@@ -3,9 +3,14 @@ import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { TextStateFeature } from '@payloadcms/richtext-lexical'
+import { textStateConfig } from '@/fields/textStateConfig'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { Projects } from './collections/Projects'
+import { Blogs } from './collections/Blogs'
+import { Tags } from './collections/Tags'
 import { SiteConfig } from './globals/site-config'
 import { Layout } from './globals/layout'
 import { ALL_PAGE_BLOCKS } from './blocks'
@@ -19,7 +24,12 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env['DATABASE_URL'] || '',
   }),
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      TextStateFeature({ state: textStateConfig }),
+    ],
+  }),
   admin: {
     user: Users.slug,
     importMap: {
@@ -42,7 +52,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Pages],
+  collections: [Users, Media, Pages, Projects, Blogs, Tags],
   globals: [SiteConfig, Layout],
   blocks: ALL_PAGE_BLOCKS,
   typescript: {
