@@ -41,18 +41,10 @@ export const Layout: GlobalConfig = {
           fields: [
             { name: 'copyright', type: 'text' },
             {
-              name: 'columns',
+              name: 'links',
               type: 'array',
-              labels: { singular: 'Column', plural: 'Columns' },
-              fields: [
-                { name: 'heading', type: 'text' },
-                {
-                  name: 'links',
-                  type: 'array',
-                  labels: { singular: 'Link', plural: 'Links' },
-                  fields: [createLinkField()],
-                },
-              ],
+              labels: { singular: 'Link', plural: 'Links' },
+              fields: [createLinkField()],
             },
           ],
         },
