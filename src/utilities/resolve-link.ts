@@ -1,7 +1,7 @@
 import { getURLPrefix } from '@/lib/relative-url'
 import type { Link } from '@/payload-types'
 
-interface ResolvedLink {
+export interface ResolvedLink {
   label?: string
   href: string
 }
@@ -34,4 +34,26 @@ export function resolveLink(raw: Link | null | undefined): ResolvedLink | null {
     label: raw.label ?? undefined,
     href,
   }
+}
+
+/**
+ * Resolves an array of link items, returning only those that resolve
+ * to a valid href. Uses a single-pass reduce to resolve and filter.
+ */
+export function resolveLinks(
+  items: { link?: Link | null; id?: string | null }[] | null | undefined,
+): ResolvedLink[] {
+  if (!items) {
+    return []
+  }
+
+  return items.reduce<ResolvedLink[]>((acc, item) => {
+    const resolved = resolveLink(item.link)
+
+    if (resolved) {
+      acc.push(resolved)
+    }
+
+    return acc
+  }, [])
 }
