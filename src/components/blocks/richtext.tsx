@@ -1,17 +1,20 @@
+'use client'
+
 import React from 'react'
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import { Richtext } from '@/components/primitives/richtext'
 import type { RichtextBlock } from '@/payload-types'
 
-export function RichtextBlockComponent({ heading, content }: RichtextBlock) {
+export function RichtextBlockComponent({ content }: RichtextBlock) {
   return (
-    <section className="py-12 md:py-20">
+    <section className="mt-6">
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
-        {heading && <h2 className="font-display text-3xl font-normal text-fg mb-8">{heading}</h2>}
-        {content && (
-          <div className="prose max-w-none">
-            <RichText data={content} />
-          </div>
-        )}
+        <div className="max-w-xl">
+          {content && (
+            <div className="text-muted leading-[1.75] prose-p:text-muted">
+              <Richtext data={content} />
+            </div>
+          )}
+        </div>
       </div>
     </section>
   )
