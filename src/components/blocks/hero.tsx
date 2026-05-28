@@ -1,30 +1,30 @@
+'use client'
+
 import React from 'react'
+import { Richtext } from '@/components/primitives/richtext'
 import type { HeroBlock } from '@/payload-types'
 
-export function HeroBlockComponent({ overline, title, description, ctas }: HeroBlock) {
+export function HeroBlockComponent({ kicker, heading, showEqualizer }: HeroBlock) {
   return (
-    <section className="py-16 md:py-24">
+    <section className="pt-[clamp(3.5rem,calc(6vh+1.5rem),6.5rem)]">
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
-        {overline && (
-          <p className="font-mono text-xs uppercase tracking-widest text-accent mb-4">{overline}</p>
+        {kicker && (
+          <p className="font-mono text-[0.725rem] uppercase tracking-[0.12em] text-accent mb-4">
+            {kicker}
+          </p>
         )}
-        {title && (
-          <h1 className="font-display text-4xl md:text-6xl font-normal leading-tight tracking-tight text-fg">
-            {title}
-          </h1>
+        {heading && (
+          <div className="font-display text-[clamp(2.2rem,5.5vw,3.8rem)] font-normal leading-[1.1] tracking-[-0.02em] text-fg max-w-[20em]">
+            <Richtext data={heading} />
+          </div>
         )}
-        {description && <p className="mt-6 max-w-2xl text-muted leading-relaxed">{description}</p>}
-        {ctas && ctas.length > 0 && (
-          <div className="mt-8 flex gap-3 flex-wrap">
-            {ctas.map((cta, i) => (
-              <a
-                key={i}
-                href={cta.link?.url ?? '#'}
-                className="inline-block border border-fg px-6 py-2.5 font-mono text-xs uppercase tracking-wider text-fg transition-colors hover:bg-fg hover:text-bg"
-              >
-                {cta.link?.label}
-              </a>
-            ))}
+        {showEqualizer && (
+          <div className="flex items-end gap-0.75 mt-10 mb-4 h-6" aria-hidden="true">
+            <span className="w-0.5 bg-accent opacity-50 animate-eq1" />
+            <span className="w-0.5 bg-accent opacity-50 animate-eq2" />
+            <span className="w-0.5 bg-accent opacity-50 animate-eq3" />
+            <span className="w-0.5 bg-accent opacity-50 animate-eq4" />
+            <span className="w-0.5 bg-accent opacity-50 animate-eq5" />
           </div>
         )}
       </div>
