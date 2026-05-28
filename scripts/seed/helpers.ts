@@ -1,18 +1,34 @@
 import { getPayload } from 'payload'
-import type { HeroBlock, CtaBlock, RichtextBlock, Page } from '@/payload-types'
+import type {
+  HeroBlock,
+  RichtextBlock,
+  TerminalBlockBlock,
+  CardGridBlock,
+  CollectionListBlock,
+  ContactBlock,
+  EntryListBlock,
+  Page,
+} from '@/payload-types'
+
+type AnyBlock =
+  | HeroBlock
+  | RichtextBlock
+  | TerminalBlockBlock
+  | CardGridBlock
+  | CollectionListBlock
+  | ContactBlock
+  | EntryListBlock
 
 /**
  * Creates or updates a Page document in the CMS.
  * If a page with the given slug already exists it is updated in place;
  * otherwise a new published page is created.
- *
- * New pages include default SEO robot configuration that allows full indexing.
  */
 export async function upsertPage(
   payload: Awaited<ReturnType<typeof getPayload>>,
   slug: string,
   title: string,
-  blocks: (HeroBlock | CtaBlock | RichtextBlock)[],
+  blocks: AnyBlock[],
 ): Promise<Page> {
   const existing = await payload.find({
     collection: 'pages',

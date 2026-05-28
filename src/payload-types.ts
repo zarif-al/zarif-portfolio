@@ -87,13 +87,20 @@ export interface Config {
   };
   blocks: {
     hero: HeroBlock;
-    cta: CtaBlock;
     richtext: RichtextBlock;
+    'terminal-block': TerminalBlockBlock;
+    'card-grid': CardGridBlock;
+    'collection-list': CollectionListBlock;
+    contact: ContactBlock;
+    'entry-list': EntryListBlock;
   };
   collections: {
     users: User;
     media: Media;
     pages: Page;
+    projects: Project;
+    blogs: Blog;
+    tags: Tag;
     'payload-kv': PayloadKv;
     'payload-folders': FolderInterface;
     'payload-locked-documents': PayloadLockedDocument;
@@ -109,6 +116,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -160,19 +170,198 @@ export interface UserAuthOperations {
  * via the `definition` "HeroBlock".
  */
 export interface HeroBlock {
-  overline?: string | null;
-  title?: string | null;
-  description?: string | null;
-  image?: (string | null) | Media;
-  ctas?:
+  kicker?: string | null;
+  heading: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  showEqualizer?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichtextBlock".
+ */
+export interface RichtextBlock {
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richtext';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TerminalBlockBlock".
+ */
+export interface TerminalBlockBlock {
+  lines: {
+    type: 'command' | 'output';
+    command?: string | null;
+    output?: string | null;
+    indent?: boolean | null;
+    id?: string | null;
+  }[];
+  systemNodes?:
     | {
-        link: Link;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  nowPlaying: {
+    track: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'terminal-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardGridBlock".
+ */
+export interface CardGridBlock {
+  numberedCards: {
+    heading?: string | null;
+    cards: {
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  cells?:
+    | {
+        heading: string;
+        span?: ('half' | 'full') | null;
+        type?: ('text' | 'stack') | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        stackItems?:
+          | {
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        stackFootnote?: string | null;
         id?: string | null;
       }[]
     | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'hero';
+  blockType: 'card-grid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CollectionListBlock".
+ */
+export interface CollectionListBlock {
+  source: 'projects' | 'blogs';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'collection-list';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactBlock".
+ */
+export interface ContactBlock {
+  infoHeading?: string | null;
+  infoDescription: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  email: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contact';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EntryListBlock".
+ */
+export interface EntryListBlock {
+  entries: {
+    label: string;
+    title: string;
+    description: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'entry-list';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -197,19 +386,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Link".
- */
-export interface Link {
-  label?: string | null;
-  type: 'external' | 'internal';
-  url?: string | null;
-  reference?: {
-    relationTo: 'pages';
-    value: string | Page;
-  } | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
@@ -226,55 +402,23 @@ export interface Page {
     /**
      * Add and arrange content blocks to build the page.
      */
-    blocks?: (CtaBlock | HeroBlock | RichtextBlock)[] | null;
+    blocks?:
+      | (
+          | CardGridBlock
+          | CollectionListBlock
+          | ContactBlock
+          | EntryListBlock
+          | HeroBlock
+          | RichtextBlock
+          | TerminalBlockBlock
+        )[]
+      | null;
   };
   localSeoTab: LocalSeoTab;
   folder?: (string | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CtaBlock".
- */
-export interface CtaBlock {
-  title?: string | null;
-  description?: string | null;
-  ctas?:
-    | {
-        link: Link;
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'cta';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RichtextBlock".
- */
-export interface RichtextBlock {
-  heading?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'richtext';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -353,28 +497,85 @@ export interface FolderInterface {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "projects".
  */
-export interface User {
+export interface Project {
   id: string;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
+  title: string;
+  slug: string;
+  tags?: (string | Tag)[] | null;
+  description: string;
+  kicker?: string | null;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  outcomeStats?:
     | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
+        value: string;
+        label: string;
+        id?: string | null;
       }[]
     | null;
-  password?: string | null;
-  collection: 'users';
+  techStack?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  label: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs".
+ */
+export interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  tags?: (string | Tag)[] | null;
+  trackNumber?: number | null;
+  publishedDate: string;
+  excerpt: string;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -411,6 +612,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'blogs';
+        value: string | Blog;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: string | Tag;
       } | null)
     | ({
         relationTo: 'payload-folders';
@@ -549,6 +762,57 @@ export interface SchemaMarkupSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  tags?: T;
+  description?: T;
+  kicker?: T;
+  body?: T;
+  outcomeStats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  techStack?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs_select".
+ */
+export interface BlogsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  tags?: T;
+  trackNumber?: T;
+  publishedDate?: T;
+  excerpt?: T;
+  body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  label?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -671,19 +935,26 @@ export interface IPayloadHeader {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Link".
+ */
+export interface Link {
+  label?: string | null;
+  type: 'external' | 'internal';
+  url?: string | null;
+  reference?: {
+    relationTo: 'pages';
+    value: string | Page;
+  } | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "IPayloadFooter".
  */
 export interface IPayloadFooter {
   copyright?: string | null;
-  columns?:
+  links?:
     | {
-        heading?: string | null;
-        links?:
-          | {
-              link: Link;
-              id?: string | null;
-            }[]
-          | null;
+        link: Link;
         id?: string | null;
       }[]
     | null;
@@ -760,16 +1031,10 @@ export interface LinkSelect<T extends boolean = true> {
  */
 export interface IPayloadFooterSelect<T extends boolean = true> {
   copyright?: T;
-  columns?:
+  links?:
     | T
     | {
-        heading?: T;
-        links?:
-          | T
-          | {
-              link?: T | LinkSelect<T>;
-              id?: T;
-            };
+        link?: T | LinkSelect<T>;
         id?: T;
       };
 }

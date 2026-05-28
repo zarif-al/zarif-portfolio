@@ -44,4 +44,8 @@ Vet dependencies before installing:
 
 ## Codebase Rules
 
-_Add codebase-specific rules, conventions, and architectural guidelines here._
+### Component architecture
+
+- **Pre-process data above the return.** Resolve links, filter items, transform data into render-ready shapes in variables at the top of the component. Never embed data transformation logic inside JSX maps.
+- **Extract sub-components into `components/` subfolders.** For example, a `header/` component with internal pieces goes into `header/components/nav-link.tsx` and `header/components/theme-toggle.tsx`.
+- **Keep the return block lean.** It should read as a layout description — a map of components, not a tangle of ternaries and inline lambdas.

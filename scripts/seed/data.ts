@@ -1,7 +1,11 @@
 import type {
   HeroBlock,
-  CtaBlock,
   RichtextBlock,
+  TerminalBlockBlock,
+  CardGridBlock,
+  CollectionListBlock,
+  ContactBlock,
+  EntryListBlock,
   IPayloadHeader,
   IPayloadFooter,
   Page,
@@ -11,19 +15,18 @@ import type {
 
 /**
  * Builds the header for the Layout global.
- * Internal links reference seeded pages by ID; external links use full URLs.
  */
-export function buildHeader(pages: { '/': Page; '/about': Page }): IPayloadHeader {
+export function buildHeader(pages: {
+  '/': Page
+  '/about': Page
+  '/projects': Page
+  '/blog': Page
+  '/contact': Page
+  '/now': Page
+}): IPayloadHeader {
   return {
-    title: 'Payload Template',
+    title: 'zarif',
     links: [
-      {
-        link: {
-          type: 'internal',
-          label: 'Home',
-          reference: { relationTo: 'pages', value: pages['/'].id },
-        },
-      },
       {
         link: {
           type: 'internal',
@@ -31,103 +34,247 @@ export function buildHeader(pages: { '/': Page; '/about': Page }): IPayloadHeade
           reference: { relationTo: 'pages', value: pages['/about'].id },
         },
       },
-      { link: { type: 'external', label: 'Contact', url: 'https://example.com/contact' } },
+      {
+        link: {
+          type: 'internal',
+          label: 'Projects',
+          reference: { relationTo: 'pages', value: pages['/projects'].id },
+        },
+      },
+      {
+        link: {
+          type: 'internal',
+          label: 'Blog',
+          reference: { relationTo: 'pages', value: pages['/blog'].id },
+        },
+      },
+      {
+        link: {
+          type: 'internal',
+          label: 'Contact',
+          reference: { relationTo: 'pages', value: pages['/contact'].id },
+        },
+      },
+      {
+        link: {
+          type: 'internal',
+          label: 'Now',
+          reference: { relationTo: 'pages', value: pages['/now'].id },
+        },
+      },
     ],
   }
 }
 
 /**
  * Builds the footer for the Layout global.
- * Internal links reference seeded pages by ID; external links use full URLs.
  */
-export function buildFooter(pages: { '/': Page; '/about': Page }): IPayloadFooter {
+export function buildFooter(_pages: {
+  '/': Page
+  '/about': Page
+  '/projects': Page
+  '/blog': Page
+  '/contact': Page
+  '/now': Page
+}): IPayloadFooter {
   return {
-    copyright: `© ${new Date().getFullYear()} Payload Template. All rights reserved.`,
-    columns: [
+    copyright: `~/zarif $`,
+    links: [
+      { link: { type: 'external', label: 'GitHub', url: 'https://github.com/zarif' } },
       {
-        heading: 'Product',
-        links: [
-          { link: { type: 'external', label: 'Features', url: 'https://example.com/features' } },
-          { link: { type: 'external', label: 'Pricing', url: 'https://example.com/pricing' } },
-          { link: { type: 'external', label: 'Docs', url: 'https://example.com/docs' } },
-        ],
+        link: { type: 'external', label: 'LinkedIn', url: 'https://linkedin.com/in/zarif' },
       },
-      {
-        heading: 'Company',
-        links: [
-          {
-            link: {
-              type: 'internal',
-              label: 'About',
-              reference: { relationTo: 'pages', value: pages['/about'].id },
-            },
-          },
-          { link: { type: 'external', label: 'Blog', url: 'https://example.com/blog' } },
-          { link: { type: 'external', label: 'Contact', url: 'https://example.com/contact' } },
-        ],
-      },
+      { link: { type: 'external', label: 'hi@zarif.dev', url: 'mailto:hi@zarif.dev' } },
     ],
   }
 }
 
 // ── Blocks ──
 
-/**
- * Builds a Hero block with lorem ipsum content.
- * Accepts a partial override to customize any field (e.g., overline, title).
- */
 export function buildHeroBlock(override: Partial<HeroBlock> = {}): HeroBlock {
   return {
     blockType: 'hero',
-    overline: 'Overline text',
-    title: 'Lorem ipsum dolor sit amet consectetur',
-    description:
-      'Adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris.',
-    ctas: [
-      { link: { type: 'external', label: 'Get started', url: 'https://example.com' } },
-      { link: { type: 'external', label: 'Learn more', url: 'https://example.com' } },
+    kicker: 'Systems Engineer · Integration Specialist',
+    heading: createHeroHeading(),
+    showEqualizer: true,
+    ...override,
+  }
+}
+
+export function buildTerminalBlock(override: Partial<TerminalBlockBlock> = {}): TerminalBlockBlock {
+  return {
+    blockType: 'terminal-block',
+    lines: [
+      { type: 'command', command: 'whoami', indent: false },
+      {
+        type: 'output',
+        output: 'zarif — systems engineer. code, games, music. in that order, or all at once.',
+        indent: true,
+      },
+      { type: 'command', command: 'cat ~/stack.txt', indent: false },
+      {
+        type: 'output',
+        output:
+          'TypeScript · Node.js · Next.js · NestJS · Payload CMS · Sanity · PostgreSQL · Redis · Docker',
+        indent: true,
+      },
+      { type: 'command', command: 'cat ~/.focus', indent: false },
+      {
+        type: 'output',
+        output:
+          'Building resilient integration layers. Making systems talk to each other. Keeping it simple',
+        indent: true,
+      },
+    ],
+    systemNodes: [
+      { label: 'NestJS' },
+      { label: 'Payload CMS' },
+      { label: 'Sanity' },
+      { label: 'Next.js' },
+      { label: 'TypeScript' },
+    ],
+    nowPlaying: { track: 'Bonobo — Black Sands' },
+    ...override,
+  }
+}
+
+export function buildRichtextBlock(override: Partial<RichtextBlock> = {}): RichtextBlock {
+  return {
+    blockType: 'richtext',
+    content: createRichText(
+      "I build the connective tissue between platforms — APIs that talk to each other, CMS backends that editors actually enjoy using, and TypeScript architectures that stay maintainable as they grow. When I'm not in an editor, I'm probably deep in a game world or rebuilding my music library. My work lives where a clear data model meets a real business need — and I bring the same obsessive attention to both.",
+    ),
+    ...override,
+  }
+}
+
+export function buildCardGridBlock(override: Partial<CardGridBlock> = {}): CardGridBlock {
+  return {
+    blockType: 'card-grid',
+    numberedCards: {
+      heading: 'What I build',
+      cards: [
+        {
+          title: 'API Design & Architecture',
+          description:
+            'REST, GraphQL, event-driven systems — contracts that survive the first production deploy.',
+        },
+        {
+          title: 'CMS Integration',
+          description:
+            'Payload, Sanity, structured content pipelines — turning editorial workflows into type-safe APIs.',
+        },
+        {
+          title: 'Data Modeling',
+          description:
+            'PostgreSQL, Prisma, migration strategy — schema that reflects the domain, not the ORM.',
+        },
+        {
+          title: 'System Interop',
+          description:
+            "Webhooks, message queues, reconciliation — making systems that weren't meant to talk actually communicate.",
+        },
+      ],
+    },
+    cells: [
+      {
+        heading: 'Background',
+        content: createRichText(
+          "I'm Zarif — a software engineer focused on high-level systems design and integrations. I work across the full stack but my gravity is on the backend: API design, data modeling, CMS architecture, and making disparate systems interoperate. Outside of code, I'm deep into video games (strategy, RPGs, anything with good systems) and music (Bonobo, Four Tet, Floating Points — the kind of stuff you can code to for hours).",
+        ),
+        span: 'half',
+        type: 'text',
+      },
+      {
+        heading: 'Approach',
+        content: createRichText(
+          'I start with the business problem, not the technology. What data needs to move? Who needs to edit it? What breaks if this goes down? From there I work backward to architecture — choosing the right abstractions, keeping the surface area small, and writing code that the next engineer can understand in ten minutes. Same philosophy I bring to games: understand the system, then optimize.',
+        ),
+        span: 'half',
+        type: 'text',
+      },
+      {
+        heading: 'Loadout',
+        span: 'half',
+        type: 'stack',
+        stackItems: [
+          { label: 'TypeScript' },
+          { label: 'Node.js' },
+          { label: 'Next.js' },
+          { label: 'NestJS' },
+          { label: 'Payload CMS' },
+          { label: 'Sanity' },
+          { label: 'PostgreSQL' },
+          { label: 'Redis' },
+          { label: 'Docker' },
+          { label: 'REST / GraphQL' },
+          { label: 'Tailwind' },
+          { label: 'Prisma' },
+        ],
+        stackFootnote: 'Rust, Kafka, edge compute',
+      },
     ],
     ...override,
   }
 }
 
-/**
- * Builds a CTA (call-to-action) block with lorem ipsum content.
- * Accepts a partial override to customize any field (e.g., title, description).
- */
-export function buildCtaBlock(override: Partial<CtaBlock> = {}): CtaBlock {
+export function buildCollectionListBlock(
+  override: Partial<CollectionListBlock> = {},
+): CollectionListBlock {
   return {
-    blockType: 'cta',
-    title: 'Ready to get started?',
-    description:
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-    ctas: [{ link: { type: 'external', label: 'Contact us', url: 'https://example.com' } }],
+    blockType: 'collection-list',
+    source: 'projects',
     ...override,
   }
 }
 
-/**
- * Builds a Richtext block with lorem ipsum body text.
- * Accepts a partial override to customize any field (e.g., heading, content).
- * The content is generated as a valid Lexical serialized state with a single paragraph.
- */
-export function buildRichtextBlock(override: Partial<RichtextBlock> = {}): RichtextBlock {
+export function buildContactBlock(override: Partial<ContactBlock> = {}): ContactBlock {
   return {
-    blockType: 'richtext',
-    heading: 'About this project',
-    content: createRichText(
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    blockType: 'contact',
+    infoHeading: 'Contact',
+    infoDescription: createRichText(
+      "I'm available for consulting, systems architecture engagements, and integration work. If you have a business problem that needs a technical system designed around it — or if you just want to talk about TypeScript architecture — reach out.",
     ),
+    email: 'hi@zarif.dev',
+    ...override,
+  }
+}
+
+export function buildEntryListBlock(override: Partial<EntryListBlock> = {}): EntryListBlock {
+  return {
+    blockType: 'entry-list',
+    entries: [
+      {
+        label: 'Work',
+        title: 'Designing a multi-region CMS deployment for a SaaS client',
+        description:
+          'Scoping edge-cached content delivery across three regions with Payload CMS, making sure editorial workflows stay fast regardless of where editors are located.',
+      },
+      {
+        label: 'Learning',
+        title: 'Rust for systems-level tooling',
+        description:
+          'Building small CLI utilities in Rust to sharpen my understanding of memory management and concurrency — skills that feed back into how I design Node.js services.',
+      },
+      {
+        label: 'Side Project',
+        title: 'An open-source TypeScript event bus',
+        description:
+          'A lightweight, type-safe event bus for Node.js with first-class TypeScript inference. Mostly scratching my own itch around typed event patterns in NestJS.',
+      },
+      {
+        label: 'Reading',
+        title: 'Designing Data-Intensive Applications (re-read)',
+        description:
+          'Every time I re-read Kleppmann I find something new. This time: the chapter on replication is directly informing the multi-region CMS work.',
+      },
+    ],
     ...override,
   }
 }
 
 // ── Lexical ──
 
-/**
- * Creates a minimal valid Lexical serialized editor state containing a single paragraph.
- * Used to seed rich text fields with plain text content.
- */
 export function createRichText(text: string) {
   return {
     root: {
@@ -140,6 +287,62 @@ export function createRichText(text: string) {
               type: 'text' as const,
               text,
               version: 1,
+            } as const,
+          ],
+          direction: null,
+          format: '' as const,
+          indent: 0,
+          version: 1,
+        },
+      ],
+      direction: null,
+      format: '' as const,
+      indent: 0,
+      version: 1,
+    },
+  }
+}
+
+/**
+ * Creates the hero heading Lexical state with italic and accent-colored text.
+ * Renders: "I design systems\nthat <em>solve business problems.</em>"
+ */
+export function createHeroHeading() {
+  return {
+    root: {
+      type: 'root' as const,
+      children: [
+        {
+          type: 'paragraph' as const,
+          children: [
+            {
+              type: 'text' as const,
+              text: 'I design systems',
+              format: 0,
+              detail: 0,
+              mode: 'normal',
+              style: '',
+              version: 1,
+            } as const,
+            { type: 'linebreak', version: 1 },
+            {
+              type: 'text' as const,
+              text: 'that ',
+              format: 0,
+              detail: 0,
+              mode: 'normal',
+              style: '',
+              version: 1,
+            } as const,
+            {
+              type: 'text' as const,
+              text: 'solve business problems.',
+              format: 2,
+              detail: 0,
+              mode: 'normal',
+              style: '',
+              version: 1,
+              $: { color: 'accent' },
             } as const,
           ],
           direction: null,

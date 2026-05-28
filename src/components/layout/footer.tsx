@@ -1,57 +1,33 @@
-import Link from 'next/link'
 import type { IPayloadFooter } from '@/payload-types'
-import { resolveLink } from '@/utilities/resolve-link'
+import { resolveLinks } from '@/utilities/resolve-link'
+import { PrimitiveLink } from '@/components/primitives/link'
 
-export function FooterComponent({ copyright, columns }: IPayloadFooter) {
+export function FooterComponent({ copyright, links }: IPayloadFooter) {
+  const resolvedLinks = resolveLinks(links)
+
   return (
-    <footer className="mt-auto border-t border-border">
+    <footer className="mt-[clamp(2rem,6vh,4rem)] border-t border-border py-8 md:py-10">
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
-        {columns && columns.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
-            {columns.map((col, i) => (
-              <div key={col.id ?? i}>
-                {col.heading && (
-                  <h4 className="font-mono text-[0.65rem] uppercase tracking-wider text-accent mb-3 font-medium">
-                    {col.heading}
-                  </h4>
-                )}
-                {col.links && col.links.length > 0 && (
-                  <ul className="flex flex-col gap-1.5 list-none">
-                    {col.links.map((linkItem, j) => {
-                      const resolved = resolveLink(linkItem.link)
-
-                      if (!resolved) {
-                        return null
-                      }
-
-                      const className =
-                        'text-sm text-muted no-underline transition-colors hover:text-fg'
-
-                      if (linkItem.link?.type === 'internal') {
-                        return (
-                          <li key={linkItem.id ?? j}>
-                            <Link href={resolved.href} className={className}>
-                              {resolved.label}
-                            </Link>
-                          </li>
-                        )
-                      }
-
-                      return (
-                        <li key={linkItem.id ?? j}>
-                          <a href={resolved.href} className={className}>
-                            {resolved.label}
-                          </a>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-        {copyright && <p className="text-xs text-muted pb-6">{copyright}</p>}
+        <div className="flex justify-between items-center gap-4 flex-wrap text-[0.775rem] text-muted">
+          {copyright && (
+            <span className="font-mono text-[0.68rem]">
+              {copyright} <span className="text-accent">█</span>
+            </span>
+          )}
+          {resolvedLinks.length > 0 && (
+            <ul className="flex gap-6 list-none font-mono text-[0.68rem]">
+              {resolvedLinks.map((link, i) => (
+                <li key={i}>
+                  <PrimitiveLink
+                    href={link.href}
+                    label={link.label}
+                    className="text-muted hover:text-fg"
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </footer>
   )

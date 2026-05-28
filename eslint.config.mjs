@@ -31,6 +31,7 @@ export default tseslint.config(
           caughtErrorsIgnorePattern: '^(_|ignore)',
         },
       ],
+      curly: ['error', 'all'],
     },
   },
   // Type-aware rules + parser config for TypeScript source files only
