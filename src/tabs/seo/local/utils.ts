@@ -20,6 +20,9 @@ const seoFallbackHandlers: {
   >]: (data: Partial<DataFromCollectionSlug<S>>, field: 'description' | 'title') => string
 } = {
   pages: (data, field) => (field === 'title' ? (data.title ?? '') : ''),
+  projects: (data, field) => (field === 'title' ? (data.title ?? '') : ''),
+  blogs: (data, field) => (field === 'title' ? (data.title ?? '') : ''),
+  tags: (data, field) => (field === 'title' ? (data.label ?? '') : ''),
 }
 
 /**
