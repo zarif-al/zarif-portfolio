@@ -1,0 +1,10 @@
+.next/
+node_modules/
+pnpm-lock.yaml
+tsconfig.tsbuildinfo
+payload-types.ts
+importMap.js
+test.env
+.env
+.env.*
+.agents
