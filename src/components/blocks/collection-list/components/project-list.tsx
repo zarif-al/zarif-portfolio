@@ -46,7 +46,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
               <p className="text-[0.875rem] text-muted leading-[1.6] mb-2">{project.meta?.description}</p>
               {project.meta?.techStack && project.meta.techStack.length > 0 && (
                 <p className="font-mono text-[0.65rem] text-border tracking-wider">
-                  {project.meta.techStack.map((s) => s.label).join(' · ')}
+                  {project.meta.techStack.join(' · ')}
                 </p>
               )}
             </Link>
