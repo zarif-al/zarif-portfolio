@@ -1,4 +1,5 @@
 import type { Tag } from '@/payload-types'
+import { extractTagLabel } from '@/utilities/extract-tag-label'
 
 interface TagsProps {
   tags: (string | Tag)[]
@@ -8,7 +9,7 @@ export function Tags({ tags }: TagsProps) {
   return (
     <div className="flex flex-wrap gap-[0.4rem]">
       {tags.map((tag, i) => {
-        const label = typeof tag === 'string' ? null : tag.label
+        const label = extractTagLabel(tag)
         if (!label) {
           return null
         }

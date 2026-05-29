@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { cn } from '@/utilities/cn'
 import { getURLPrefix } from '@/lib/relative-url'
 import type { Project } from '@/payload-types'
-import { getTagLabel } from '../utils'
+import { extractTagLabel } from '@/utilities/extract-tag-label'
 import { FilterBar } from './filter'
 import { Tags } from '@/components/primitives/tags'
 
@@ -21,7 +21,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
   const filtered =
     activeFilter === 'all'
       ? projects
-      : projects.filter((p) => p.meta?.tags?.some((t) => getTagLabel(t) === activeFilter))
+      : projects.filter((p) => p.meta?.tags?.some((t) => extractTagLabel(t) === activeFilter))
 
   return (
     <section className={cn(className)}>

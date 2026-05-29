@@ -3,8 +3,10 @@ import { notFound } from 'next/navigation'
 import { BackLink } from '@/components/primitives/back-link'
 import { Tags } from '@/components/primitives/tags'
 import { Richtext } from '@/components/primitives/richtext'
+import { RelatedItems } from '@/blocks/non-buildable/related-items'
 import { getPayloadInstance } from '@/lib/payload'
 import type { Metadata } from 'next'
+import { extractCollectionId } from '@/utilities/extract-collection-id'
 import { getMetadata } from '@/utilities/get-metadata'
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -28,6 +30,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   if (!project) {
     notFound()
   }
+
+  const tagIds = (project.meta?.tags ?? []).map((t) => extractCollectionId(t))
 
   return (
     <section className="py-[clamp(2rem,6vh,4rem)]">
@@ -82,6 +86,14 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             ))}
           </div>
         )}
+
+        <RelatedItems
+          collection="projects"
+          currentId={project.id}
+          tagIds={tagIds}
+          sort="-createdAt"
+          draft={isDraftMode}
+        />
       </div>
     </section>
   )

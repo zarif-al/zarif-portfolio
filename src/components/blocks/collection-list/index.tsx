@@ -2,7 +2,7 @@ import type { CollectionListBlock as CollectionListBlockType } from '@/payload-t
 import type { BlockComponentProps } from '@/components/blocks/types'
 import { draftMode } from 'next/headers'
 import { getPayloadInstance } from '@/lib/payload'
-import { getTagLabel } from './utils'
+import { extractTagLabel } from '@/utilities/extract-tag-label'
 import { ProjectListView } from './components/project-list'
 import { BlogListView } from './components/blog-list'
 
@@ -28,7 +28,7 @@ export async function CollectionListBlockComponent({
       for (const project of projects) {
         if (project.meta?.tags) {
           for (const tag of project.meta.tags) {
-            const label = getTagLabel(tag)
+            const label = extractTagLabel(tag)
             if (label && !allTags.includes(label)) {
               allTags.push(label)
             }
@@ -53,7 +53,7 @@ export async function CollectionListBlockComponent({
       for (const post of posts) {
         if (post.meta?.tags) {
           for (const tag of post.meta.tags) {
-            const label = getTagLabel(tag)
+            const label = extractTagLabel(tag)
             if (label && !allTags.includes(label)) {
               allTags.push(label)
             }
