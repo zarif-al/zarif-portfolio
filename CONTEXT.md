@@ -11,11 +11,19 @@ A publicly routable, generic web page built with blocks. Managed in the `pages` 
 _Avoid_: Route, CMS page, content page
 
 **Block**:
-A composable content building block used on Pages and in the Layout. Each block has a **Block Config** (the Payload schema definition in `src/blocks/`) and a **Block Component** (the React renderer in `src/components/blocks/`). The config defines what data the block stores; the component defines how it renders.
+A composable content building block used on Pages and in the Layout. Each **Buildable Block** has both a **Block Config** (the Payload schema definition in `src/blocks/buildable/`) and a **Block Component** (the React renderer in `src/components/blocks/`). The config defines what data the block stores; the component defines how it renders. **Non-Buildable Blocks** (in `src/blocks/non-buildable/`) are frontend-only — they render block-like UI but are not CMS-managed and have no Payload schema.
 _Avoid_: Component, section, module
 
+**Buildable Block**:
+A CMS-composable **Block** registered in `ALL_PAGE_BLOCKS`. Has a **Block Config** in `src/blocks/buildable/` and a **Block Component** in `src/components/blocks/`. Editable via the Payload admin.
+_Avoid_: CMS block, page block, admin block
+
+**Non-Buildable Block**:
+A frontend-only **Block** that shares the visual language of blocks but has no Payload schema — not CMS-managed, not in `ALL_PAGE_BLOCKS`. Lives in `src/blocks/non-buildable/` and is rendered by pages that need it (e.g., the **RelatedItems** block on detail pages). Self-fetching or accepts pre-fetched data.
+_Avoid_: Static block, hardcoded block, inline block
+
 **Block Config**:
-A Payload block schema — defines the fields, validation, and admin UI for a single content block type. Lives in `src/blocks/`.
+A Payload block schema — defines the fields, validation, and admin UI for a single **Buildable Block** type. Lives in `src/blocks/buildable/`.
 _Avoid_: Block definition, block schema
 
 **Block Component**:
@@ -111,11 +119,15 @@ _Avoid_: Metrics, stats, KPI, numbers
 An array of technology labels displayed as pills on a **Project** detail page and as a monospaced line on **Project** cards in the list.
 _Avoid_: Tools, technologies, stack tags
 
+**RelatedItems**:
+A **Non-Buildable Block** rendered on **Blog Post** and **Project** detail pages. Auto-generates up to 3 related items from the same collection that share at least one **Tag** with the current item. Self-fetching — pages just configure collection, sort, and tag IDs.
+_Avoid_: Related posts, related projects, cross-links
+
 ## Example dialogue
 
 **Dev**: "I need to add a testimonials section to every page."
 
-**Lead**: "So you're adding a new **Block**. You'll need a **Block Config** in `src/blocks/` for the data — author name, quote, avatar — and a **Block Component** in `src/components/blocks/` to render it. Then register both in the blocks index and the renderer."
+**Lead**: "So you're adding a new **Buildable Block**. You'll need a **Block Config** in `src/blocks/buildable/` for the data — author name, quote, avatar — and a **Block Component** in `src/components/blocks/` to render it. Then register both in the blocks index and the renderer."
 
 **Dev**: "Got it. And the block shows up automatically in the Pages editor?"
 
