@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getPayloadInstance } from '@/lib/payload'
+import { getURLPrefix } from '@/lib/relative-url'
 
 interface RelatedItemsProps {
   collection: 'projects' | 'blogs'
@@ -42,7 +43,7 @@ export async function RelatedItems({
     return null
   }
 
-  const urlPrefix = collection === 'projects' ? '/projects/' : '/blog/'
+  const urlPrefix = getURLPrefix(collection)
 
   return (
     <div className="mt-12 p-6 bg-surface border border-border">
