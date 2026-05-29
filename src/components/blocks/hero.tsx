@@ -24,7 +24,7 @@ export function HeroBlockComponent({
           <div
             className={cn(
               size === 'default' &&
-                "'[&_h1]:text-[clamp(1.75rem,4vw,2.5rem)] [&_h1]:leading-[1.2] [&_h1]:tracking-[-0.015em]'",
+                '[&_h1]:text-[clamp(1.75rem,4vw,2.5rem)] [&_h1]:leading-[1.2] [&_h1]:tracking-[-0.015em]',
             )}
           >
             <Richtext data={heading} />
