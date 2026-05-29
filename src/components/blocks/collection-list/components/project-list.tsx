@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
+import { getURLPrefix } from '@/lib/relative-url'
 import type { Project } from '@/payload-types'
 import { getTagLabel } from '../utils'
 import { FilterBar } from './filter'
@@ -31,7 +32,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
           {filtered.map((project) => (
             <Link
               key={project.id}
-              href={`/projects/${project.slug}`}
+              href={`${getURLPrefix('projects')}${project.slug}`}
               className="grid grid-cols-1 border border-border border-b-0 last:border-b p-6 bg-surface transition-colors duration-200 hover:bg-bg no-underline text-inherit"
             >
               <div className="flex gap-3 items-center mb-2 flex-wrap">

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
+import { getURLPrefix } from '@/lib/relative-url'
 import type { Blog } from '@/payload-types'
 import { Tags } from '@/components/primitives/tags'
 import { FilterBar } from './filter'
@@ -31,7 +32,7 @@ export function BlogListView({ posts, allTags, className }: BlogListViewProps) {
           {filtered.map((post) => (
             <Link
               key={post.id}
-              href={`/blog/${post.slug}`}
+              href={`${getURLPrefix('blogs')}${post.slug}`}
               className="block no-underline text-inherit border border-border border-b-0 last:border-b p-5 md:p-6 bg-surface transition-colors duration-200 hover:bg-bg"
             >
               {post.meta?.trackNumber != null && (
