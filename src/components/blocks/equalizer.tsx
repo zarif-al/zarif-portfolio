@@ -1,10 +1,8 @@
 import { cn } from '@/utilities/cn'
 import type { EqualizerBlock } from '@/payload-types'
+import type { BlockComponentProps } from '@/components/blocks/types'
 
-export function EqualizerBlockComponent({
-  track,
-  className,
-}: EqualizerBlock & { className?: string }) {
+export function EqualizerBlockComponent({ track, className }: BlockComponentProps<EqualizerBlock>) {
   return (
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">

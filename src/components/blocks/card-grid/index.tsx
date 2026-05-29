@@ -3,13 +3,11 @@
 import React from 'react'
 import { cn } from '@/utilities/cn'
 import type { CardGridBlock } from '@/payload-types'
+import type { BlockComponentProps } from '@/components/blocks/types'
 import { NumberedGrid } from './components/numbered-grid'
 import { CellGrid } from './components/cell-grid'
 
-export function CardGridBlockComponent({
-  content,
-  className,
-}: CardGridBlock & { className?: string }) {
+export function CardGridBlockComponent({ content, className }: BlockComponentProps<CardGridBlock>) {
   return (
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">

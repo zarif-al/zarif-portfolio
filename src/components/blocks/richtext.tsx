@@ -4,11 +4,9 @@ import React from 'react'
 import { Richtext } from '@/components/primitives/richtext'
 import { cn } from '@/utilities/cn'
 import type { RichtextBlock } from '@/payload-types'
+import type { BlockComponentProps } from '@/components/blocks/types'
 
-export function RichtextBlockComponent({
-  content,
-  className,
-}: RichtextBlock & { className?: string }) {
+export function RichtextBlockComponent({ content, className }: BlockComponentProps<RichtextBlock>) {
   return (
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">

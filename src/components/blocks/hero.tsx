@@ -4,12 +4,9 @@ import React from 'react'
 import { Richtext } from '@/components/primitives/richtext'
 import { cn } from '@/utilities/cn'
 import type { HeroBlock } from '@/payload-types'
+import type { BlockComponentProps } from '@/components/blocks/types'
 
-export function HeroBlockComponent({
-  kicker,
-  heading,
-  className,
-}: HeroBlock & { className?: string }) {
+export function HeroBlockComponent({ kicker, heading, className }: BlockComponentProps<HeroBlock>) {
   return (
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">

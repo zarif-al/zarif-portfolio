@@ -6,17 +6,8 @@ import { CollectionListBlockComponent } from './collection-list'
 import { ContactBlockComponent } from './contact'
 import { EntryListBlockComponent } from './entry-list'
 import { EqualizerBlockComponent } from './equalizer'
-import type { Config } from '@/payload-types'
-
-type PageBlock = Config['blocks'][keyof Config['blocks']]
-
-interface RenderBlocksProps {
-  blocks?: PageBlock[] | null
-}
-
-const BLOCK_SPACING = 'mb-[clamp(2rem,6vh,5rem)]'
-const BLOCK_SPACING_TOP = 'pt-[clamp(2rem,6vh,5rem)]'
-const EQUALIZER_SPACING = 'mb-4 max-sm:mb-3'
+import { BLOCK_SPACING, BLOCK_SPACING_TOP, EQUALIZER_SPACING } from './constants'
+import type { RenderBlocksProps } from './types'
 
 /**
  * Renders an ordered list of page blocks.
