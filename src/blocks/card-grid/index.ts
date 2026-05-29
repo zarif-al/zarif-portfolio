@@ -1,40 +1,35 @@
 import type { Block } from 'payload'
 
-export const CardGrid: Block = {
-  slug: 'card-grid',
-  interfaceName: 'CardGridBlock',
+const NumberedGrid: Block = {
+  slug: 'numbered-grid',
+  interfaceName: 'NumberedGridBlock',
   fields: [
+    { name: 'heading', type: 'text' },
     {
-      name: 'numberedCards',
-      type: 'group',
+      name: 'cards',
+      type: 'array',
+      required: true,
+      minRows: 1,
       fields: [
-        { name: 'heading', type: 'text' },
-        {
-          name: 'cards',
-          type: 'array',
-          required: true,
-          minRows: 1,
-          fields: [
-            { name: 'title', type: 'text', required: true },
-            { name: 'description', type: 'text', required: true },
-          ],
-        },
+        { name: 'title', type: 'text', required: true },
+        { name: 'description', type: 'text', required: true },
       ],
     },
+  ],
+}
+
+const CellGrid: Block = {
+  slug: 'cell-grid',
+  interfaceName: 'CellGridBlock',
+  fields: [
+    { name: 'swap', type: 'checkbox', defaultValue: false },
     {
-      name: 'cells',
+      name: 'items',
       type: 'array',
+      required: true,
+      minRows: 2,
+      maxRows: 2,
       fields: [
-        { name: 'heading', type: 'text', required: true },
-        {
-          name: 'span',
-          type: 'select',
-          options: [
-            { label: 'Half', value: 'half' },
-            { label: 'Full', value: 'full' },
-          ],
-          defaultValue: 'half',
-        },
         {
           name: 'type',
           type: 'select',
@@ -43,7 +38,9 @@ export const CardGrid: Block = {
             { label: 'Stack', value: 'stack' },
           ],
           defaultValue: 'text',
+          required: true,
         },
+        { name: 'heading', type: 'text' },
         {
           name: 'content',
           type: 'richText',
@@ -55,12 +52,20 @@ export const CardGrid: Block = {
           admin: { condition: (_, siblingData) => siblingData?.['type'] === 'stack' },
           fields: [{ name: 'label', type: 'text', required: true }],
         },
-        {
-          name: 'stackFootnote',
-          type: 'text',
-          admin: { condition: (_, siblingData) => siblingData?.['type'] === 'stack' },
-        },
+        { name: 'footnote', type: 'text' },
       ],
+    },
+  ],
+}
+
+export const CardGrid: Block = {
+  slug: 'card-grid',
+  interfaceName: 'CardGridBlock',
+  fields: [
+    {
+      name: 'content',
+      type: 'blocks',
+      blocks: [NumberedGrid, CellGrid],
     },
   ],
 }
