@@ -1,6 +1,8 @@
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { BackLink } from '@/components/primitives/back-link'
+import { Tags } from '@/components/primitives/tags'
 import { Richtext } from '@/components/primitives/richtext'
 import { getPayloadInstance } from '@/lib/payload'
 import type { Metadata } from 'next'
@@ -39,13 +41,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   return (
     <section className="py-[clamp(2rem,6vh,4rem)]">
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-[0.4rem] font-mono text-xs uppercase tracking-[0.08em] text-muted no-underline border border-border px-[0.85rem] py-[0.45rem] mb-8 transition-colors duration-200 hover:border-accent hover:text-accent"
-        >
-          <span className="text-[0.9rem] leading-none">←</span>
-          Back to Blog
-        </Link>
+        <BackLink href="/blog" label="Back to Blog" />
 
         <div className="mb-10">
           {renderKicker(post.meta?.trackNumber, post.meta?.publishedDate)}
@@ -54,7 +50,11 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             {post.title}
           </h1>
 
-          {renderTags(post.meta?.tags)}
+          {post.meta?.tags && post.meta.tags.length > 0 && (
+            <div className="mt-4">
+              <Tags tags={post.meta.tags} />
+            </div>
+          )}
         </div>
 
         {post.meta?.body && (
@@ -107,31 +107,6 @@ function renderKicker(
 
   return (
     <p className="font-mono text-[0.72rem] uppercase tracking-widest text-accent mb-3">{text}</p>
-  )
-}
-
-/** Render tag pills, same pattern as project detail */
-function renderTags(tags: Blog['meta']['tags']) {
-  if (!tags || tags.length === 0) {
-    return null
-  }
-  return (
-    <div className="flex flex-wrap gap-2 mt-4 font-mono text-[0.7rem] text-muted">
-      {tags.map((tag) => {
-        const label = typeof tag === 'string' ? '' : tag.label
-        if (!label) {
-          return null
-        }
-        return (
-          <span
-            key={label}
-            className="border border-border px-[0.55rem] py-[0.2rem] uppercase tracking-[0.06em]"
-          >
-            {label}
-          </span>
-        )
-      })}
-    </div>
   )
 }
 
