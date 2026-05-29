@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import { getPayload } from 'payload'
+import type { SanitizedServerEditorConfig } from '@payloadcms/richtext-lexical'
 import configPromise from '@payload-config'
 import {
   buildHeader,
@@ -14,6 +15,65 @@ import {
   buildEntryListBlock,
 } from './data'
 import { upsertPage, readMd, mdToLexical, getEditorConfig } from './helpers'
+
+/** Builds a full Payload-shaped project data object from flat source data. */
+function buildProjectData(
+  p: (typeof PROJECTS)[number],
+  tagMap: Record<string, string>,
+  editorConfig: SanitizedServerEditorConfig,
+) {
+  return {
+    title: p.title,
+    slug: p.slug,
+    meta: {
+      description: p.description,
+      body: mdToLexical(editorConfig, readMd(`projects/${p.bodyFile}`)),
+      tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
+      techStack: p.techStack.map((s) => ({ label: s })),
+      outcomeStats: p.outcomeStats,
+      kicker: p.kicker,
+    },
+    localSeoTab: {
+      title: p.title,
+      description: p.description,
+      robotsConfig: {
+        disableIndex: true,
+        disableFollow: true,
+        disableImageIndex: true,
+        disableSnippet: true,
+      },
+    },
+  }
+}
+
+/** Builds a full Payload-shaped blog data object from flat source data. */
+function buildBlogData(
+  b: (typeof BLOGS)[number],
+  tagMap: Record<string, string>,
+  editorConfig: SanitizedServerEditorConfig,
+) {
+  return {
+    title: b.title,
+    slug: b.slug,
+    meta: {
+      trackNumber: b.trackNumber,
+      publishedDate: b.publishedDate,
+      excerpt: b.excerpt,
+      body: mdToLexical(editorConfig, readMd(`blogs/${b.bodyFile}`)),
+      tags: b.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
+    },
+    localSeoTab: {
+      title: b.title,
+      description: b.excerpt,
+      robotsConfig: {
+        disableIndex: true,
+        disableFollow: true,
+        disableImageIndex: true,
+        disableSnippet: true,
+      },
+    },
+  }
+}
 
 async function seed() {
   const payload = await getPayload({ config: configPromise })
@@ -45,36 +105,12 @@ async function seed() {
       limit: 1,
     })
     const doc = existing.docs[0]
+    const data = buildProjectData(p, tagMap, editorConfig)
+
     if (doc) {
-      await payload.update({
-        collection: 'projects',
-        id: doc.id,
-        data: {
-          title: p.title,
-          slug: p.slug,
-          description: p.description,
-          body: mdToLexical(editorConfig, readMd(`projects/${p.bodyFile}`)),
-          tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
-          techStack: p.techStack.map((s) => ({ label: s })),
-          outcomeStats: p.outcomeStats,
-          kicker: p.kicker,
-        },
-      })
+      await payload.update({ collection: 'projects', id: doc.id, data })
     } else {
-      await payload.create({
-        collection: 'projects',
-        data: {
-          title: p.title,
-          slug: p.slug,
-          description: p.description,
-          body: mdToLexical(editorConfig, readMd(`projects/${p.bodyFile}`)),
-          tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
-          techStack: p.techStack.map((s) => ({ label: s })),
-          outcomeStats: p.outcomeStats,
-          kicker: p.kicker,
-        },
-        draft: false,
-      })
+      await payload.create({ collection: 'projects', data, draft: false })
     }
   }
 
@@ -86,34 +122,12 @@ async function seed() {
       limit: 1,
     })
     const doc = existing.docs[0]
+    const data = buildBlogData(b, tagMap, editorConfig)
+
     if (doc) {
-      await payload.update({
-        collection: 'blogs',
-        id: doc.id,
-        data: {
-          title: b.title,
-          slug: b.slug,
-          trackNumber: b.trackNumber,
-          publishedDate: b.publishedDate,
-          excerpt: b.excerpt,
-          body: mdToLexical(editorConfig, readMd(`blogs/${b.bodyFile}`)),
-          tags: b.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
-        },
-      })
+      await payload.update({ collection: 'blogs', id: doc.id, data })
     } else {
-      await payload.create({
-        collection: 'blogs',
-        data: {
-          title: b.title,
-          slug: b.slug,
-          trackNumber: b.trackNumber,
-          publishedDate: b.publishedDate,
-          excerpt: b.excerpt,
-          body: mdToLexical(editorConfig, readMd(`blogs/${b.bodyFile}`)),
-          tags: b.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
-        },
-        draft: false,
-      })
+      await payload.create({ collection: 'blogs', data, draft: false })
     }
   }
 
