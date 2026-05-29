@@ -21,7 +21,7 @@ export async function RenderLayout({ children }: RenderLayoutProps) {
   return (
     <>
       {layout.header && <HeaderComponent {...layout.header} />}
-      <main className="min-h-[60vh]">{children}</main>
+      <main>{children}</main>
       {layout.footer && <FooterComponent {...layout.footer} />}
     </>
   )

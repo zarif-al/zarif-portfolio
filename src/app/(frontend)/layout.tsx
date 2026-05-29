@@ -16,7 +16,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en" data-theme={theme} data-scroll-behavior="smooth" suppressHydrationWarning>
-      <body className="flex flex-col min-h-screen">
+      <body>
         <RenderLayout>{children}</RenderLayout>
       </body>
     </html>
