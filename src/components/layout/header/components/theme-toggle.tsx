@@ -42,26 +42,22 @@ export function ThemeToggle() {
   )
 }
 
-/**
- * Reads the current theme from the `data-theme` attribute on `<html>`.
- * Falls back to the system `prefers-color-scheme` media query when
- * no explicit theme has been set.
- *
- * Must only be called on the client (during `useState` lazy initialization).
- */
 function readInitialTheme(): Theme {
   if (typeof document === 'undefined') {
     return 'light'
   }
 
-  const stored = document.documentElement.getAttribute(THEME_ATTRIBUTE)
+  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${THEME_COOKIE}=([^;]*)`))
+  const cookieValue = match ? match[1] : null
 
-  if (stored === 'dark' || stored === 'light') {
-    return stored
+  if (cookieValue === 'dark' || cookieValue === 'light') {
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, cookieValue)
+    return cookieValue
   }
 
-  if (typeof window === 'undefined') {
-    return 'light'
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark'
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+
+  return 'light'
 }
