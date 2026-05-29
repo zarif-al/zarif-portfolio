@@ -15,13 +15,19 @@ export function customLexicalEditor(options: CustomLexicalOptions = {}) {
         features = features.filter((f) => !hasKey(f) || f.key !== 'paragraph')
       }
 
+      // Remove the heading feature entirely when headings are disabled
+      // (e.g. contact or card-grid blocks that should only accept paragraphs).
+      if (options.headingsConfig?.enabled === false) {
+        features = features.filter((f) => !hasKey(f) || f.key !== 'heading')
+      }
+
       // Replace the default heading feature with one scoped to the
       // requested sizes (e.g. ['h1'] limits the toolbar to h1 only).
-      if (options.enabledHeadingSizes) {
+      if (options.headingsConfig?.enabled && options.headingsConfig?.allowedSizes) {
         features = features.filter((f) => !hasKey(f) || f.key !== 'heading')
         features.push(
           HeadingFeature({
-            enabledHeadingSizes: options.enabledHeadingSizes,
+            enabledHeadingSizes: options.headingsConfig.allowedSizes,
           }),
         )
       }

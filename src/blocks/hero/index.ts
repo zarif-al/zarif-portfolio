@@ -21,7 +21,7 @@ export const Hero: Block = {
       type: 'richText',
       required: true,
       editor: customLexicalEditor({
-        enabledHeadingSizes: ['h1'],
+        headingsConfig: { allowedSizes: ['h1'] },
         allowParagraph: false,
       }),
     },

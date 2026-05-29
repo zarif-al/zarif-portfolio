@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { customLexicalEditor } from '@/lib/lexical-editor'
 
 const NumberedGrid: Block = {
   slug: 'numbered-grid',
@@ -44,6 +45,7 @@ const CellGrid: Block = {
         {
           name: 'content',
           type: 'richText',
+          editor: customLexicalEditor({ headingsConfig: { enabled: false } }),
           admin: { condition: (_, siblingData) => siblingData?.['type'] === 'text' },
         },
         {
