@@ -20,7 +20,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
   const filtered =
     activeFilter === 'all'
       ? projects
-      : projects.filter((p) => p.tags?.some((t) => getTagLabel(t) === activeFilter))
+      : projects.filter((p) => p.meta?.tags?.some((t) => getTagLabel(t) === activeFilter))
 
   return (
     <section className={cn(className)}>
@@ -35,7 +35,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
               className="grid grid-cols-1 border border-border border-b-0 last:border-b p-6 bg-surface transition-colors duration-200 hover:bg-bg no-underline text-inherit"
             >
               <div className="flex gap-3 items-center mb-2 flex-wrap">
-                {project.tags && <Tags tags={project.tags} />}
+                {project.meta?.tags && <Tags tags={project.meta.tags} />}
                 <span className="font-mono text-[0.55rem] text-accent tracking-[0.08em] uppercase">
                   ✦ Quest Complete
                 </span>
@@ -43,10 +43,10 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
               <h3 className="font-display text-[1.2rem] font-normal text-fg mb-[0.35rem] tracking-[-0.01em]">
                 {project.title}
               </h3>
-              <p className="text-[0.875rem] text-muted leading-[1.6] mb-2">{project.description}</p>
-              {project.techStack && project.techStack.length > 0 && (
+              <p className="text-[0.875rem] text-muted leading-[1.6] mb-2">{project.meta?.description}</p>
+              {project.meta?.techStack && project.meta.techStack.length > 0 && (
                 <p className="font-mono text-[0.65rem] text-border tracking-wider">
-                  {project.techStack.map((s) => s.label).join(' · ')}
+                  {project.meta.techStack.map((s) => s.label).join(' · ')}
                 </p>
               )}
             </Link>

@@ -1,5 +1,6 @@
 import type { CollectionListBlock as CollectionListBlockType } from '@/payload-types'
 import type { BlockComponentProps } from '@/components/blocks/types'
+import { draftMode } from 'next/headers'
 import { getPayloadInstance } from '@/lib/payload'
 import { getTagLabel } from './utils'
 import { ProjectListView } from './components/project-list'
@@ -9,6 +10,7 @@ export async function CollectionListBlockComponent({
   className,
   ...props
 }: BlockComponentProps<CollectionListBlockType>) {
+  const { isEnabled: isDraftMode } = await draftMode()
   const payload = await getPayloadInstance()
 
   switch (props.source) {
@@ -17,13 +19,15 @@ export async function CollectionListBlockComponent({
         collection: 'projects',
         pagination: false,
         sort: '-createdAt',
+        draft: isDraftMode,
+        select: { id: true, slug: true, title: true, meta: true },
       })
 
       const allTags: string[] = []
 
       for (const project of projects) {
-        if (project.tags) {
-          for (const tag of project.tags) {
+        if (project.meta?.tags) {
+          for (const tag of project.meta.tags) {
             const label = getTagLabel(tag)
             if (label && !allTags.includes(label)) {
               allTags.push(label)
@@ -40,13 +44,15 @@ export async function CollectionListBlockComponent({
         collection: 'blogs',
         pagination: false,
         sort: '-publishedDate',
+        draft: isDraftMode,
+        select: { id: true, slug: true, title: true, meta: true },
       })
 
       const allTags: string[] = []
 
       for (const post of posts) {
-        if (post.tags) {
-          for (const tag of post.tags) {
+        if (post.meta?.tags) {
+          for (const tag of post.meta.tags) {
             const label = getTagLabel(tag)
             if (label && !allTags.includes(label)) {
               allTags.push(label)
