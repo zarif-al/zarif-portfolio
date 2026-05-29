@@ -10,8 +10,8 @@ import type { Media } from '@/payload-types'
  * component (e.g. `<Image>` for images, `<video>` for video, a download link
  * for files).
  */
-export function resolveMedia(raw?: Media | null): ResolvedMedia | null {
-  if (!raw?.url || !raw?.mimeType) {
+export function resolveMedia(raw?: string | Media | null): ResolvedMedia | null {
+  if (typeof raw == 'string' || !raw?.url || !raw?.mimeType) {
     return null
   }
 
