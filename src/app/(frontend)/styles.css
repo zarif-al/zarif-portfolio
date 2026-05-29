@@ -17,10 +17,10 @@
 }
 
 @utility prose {
-  --tw-prose-body: var(--color-fg);
+  --tw-prose-body: var(--color-muted);
   --tw-prose-headings: var(--color-fg);
   --tw-prose-links: var(--color-accent);
-  --tw-prose-bold: var(--color-fg);
+  --tw-prose-bold: var(--color-muted);
   --tw-prose-counters: var(--color-muted);
   --tw-prose-bullets: var(--color-accent);
   --tw-prose-hr: var(--color-border);
