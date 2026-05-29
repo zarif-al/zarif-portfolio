@@ -2,9 +2,6 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { buildConfig } from 'payload'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { TextStateFeature } from '@payloadcms/richtext-lexical'
-import { textStateConfig } from '@/fields/textStateConfig'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -15,6 +12,7 @@ import { SiteConfig } from './globals/site-config'
 import { Layout } from './globals/layout'
 import { ALL_PAGE_BLOCKS } from './blocks'
 import { getURLPrefix } from '@/lib/relative-url'
+import { customLexicalEditor } from './lib/lexical-editor'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,12 +22,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env['DATABASE_URL'] || '',
   }),
-  editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [
-      ...defaultFeatures,
-      TextStateFeature({ state: textStateConfig }),
-    ],
-  }),
+  editor: customLexicalEditor,
   admin: {
     user: Users.slug,
     importMap: {
