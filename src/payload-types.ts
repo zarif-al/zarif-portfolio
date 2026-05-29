@@ -530,8 +530,10 @@ export interface Project {
    * The slug is used in the URL for this page. It's recommended to keep it short and descriptive.
    */
   slug: string;
+  localSeoTab: LocalSeoTab;
   meta: {
     tags?: (string | Tag)[] | null;
+    techStack?: string[] | null;
     description: string;
     kicker?: string | null;
     body: {
@@ -551,19 +553,12 @@ export interface Project {
     };
     outcomeStats?:
       | {
+          label: string;
           value: string;
-          label: string;
-          id?: string | null;
-        }[]
-      | null;
-    techStack?:
-      | {
-          label: string;
           id?: string | null;
         }[]
       | null;
   };
-  localSeoTab: LocalSeoTab;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -805,28 +800,23 @@ export interface SchemaMarkupSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  localSeoTab?: T | LocalSeoTabSelect<T>;
   meta?:
     | T
     | {
         tags?: T;
+        techStack?: T;
         description?: T;
         kicker?: T;
         body?: T;
         outcomeStats?:
           | T
           | {
+              label?: T;
               value?: T;
-              label?: T;
-              id?: T;
-            };
-        techStack?:
-          | T
-          | {
-              label?: T;
               id?: T;
             };
       };
-  localSeoTab?: T | LocalSeoTabSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
