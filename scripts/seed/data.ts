@@ -6,6 +6,7 @@ import type {
   CollectionListBlock,
   ContactBlock,
   EntryListBlock,
+  EqualizerBlock,
   IPayloadHeader,
   IPayloadFooter,
   Page,
@@ -94,9 +95,9 @@ export function buildFooter(_pages: {
 export function buildHeroBlock(override: Partial<HeroBlock> = {}): HeroBlock {
   return {
     blockType: 'hero',
+    size: 'large',
     kicker: 'Systems Engineer · Integration Specialist',
     heading: createHeroHeading(),
-    showEqualizer: true,
     ...override,
   }
 }
@@ -133,7 +134,14 @@ export function buildTerminalBlock(override: Partial<TerminalBlockBlock> = {}): 
       { label: 'Next.js' },
       { label: 'TypeScript' },
     ],
-    nowPlaying: { track: 'Bonobo — Black Sands' },
+    ...override,
+  }
+}
+
+export function buildEqualizerBlock(override: Partial<EqualizerBlock> = {}): EqualizerBlock {
+  return {
+    blockType: 'equalizer',
+    track: 'Bonobo — Black Sands',
     ...override,
   }
 }
@@ -151,67 +159,88 @@ export function buildRichtextBlock(override: Partial<RichtextBlock> = {}): Richt
 export function buildCardGridBlock(override: Partial<CardGridBlock> = {}): CardGridBlock {
   return {
     blockType: 'card-grid',
-    numberedCards: {
-      heading: 'What I build',
-      cards: [
-        {
-          title: 'API Design & Architecture',
-          description:
-            'REST, GraphQL, event-driven systems — contracts that survive the first production deploy.',
-        },
-        {
-          title: 'CMS Integration',
-          description:
-            'Payload, Sanity, structured content pipelines — turning editorial workflows into type-safe APIs.',
-        },
-        {
-          title: 'Data Modeling',
-          description:
-            'PostgreSQL, Prisma, migration strategy — schema that reflects the domain, not the ORM.',
-        },
-        {
-          title: 'System Interop',
-          description:
-            "Webhooks, message queues, reconciliation — making systems that weren't meant to talk actually communicate.",
-        },
-      ],
-    },
-    cells: [
+    content: [
       {
-        heading: 'Background',
-        content: createRichText(
-          "I'm Zarif — a software engineer focused on high-level systems design and integrations. I work across the full stack but my gravity is on the backend: API design, data modeling, CMS architecture, and making disparate systems interoperate. Outside of code, I'm deep into video games (strategy, RPGs, anything with good systems) and music (Bonobo, Four Tet, Floating Points — the kind of stuff you can code to for hours).",
-        ),
-        span: 'half',
-        type: 'text',
-      },
-      {
-        heading: 'Approach',
-        content: createRichText(
-          'I start with the business problem, not the technology. What data needs to move? Who needs to edit it? What breaks if this goes down? From there I work backward to architecture — choosing the right abstractions, keeping the surface area small, and writing code that the next engineer can understand in ten minutes. Same philosophy I bring to games: understand the system, then optimize.',
-        ),
-        span: 'half',
-        type: 'text',
-      },
-      {
-        heading: 'Loadout',
-        span: 'half',
-        type: 'stack',
-        stackItems: [
-          { label: 'TypeScript' },
-          { label: 'Node.js' },
-          { label: 'Next.js' },
-          { label: 'NestJS' },
-          { label: 'Payload CMS' },
-          { label: 'Sanity' },
-          { label: 'PostgreSQL' },
-          { label: 'Redis' },
-          { label: 'Docker' },
-          { label: 'REST / GraphQL' },
-          { label: 'Tailwind' },
-          { label: 'Prisma' },
+        blockType: 'numbered-grid',
+        heading: 'What I build',
+        cards: [
+          {
+            title: 'API Design & Architecture',
+            description:
+              'REST, GraphQL, event-driven systems — contracts that survive the first production deploy.',
+          },
+          {
+            title: 'CMS Integration',
+            description:
+              'Payload, Sanity, structured content pipelines — turning editorial workflows into type-safe APIs.',
+          },
+          {
+            title: 'Data Modeling',
+            description:
+              'PostgreSQL, Prisma, migration strategy — schema that reflects the domain, not the ORM.',
+          },
+          {
+            title: 'System Interop',
+            description:
+              "Webhooks, message queues, reconciliation — making systems that weren't meant to talk actually communicate.",
+          },
+          {
+            title: 'Developer Tooling',
+            description:
+              'CLI builders, internal dashboards, monorepo toolchain — sharpening the tools other engineers reach for every day.',
+          },
         ],
-        stackFootnote: 'Rust, Kafka, edge compute',
+      },
+      {
+        blockType: 'cell-grid',
+        swap: false,
+        items: [
+          {
+            type: 'text',
+            heading: 'Background',
+            content: createRichText(
+              "I'm Zarif — a software engineer focused on high-level systems design and integrations. I work across the full stack but my gravity is on the backend: API design, data modeling, CMS architecture, and making disparate systems interoperate. Outside of code, I'm deep into video games (strategy, RPGs, anything with good systems) and music (Bonobo, Four Tet, Floating Points — the kind of stuff you can code to for hours).",
+            ),
+            footnote: '',
+          },
+          {
+            type: 'text',
+            heading: 'Approach',
+            content: createRichText(
+              'I start with the business problem, not the technology. What data needs to move? Who needs to edit it? What breaks if this goes down? From there I work backward to architecture — choosing the right abstractions, keeping the surface area small, and writing code that the next engineer can understand in ten minutes. Same philosophy I bring to games: understand the system, then optimize.',
+            ),
+            footnote: '',
+          },
+        ],
+      },
+      {
+        blockType: 'cell-grid',
+        swap: false,
+        items: [
+          {
+            type: 'stack',
+            heading: 'Loadout',
+            stackItems: [
+              { label: 'TypeScript' },
+              { label: 'Node.js' },
+              { label: 'Next.js' },
+              { label: 'NestJS' },
+              { label: 'Payload CMS' },
+              { label: 'Sanity' },
+              { label: 'PostgreSQL' },
+              { label: 'Redis' },
+              { label: 'Docker' },
+              { label: 'REST / GraphQL' },
+              { label: 'Tailwind' },
+              { label: 'Prisma' },
+            ],
+            footnote: 'Rust, Kafka, edge compute',
+          },
+          {
+            type: 'text',
+            footnote: '',
+          },
+        ],
       },
     ],
     ...override,
@@ -305,7 +334,12 @@ export function createRichText(text: string) {
 
 /**
  * Creates the hero heading Lexical state with italic and accent-colored text.
+ *
  * Renders: "I design systems\nthat <em>solve business problems.</em>"
+ *
+ * This must be hand-crafted as JSON rather than converted from markdown because
+ * it uses Payload's custom TextStateFeature accent color (`$: { color: 'accent' }`)
+ * which has no markdown equivalent.
  */
 export function createHeroHeading() {
   return {
@@ -313,7 +347,8 @@ export function createHeroHeading() {
       type: 'root' as const,
       children: [
         {
-          type: 'paragraph' as const,
+          type: 'heading' as const,
+          tag: 'h1' as const,
           children: [
             {
               type: 'text' as const,

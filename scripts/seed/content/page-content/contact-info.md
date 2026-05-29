@@ -1,0 +1,1 @@
+I'm available for consulting, systems architecture engagements, and integration work. If you have a business problem that needs a technical system designed around it — or if you just want to talk about TypeScript architecture — reach out.

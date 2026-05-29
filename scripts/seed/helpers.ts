@@ -1,4 +1,9 @@
 import { getPayload } from 'payload'
+import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
+import type { SanitizedServerEditorConfig } from '@payloadcms/richtext-lexical'
+import type { SanitizedConfig } from 'payload'
 import type {
   HeroBlock,
   RichtextBlock,
@@ -7,6 +12,7 @@ import type {
   CollectionListBlock,
   ContactBlock,
   EntryListBlock,
+  EqualizerBlock,
   Page,
 } from '@/payload-types'
 
@@ -18,6 +24,7 @@ type AnyBlock =
   | CollectionListBlock
   | ContactBlock
   | EntryListBlock
+  | EqualizerBlock
 
 /**
  * Creates or updates a Page document in the CMS.
@@ -62,4 +69,24 @@ export async function upsertPage(
     },
     draft: false,
   })
+}
+
+/**
+ * Reads a markdown file from the seed content directory.
+ * Returns a function that accepts an editor config and converts to lexical.
+ */
+export function readMd(filename: string): string {
+  return readFileSync(resolve(import.meta.dirname, 'content', filename), 'utf-8')
+}
+
+/**
+ * Converts a markdown string to Payload-compatible lexical rich text.
+ */
+export function mdToLexical(editorConfig: SanitizedServerEditorConfig, md: string) {
+  return convertMarkdownToLexical({ editorConfig, markdown: md })
+}
+
+/** Resolves the sanitized server editor config from the default lexical editor. */
+export async function getEditorConfig(config: SanitizedConfig) {
+  return editorConfigFactory.default({ config })
 }
