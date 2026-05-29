@@ -62,7 +62,9 @@ export const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => (
           continue
         }
 
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- StyleObject and React.CSSProperties are structurally incompatible at the type level due to csstype version mismatch, but identical at runtime.
+        // StyleObject and React.CSSProperties are structurally incompatible at the type level
+        // due to csstype version mismatch, but identical at runtime.
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         text = <span style={entry.css as React.CSSProperties}>{text}</span>
       }
     }
