@@ -16,6 +16,7 @@ interface IGetMetadataArgs {
 export async function getMetadata({
   collectionSlug,
   pageSlug,
+  draft,
 }: IGetMetadataArgs): Promise<Metadata> {
   const serverURL = process.env['NEXT_PUBLIC_URL']
 
@@ -32,6 +33,7 @@ export async function getMetadata({
       localSeoTab: true,
     },
     limit: 1,
+    draft,
   })
 
   const pageData = pageResults.docs[0]
@@ -45,6 +47,7 @@ export async function getMetadata({
     select: {
       globalSeoTab: true,
     },
+    draft,
   })
 
   const globalSEO = siteConfig.globalSeoTab
