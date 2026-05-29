@@ -114,3 +114,15 @@ export async function generateMetadata({
     pageSlug: '/' + slug,
   })
 }
+
+export async function generateStaticParams() {
+  const payload = await getPayloadInstance()
+
+  const { docs } = await payload.find({
+    collection: 'projects',
+    pagination: false,
+    select: { slug: true },
+  })
+
+  return docs.map((doc) => ({ slug: doc.slug.replace(/^\//, '') }))
+}

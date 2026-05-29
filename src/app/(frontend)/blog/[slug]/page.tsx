@@ -80,10 +80,24 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { isEnabled: draft } = await draftMode()
+
   const { slug } = await params
+
   return await getMetadata({
     collectionSlug: 'blogs',
     draft,
     pageSlug: '/' + slug,
   })
+}
+
+export async function generateStaticParams() {
+  const payload = await getPayloadInstance()
+
+  const { docs } = await payload.find({
+    collection: 'blogs',
+    pagination: false,
+    select: { slug: true },
+  })
+
+  return docs.map((doc) => ({ slug: doc.slug.replace(/^\//, '') }))
 }

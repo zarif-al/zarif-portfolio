@@ -46,3 +46,18 @@ export async function generateMetadata({
     pageSlug,
   })
 }
+
+export async function generateStaticParams() {
+  const payload = await getPayloadInstance()
+
+  const { docs } = await payload.find({
+    collection: 'pages',
+    pagination: false,
+    select: { slug: true },
+  })
+
+  return docs.map((doc) => {
+    const segments = doc.slug === '/' ? [] : doc.slug.replace(/^\//, '').split('/')
+    return { slug: segments }
+  })
+}
