@@ -40,11 +40,15 @@ _Avoid_: Admin tab, tab group
 ### Portfolio Domain
 
 **Hero**:
-A universal page header block — a kicker and a heading with an optional equalizer animation. Used at the top of every page.
+A universal page header block — a kicker and a heading. Used at the top of every page.
 _Avoid_: Home hero, page header, banner
 
+**Equalizer**:
+A decorative block with pulsing bar animation and a "Now Playing" widget showing a track name. Sits between the hero and the terminal block on the home page. Has tighter vertical spacing than other blocks.
+_Avoid_: EQ, audio bars, visualizer, now-playing
+
 **TerminalBlock**:
-A terminal-styled card block with command and output lines, a system diagram, and a now-playing widget.
+A terminal-styled card block with command and output lines, and a system node diagram.
 _Avoid_: Terminal, CLI block, command block
 
 **RichText**:
@@ -52,8 +56,16 @@ A standalone rich text block for prose — paragraphs, links, basic formatting.
 _Avoid_: Body, content, text block
 
 **CardGrid**:
-A single bordered-container block with an optional section of numbered cards (title + description, auto-incremented numbers) followed by optional content cells. Each cell has a heading and either rich text content or a stack list (tag pills + footnote). Cells can span half or full width of the 2-column grid.
+A bordered-container block composed of reorderable sub-blocks — **NumberedGrid** (full-span capability cards with auto-incremented numbers) and **CellGrid** (a pair of cells rendered side-by-side, each with a heading and either rich text or a stack list with footnote). Sub-blocks can appear in any order, any number of times.
 _Avoid_: About grid, feature grid, capability grid
+
+**NumberedGrid**:
+A sub-block inside **CardGrid**. A full-width cell containing an optional heading and a grid of numbered cards (title + description). Always spans both columns of the parent 2-column grid.
+_Avoid_: Capability grid, feature cards
+
+**CellGrid**:
+A sub-block inside **CardGrid**. Always renders two cells side-by-side in the parent 2-column grid. Each cell can be `text` (rich text) or `stack` (tag pills + optional footnote). A `swap` boolean flips the visual order. An item with no content renders as a grayed-out placeholder.
+_Avoid_: Content cell, about cell
 
 **CollectionList**:
 A block that renders a list of items from a chosen collection — Projects or Blogs. The Projects variant auto-generates a **FilterBar** from the union of all **Tags** assigned to projects. Cards link to collection detail routes (`projects/[slug]`, `blog/[slug]`).
