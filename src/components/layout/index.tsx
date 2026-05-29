@@ -16,6 +16,10 @@ export async function RenderLayout({ children }: RenderLayoutProps) {
     slug: 'layout',
     draft: isDraftMode,
     depth: 1,
+    select: {
+      header: { title: true, links: true },
+      footer: { copyright: true, links: true },
+    },
   })
 
   return (
