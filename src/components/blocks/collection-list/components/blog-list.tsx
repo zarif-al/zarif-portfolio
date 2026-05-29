@@ -1,19 +1,32 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
 import type { Blog } from '@/payload-types'
 import { Tags } from './tags'
+import { FilterBar } from './filter'
 
 interface BlogListViewProps {
   posts: Blog[]
+  allTags: string[]
   className?: string
 }
 
-export function BlogListView({ posts, className }: BlogListViewProps) {
+export function BlogListView({ posts, allTags, className }: BlogListViewProps) {
+  const [activeFilter, setActiveFilter] = useState('all')
+
+  const filtered =
+    activeFilter === 'all'
+      ? posts
+      : posts.filter((p) => p.tags?.some((t) => typeof t !== 'string' && t.label === activeFilter))
+
   return (
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
+        <FilterBar allTags={allTags} activeFilter={activeFilter} onFilterChange={setActiveFilter} />
         <div className="flex flex-col">
-          {posts.map((post) => (
+          {filtered.map((post) => (
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
@@ -24,7 +37,7 @@ export function BlogListView({ posts, className }: BlogListViewProps) {
                   Track {String(post.trackNumber).padStart(2, '0')}
                 </div>
               )}
-              <Tags tags={post.tags} />
+              {post.tags && <Tags tags={post.tags} />}
               <div className="font-display text-[1.1rem] font-normal text-fg mb-1">
                 {post.title}
               </div>

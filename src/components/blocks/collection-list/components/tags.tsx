@@ -1,24 +1,13 @@
+import type { Tag } from '@/payload-types'
 import { getTagLabel } from '../utils'
 
 interface TagsProps {
-  tags?:
-    | (
-        | string
-        | {
-            id?: string | null
-            label?: string | null
-          }
-      )[]
-    | null
+  tags: (string | Tag)[]
 }
 
 export function Tags({ tags }: TagsProps) {
-  if (!tags || tags.length === 0) {
-    return null
-  }
-
   return (
-    <>
+    <div className="flex gap-[0.4rem] flex-wrap">
       {tags.map((tag, i) => {
         const label = getTagLabel(tag)
         if (!label) {
@@ -33,6 +22,6 @@ export function Tags({ tags }: TagsProps) {
           </span>
         )
       })}
-    </>
+    </div>
   )
 }

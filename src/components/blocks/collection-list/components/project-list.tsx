@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { cn } from '@/utilities/cn'
 import type { Project } from '@/payload-types'
 import { getTagLabel } from '../utils'
-import { FilterBar } from './filter-bar'
+import { FilterBar } from './filter'
 import { Tags } from './tags'
 
 interface ProjectListViewProps {
@@ -35,7 +35,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
               className="grid grid-cols-1 border border-border border-b-0 last:border-b p-6 bg-surface transition-colors duration-200 hover:bg-bg no-underline text-inherit"
             >
               <div className="flex gap-3 items-center mb-2 flex-wrap">
-                <Tags tags={project.tags} />
+                {project.tags && <Tags tags={project.tags} />}
                 <span className="font-mono text-[0.55rem] text-accent tracking-[0.08em] uppercase">
                   ✦ Quest Complete
                 </span>

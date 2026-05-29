@@ -42,7 +42,20 @@ export async function CollectionListBlockComponent({
         sort: '-publishedDate',
       })
 
-      return <BlogListView posts={posts} className={className} />
+      const allTags: string[] = []
+
+      for (const post of posts) {
+        if (post.tags) {
+          for (const tag of post.tags) {
+            const label = getTagLabel(tag)
+            if (label && !allTags.includes(label)) {
+              allTags.push(label)
+            }
+          }
+        }
+      }
+
+      return <BlogListView posts={posts} allTags={allTags} className={className} />
     }
 
     default:

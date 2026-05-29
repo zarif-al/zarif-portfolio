@@ -12,7 +12,7 @@ export function FilterBar({ allTags, activeFilter, onFilterChange }: FilterBarPr
   }
 
   return (
-    <div className="flex gap-0 mb-6 border border-border w-fit max-w-full flex-wrap overflow-x-auto [-webkit-overflow-scrolling:touch]">
+    <div className="flex gap-0 mb-6 border border-border w-fit max-w-full flex-wrap max-sm:flex-nowrap max-sm:w-full overflow-x-auto [-webkit-overflow-scrolling:touch]">
       <FilterButton active={activeFilter === 'all'} onClick={() => onFilterChange('all')}>
         All
       </FilterButton>
