@@ -8,6 +8,7 @@
   --color-muted: oklch(48% 0.012 70);
   --color-border: oklch(90% 0.006 95);
   --color-accent: oklch(52% 0.1 28);
+  --color-accent-soft: oklch(52% 0.1 28 / 0.12);
 
   --font-display: 'Iowan Old Style', 'Charter', Georgia, serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -44,6 +45,7 @@
   --color-muted: oklch(58% 0.012 70);
   --color-border: oklch(28% 0.015 95);
   --color-accent: oklch(60% 0.14 28);
+  --color-accent-soft: oklch(60% 0.14 28 / 0.15);
 }
 
 @layer base {
