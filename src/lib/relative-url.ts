@@ -6,6 +6,14 @@ export function getURLPrefix(collectionSlug: string) {
       return ''
     }
 
+    case 'projects': {
+      return '/projects/'
+    }
+
+    case 'blogs': {
+      return '/blog/'
+    }
+
     default: {
       notFound()
     }
