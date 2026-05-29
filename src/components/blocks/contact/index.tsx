@@ -22,7 +22,7 @@ export function ContactBlockComponent({
             )}
             {infoDescription && (
               <div className="text-[0.875rem] text-muted leading-[1.6] mb-4">
-                <Richtext data={infoDescription} />
+                <Richtext data={infoDescription} disableProse />
               </div>
             )}
             {email && (

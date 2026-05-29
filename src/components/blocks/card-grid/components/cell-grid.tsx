@@ -44,7 +44,7 @@ export function CellGrid({ swap, items }: CellGridBlock) {
               </>
             ) : (
               <div className="text-[0.9rem] text-muted leading-[1.6]">
-                {item.content ? <Richtext data={item.content} /> : null}
+                {item.content ? <Richtext data={item.content} disableProse /> : null}
               </div>
             )}
           </div>
