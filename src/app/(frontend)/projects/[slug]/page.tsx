@@ -1,6 +1,7 @@
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import { BackLink } from '@/components/primitives/back-link'
+import { Tags } from '@/components/primitives/tags'
 import { Richtext } from '@/components/primitives/richtext'
 import { getPayloadInstance } from '@/lib/payload'
 import type { Metadata } from 'next'
@@ -31,13 +32,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   return (
     <section className="py-[clamp(2rem,6vh,4rem)]">
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
-        <Link
-          href={'/projects'}
-          className="inline-flex items-center gap-[0.4rem] font-mono text-xs uppercase tracking-[0.08em] text-muted no-underline border border-border px-[0.85rem] py-[0.45rem] mb-8 transition-colors duration-200 hover:border-accent hover:text-accent"
-        >
-          <span className="text-[0.9rem] leading-none">←</span>
-          Back to Projects
-        </Link>
+        <BackLink href="/projects" label="Back to Projects" />
 
         <div className="mb-10">
           {project.meta?.kicker && (
@@ -50,21 +45,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </h1>
 
           {project.meta?.tags && project.meta.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-4 font-mono text-[0.7rem] text-muted">
-              {project.meta.tags.map((tag) => {
-                const label = typeof tag === 'string' ? '' : (tag.label ?? '')
-                if (!label) {
-                  return null
-                }
-                return (
-                  <span
-                    key={label}
-                    className="border border-border px-[0.55rem] py-[0.2rem] uppercase tracking-[0.06em]"
-                  >
-                    {label}
-                  </span>
-                )
-              })}
+            <div className="mt-4">
+              <Tags tags={project.meta.tags} />
             </div>
           )}
         </div>

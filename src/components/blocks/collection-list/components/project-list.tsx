@@ -6,7 +6,7 @@ import { cn } from '@/utilities/cn'
 import type { Project } from '@/payload-types'
 import { getTagLabel } from '../utils'
 import { FilterBar } from './filter'
-import { Tags } from './tags'
+import { Tags } from '@/components/primitives/tags'
 
 interface ProjectListViewProps {
   projects: Project[]
@@ -43,7 +43,9 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
               <h3 className="font-display text-[1.2rem] font-normal text-fg mb-[0.35rem] tracking-[-0.01em]">
                 {project.title}
               </h3>
-              <p className="text-[0.875rem] text-muted leading-[1.6] mb-2">{project.meta?.description}</p>
+              <p className="text-[0.875rem] text-muted leading-[1.6] mb-2">
+                {project.meta?.description}
+              </p>
               {project.meta?.techStack && project.meta.techStack.length > 0 && (
                 <p className="font-mono text-[0.65rem] text-border tracking-wider">
                   {project.meta.techStack.join(' · ')}

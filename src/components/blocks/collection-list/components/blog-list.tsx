@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
 import type { Blog } from '@/payload-types'
-import { Tags } from './tags'
+import { Tags } from '@/components/primitives/tags'
 import { FilterBar } from './filter'
 
 interface BlogListViewProps {
@@ -19,7 +19,9 @@ export function BlogListView({ posts, allTags, className }: BlogListViewProps) {
   const filtered =
     activeFilter === 'all'
       ? posts
-      : posts.filter((p) => p.meta?.tags?.some((t) => typeof t !== 'string' && t.label === activeFilter))
+      : posts.filter((p) =>
+          p.meta?.tags?.some((t) => typeof t !== 'string' && t.label === activeFilter),
+        )
 
   return (
     <section className={cn(className)}>
