@@ -65,6 +65,9 @@ importers:
       react-dom:
         specifier: 19.2.6
         version: 19.2.6(react@19.2.6)
+      react-hook-form:
+        specifier: 7.54.2
+        version: 7.54.2(react@19.2.6)
       shadcn:
         specifier: ^4.7.0
         version: 4.8.1(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(typescript@5.7.3)
@@ -4559,6 +4562,12 @@ packages:
     resolution: {integrity: sha512-3DpCr5HVdZ0caUjYE/kIHBEJN0mNP3ZCgf16c48uJ5TbWjorKVp+YG8W3XqlJ7vJAVNw6wNIImyPXmFydwmyng==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
+
+  react-hook-form@7.54.2:
+    resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || ^19
 
   react-image-crop@10.1.8:
     resolution: {integrity: sha512-4rb8XtXNx7ZaOZarKKnckgz4xLMvds/YrU6mpJfGhGAsy2Mg4mIw1x+DCCGngVGq2soTBVVOxx2s/C6mTX9+pA==}
@@ -10547,6 +10556,10 @@ snapshots:
       react: 19.2.6
 
   react-error-boundary@6.1.2(react@19.2.6):
+    dependencies:
+      react: 19.2.6
+
+  react-hook-form@7.54.2(react@19.2.6):
     dependencies:
       react: 19.2.6
 
