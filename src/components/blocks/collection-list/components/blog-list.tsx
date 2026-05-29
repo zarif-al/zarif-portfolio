@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { cn } from '@/utilities/cn'
 import type { Blog } from '@/payload-types'
+import { Tags } from './tags'
 
 interface BlogListViewProps {
   posts: Blog[]
@@ -23,6 +24,7 @@ export function BlogListView({ posts, className }: BlogListViewProps) {
                   Track {String(post.trackNumber).padStart(2, '0')}
                 </div>
               )}
+              <Tags tags={post.tags} />
               <div className="font-display text-[1.1rem] font-normal text-fg mb-1">
                 {post.title}
               </div>

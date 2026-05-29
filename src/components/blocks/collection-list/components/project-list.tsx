@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { cn } from '@/utilities/cn'
 import type { Project } from '@/payload-types'
 import { getTagLabel } from '../utils'
-import { FilterButton } from './filter-button'
+import { FilterBar } from './filter-bar'
+import { Tags } from './tags'
 
 interface ProjectListViewProps {
   projects: Project[]
@@ -24,22 +25,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
   return (
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
-        {allTags.length > 0 && (
-          <div className="flex gap-0 mb-6 border border-border w-fit max-w-full flex-wrap overflow-x-auto [-webkit-overflow-scrolling:touch]">
-            <FilterButton active={activeFilter === 'all'} onClick={() => setActiveFilter('all')}>
-              All
-            </FilterButton>
-            {allTags.map((tag) => (
-              <FilterButton
-                key={tag}
-                active={activeFilter === tag}
-                onClick={() => setActiveFilter(tag)}
-              >
-                {tag}
-              </FilterButton>
-            ))}
-          </div>
-        )}
+        <FilterBar allTags={allTags} activeFilter={activeFilter} onFilterChange={setActiveFilter} />
 
         <div className="flex flex-col">
           {filtered.map((project) => (
@@ -49,14 +35,7 @@ export function ProjectListView({ projects, allTags, className }: ProjectListVie
               className="grid grid-cols-1 border border-border border-b-0 last:border-b p-6 bg-surface transition-colors duration-200 hover:bg-bg no-underline text-inherit"
             >
               <div className="flex gap-3 items-center mb-2 flex-wrap">
-                {project.tags?.map((tag, j) => (
-                  <span
-                    key={j}
-                    className="font-mono text-[0.62rem] uppercase tracking-widest text-accent border border-border px-2 py-[0.15rem]"
-                  >
-                    {getTagLabel(tag)}
-                  </span>
-                ))}
+                <Tags tags={project.tags} />
                 <span className="font-mono text-[0.55rem] text-accent tracking-[0.08em] uppercase">
                   ✦ Quest Complete
                 </span>
