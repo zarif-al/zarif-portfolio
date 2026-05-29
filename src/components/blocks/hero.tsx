@@ -6,7 +6,12 @@ import { cn } from '@/utilities/cn'
 import type { HeroBlock } from '@/payload-types'
 import type { BlockComponentProps } from '@/components/blocks/types'
 
-export function HeroBlockComponent({ kicker, heading, className }: BlockComponentProps<HeroBlock>) {
+export function HeroBlockComponent({
+  size = 'large',
+  kicker,
+  heading,
+  className,
+}: BlockComponentProps<HeroBlock>) {
   return (
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
@@ -16,7 +21,12 @@ export function HeroBlockComponent({ kicker, heading, className }: BlockComponen
           </p>
         )}
         {heading && (
-          <div className="font-display text-[clamp(2.2rem,5.5vw,3.8rem)] font-normal leading-[1.1] tracking-[-0.02em] text-fg max-w-[20em]">
+          <div
+            className={cn(
+              size === 'default' &&
+                "'[&_h1]:text-[clamp(1.75rem,4vw,2.5rem)] [&_h1]:leading-[1.2] [&_h1]:tracking-[-0.015em]'",
+            )}
+          >
             <Richtext data={heading} />
           </div>
         )}
