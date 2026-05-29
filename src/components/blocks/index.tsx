@@ -18,6 +18,15 @@ const BLOCK_SPACING = 'mb-[clamp(2rem,6vh,5rem)]'
 const BLOCK_SPACING_TOP = 'pt-[clamp(2rem,6vh,5rem)]'
 const EQUALIZER_SPACING = 'mb-4 max-sm:mb-3'
 
+/**
+ * Renders an ordered list of page blocks.
+ *
+ * Spacing is centralized here — each block receives a `className` applied
+ * to its outermost `<section>`. Standard blocks get bottom margin only
+ * (`BLOCK_SPACING`); the Equalizer uses tighter bottom margin.
+ * The first block additionally receives top padding (`BLOCK_SPACING_TOP`)
+ * so the page opens with breathing room.
+ */
 export function RenderBlocks({ blocks }: RenderBlocksProps) {
   if (!blocks || blocks.length === 0) {
     return null
@@ -26,13 +35,9 @@ export function RenderBlocks({ blocks }: RenderBlocksProps) {
   return (
     <>
       {blocks.map((block, i) => {
-        const isFirst = i === 0
-        const spacing = (() => {
-          if (block.blockType === 'equalizer') {
-            return isFirst ? `${EQUALIZER_SPACING} ${BLOCK_SPACING_TOP}` : EQUALIZER_SPACING
-          }
-          return isFirst ? `${BLOCK_SPACING} ${BLOCK_SPACING_TOP}` : BLOCK_SPACING
-        })()
+        const base = block.blockType === 'equalizer' ? EQUALIZER_SPACING : BLOCK_SPACING
+
+        const spacing = i === 0 ? `${base} ${BLOCK_SPACING_TOP}` : base
 
         switch (block.blockType) {
           case 'hero':
