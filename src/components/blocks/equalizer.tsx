@@ -20,7 +20,7 @@ export function EqualizerBlockComponent({ track, className }: BlockComponentProp
               <span className="relative w-2 h-2 border-[1.5px] border-accent shrink-0">
                 <span className="absolute inset-[2px] bg-accent animate-spin-slow" />
               </span>
-              <span className="text-accent uppercase tracking-[0.1em] text-[0.6rem]">
+              <span className="text-accent uppercase tracking-widest text-[0.6rem]">
                 Now Playing
               </span>
               <span className="text-fg font-medium">{track}</span>
