@@ -1,10 +1,17 @@
 import Link from 'next/link'
 import type { IPayloadHeader } from '@/payload-types'
 import { resolveLinks } from '@/utilities/resolve-link'
+import { NavLink } from './components/nav-link'
 import { MobileNav } from './components/mobile-nav'
+import { ThemeToggle } from './components/theme-toggle'
 
 export function HeaderComponent({ title, links }: IPayloadHeader) {
   const resolvedLinks = resolveLinks(links)
+
+  const navLinkChildren =
+    resolvedLinks.length > 0
+      ? resolvedLinks.map((item, i) => <NavLink index={i} link={item} key={i} />)
+      : null
 
   return (
     <header>
@@ -18,7 +25,17 @@ export function HeaderComponent({ title, links }: IPayloadHeader) {
             {title}
           </Link>
         )}
-        {resolvedLinks && resolvedLinks.length > 0 && <MobileNav links={resolvedLinks} />}
+
+        {navLinkChildren && (
+          <nav className="hidden sm:flex sm:flex-row sm:border sm:border-border">
+            {navLinkChildren}
+          </nav>
+        )}
+
+        <div className="flex items-center gap-2">
+          {navLinkChildren && <MobileNav>{navLinkChildren}</MobileNav>}
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )
