@@ -29,7 +29,7 @@ function buildProjectData(
       description: p.description,
       body: mdToLexical(editorConfig, readMd(`projects/${p.bodyFile}`)),
       tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
-      techStack: p.techStack.map((s) => ({ label: s })),
+      techStack: p.techStack,
       outcomeStats: p.outcomeStats,
       kicker: p.kicker,
     },
@@ -101,7 +101,7 @@ async function seed() {
   for (const p of PROJECTS) {
     const existing = await payload.find({
       collection: 'projects',
-      where: { slug: { equals: p.slug } },
+      where: { slug: { equals: `/${p.slug}` } },
       limit: 1,
     })
     const doc = existing.docs[0]
@@ -118,7 +118,7 @@ async function seed() {
   for (const b of BLOGS) {
     const existing = await payload.find({
       collection: 'blogs',
-      where: { slug: { equals: b.slug } },
+      where: { slug: { equals: `/${b.slug}` } },
       limit: 1,
     })
     const doc = existing.docs[0]
