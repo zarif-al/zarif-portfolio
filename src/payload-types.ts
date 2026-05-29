@@ -584,6 +584,7 @@ export interface Blog {
    * The slug is used in the URL for this page. It's recommended to keep it short and descriptive.
    */
   slug: string;
+  localSeoTab: LocalSeoTab;
   meta: {
     tags?: (string | Tag)[] | null;
     trackNumber?: number | null;
@@ -605,7 +606,6 @@ export interface Blog {
       [k: string]: unknown;
     };
   };
-  localSeoTab: LocalSeoTab;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -828,6 +828,7 @@ export interface ProjectsSelect<T extends boolean = true> {
 export interface BlogsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  localSeoTab?: T | LocalSeoTabSelect<T>;
   meta?:
     | T
     | {
@@ -837,7 +838,6 @@ export interface BlogsSelect<T extends boolean = true> {
         excerpt?: T;
         body?: T;
       };
-  localSeoTab?: T | LocalSeoTabSelect<T>;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
