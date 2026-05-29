@@ -44,6 +44,8 @@ Vet dependencies before installing:
 
 ## Codebase Rules
 
+- **Do not re-export.** Import directly from the file where the symbol is defined. Never use barrel re-exports like `export { X } from './other-file'`.
+
 ### Component architecture
 
 - **Pre-process data above the return.** Resolve links, filter items, transform data into render-ready shapes in variables at the top of the component. Never embed data transformation logic inside JSX maps.
