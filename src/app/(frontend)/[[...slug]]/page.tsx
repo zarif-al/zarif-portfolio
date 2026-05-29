@@ -2,6 +2,8 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayloadInstance } from '@/lib/payload'
 import { RenderBlocks } from '@/components/blocks'
+import type { Metadata } from 'next'
+import { getMetadata } from '@/utilities/get-metadata'
 
 export default async function Page({ params }: { params: Promise<{ slug?: string[] }> }) {
   const { slug } = await params
@@ -15,6 +17,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     where: { slug: { equals: pageSlug } },
     limit: 1,
     draft: isDraftMode,
+    select: { blocksTab: true },
   })
 
   const page = pages.docs[0]
@@ -24,4 +27,22 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   }
 
   return <RenderBlocks blocks={page.blocksTab?.blocks} />
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug?: string[] }>
+}): Promise<Metadata> {
+  const { isEnabled: draft } = await draftMode()
+
+  const { slug } = await params
+
+  const pageSlug = slug?.length ? `/${slug.join('/')}` : '/'
+
+  return await getMetadata({
+    collectionSlug: 'pages',
+    draft,
+    pageSlug,
+  })
 }
