@@ -216,6 +216,7 @@ const PROJECTS = [
   {
     slug: 'multi-tenant-cms-platform',
     title: 'Multi-tenant CMS Platform',
+    kicker: 'Project',
     description:
       'Designed and built a Payload CMS deployment serving 40+ tenants from a single codebase. Custom access control layer, per-tenant schema extensions, and a shared media pipeline with tenant-scoped storage. Reduced infrastructure costs by 60% vs. per-tenant instances.',
     bodyFile: 'multi-tenant-cms-platform.md',
@@ -231,6 +232,7 @@ const PROJECTS = [
   {
     slug: 'real-time-data-pipeline',
     title: 'Real-time Data Pipeline for e-Commerce',
+    kicker: 'Project',
     description:
       'Built a NestJS event-driven pipeline syncing product catalog, inventory, and order data between a legacy ERP and a modern Sanity + Next.js storefront. Handles 50k+ events/day with idempotent processing and a dead-letter queue for failed syncs.',
     bodyFile: 'real-time-data-pipeline.md',
@@ -246,6 +248,7 @@ const PROJECTS = [
   {
     slug: 'editorial-platform-migration',
     title: 'Editorial Platform Migration',
+    kicker: 'Project',
     description:
       'Migrated a 10k+ document editorial backend from WordPress to Sanity with custom content modeling, automated redirect mapping, and zero-downtime cutover. Built a Next.js frontend with ISR that cut page load times by 70%.',
     bodyFile: 'editorial-platform-migration.md',
@@ -261,6 +264,7 @@ const PROJECTS = [
   {
     slug: 'payment-system-consolidation',
     title: 'Payment System Consolidation',
+    kicker: 'Project',
     description:
       'Consolidated three payment providers (Stripe, local gateway, manual invoicing) behind a unified NestJS API layer. Built reconciliation tooling, webhook normalization, and an admin dashboard for finance operations. Processed $2M+ in the first quarter post-launch.',
     bodyFile: 'payment-system-consolidation.md',
@@ -276,6 +280,7 @@ const PROJECTS = [
   {
     slug: 'internal-api-gateway',
     title: 'Internal API Gateway',
+    kicker: 'Project',
     description:
       "Designed a centralized API gateway for a microservices ecosystem — rate limiting, auth, request tracing, and schema validation at the edge. Reduced inter-service coupling and gave the platform team observability they didn't have before.",
     bodyFile: 'internal-api-gateway.md',
