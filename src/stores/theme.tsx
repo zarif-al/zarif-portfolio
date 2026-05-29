@@ -59,7 +59,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 function getSnapshotServer(): Theme {
-  return 'light'
+  return 'dark'
 }
 
 /**
