@@ -57,7 +57,7 @@ export function ContactForm() {
         <textarea
           placeholder="What are you working on?"
           rows={5}
-          className={inputClass(errors.message)}
+          className={cn(inputClass(errors.message), 'resize-y min-h-[7rem]')}
           {...register('message', { required: 'Please include a message.' })}
         />
       </Field>
@@ -96,9 +96,8 @@ function Field({
 
 function inputClass(error?: { message?: string }) {
   return cn(
-    'w-full border border-border bg-bg text-fg px-3 py-2.5 font-body text-[0.9rem] leading-[1.5] transition-[border-color] duration-200',
+    'w-full border border-border bg-bg text-fg px-3 py-[0.6rem] font-body text-[0.9rem] leading-[1.5] transition-[border-color] duration-200',
     'focus:outline-hidden focus:border-accent',
-    'resize-y min-h-[7rem]',
     error && 'border-error',
   )
 }
