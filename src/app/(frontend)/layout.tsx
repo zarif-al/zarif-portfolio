@@ -2,6 +2,7 @@ import React from 'react'
 import { Crimson_Pro, Inter, JetBrains_Mono } from 'next/font/google'
 import './styles.css'
 import type { Metadata } from 'next'
+import { DEFAULT_THEME } from '@/store/theme.constants'
 import { RenderLayout } from '@/components/layout'
 
 const crimsonPro = Crimson_Pro({
@@ -31,6 +32,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     <html
       lang="en"
       data-scroll-behavior="smooth"
+      data-theme={DEFAULT_THEME}
       className={`${crimsonPro.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
