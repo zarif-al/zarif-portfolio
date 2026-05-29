@@ -7,11 +7,11 @@ export function getURLPrefix(collectionSlug: string) {
     }
 
     case 'projects': {
-      return '/projects/'
+      return '/projects'
     }
 
     case 'blogs': {
-      return '/blog/'
+      return '/blog'
     }
 
     default: {
