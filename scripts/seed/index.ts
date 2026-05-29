@@ -57,6 +57,7 @@ async function seed() {
           tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
           techStack: p.techStack.map((s) => ({ label: s })),
           outcomeStats: p.outcomeStats,
+          kicker: p.kicker,
         },
       })
     } else {
@@ -70,6 +71,7 @@ async function seed() {
           tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
           techStack: p.techStack.map((s) => ({ label: s })),
           outcomeStats: p.outcomeStats,
+          kicker: p.kicker,
         },
         draft: false,
       })
