@@ -14,6 +14,9 @@ export const Tags: CollectionConfig = {
   access: {
     read: draftModeAccess,
   },
+  defaultPopulate: {
+    label: true,
+  },
   fields: [
     {
       name: 'label',
