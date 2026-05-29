@@ -2,11 +2,15 @@
 
 import React from 'react'
 import { Richtext } from '@/components/primitives/richtext'
+import { cn } from '@/utilities/cn'
 import type { RichtextBlock } from '@/payload-types'
 
-export function RichtextBlockComponent({ content }: RichtextBlock) {
+export function RichtextBlockComponent({
+  content,
+  className,
+}: RichtextBlock & { className?: string }) {
   return (
-    <section className="mt-6">
+    <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
         <div className="max-w-xl">
           {content && (
