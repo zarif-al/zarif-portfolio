@@ -93,6 +93,7 @@ export interface Config {
     'collection-list': CollectionListBlock;
     contact: ContactBlock;
     'entry-list': EntryListBlock;
+    equalizer: EqualizerBlock;
   };
   collections: {
     users: User;
@@ -171,6 +172,7 @@ export interface UserAuthOperations {
  */
 export interface HeroBlock {
   kicker?: string | null;
+  size: 'large' | 'default';
   heading: {
     root: {
       type: string;
@@ -186,7 +188,6 @@ export interface HeroBlock {
     };
     [k: string]: unknown;
   };
-  showEqualizer?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'hero';
@@ -233,9 +234,6 @@ export interface TerminalBlockBlock {
         id?: string | null;
       }[]
     | null;
-  nowPlaying: {
-    track: string;
-  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'terminal-block';
@@ -245,47 +243,62 @@ export interface TerminalBlockBlock {
  * via the `definition` "CardGridBlock".
  */
 export interface CardGridBlock {
-  numberedCards: {
-    heading?: string | null;
-    cards: {
-      title: string;
-      description: string;
-      id?: string | null;
-    }[];
-  };
-  cells?:
-    | {
-        heading: string;
-        span?: ('half' | 'full') | null;
-        type?: ('text' | 'stack') | null;
-        content?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
-        stackItems?:
-          | {
-              label: string;
-              id?: string | null;
-            }[]
-          | null;
-        stackFootnote?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  content?: (NumberedGridBlock | CellGridBlock)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'card-grid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedGridBlock".
+ */
+export interface NumberedGridBlock {
+  heading?: string | null;
+  cards: {
+    title: string;
+    description: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'numbered-grid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CellGridBlock".
+ */
+export interface CellGridBlock {
+  swap?: boolean | null;
+  items: {
+    type: 'text' | 'stack';
+    heading?: string | null;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    stackItems?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    footnote?: string | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cell-grid';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -337,6 +350,16 @@ export interface EntryListBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'entry-list';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EqualizerBlock".
+ */
+export interface EqualizerBlock {
+  track?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'equalizer';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -408,6 +431,7 @@ export interface Page {
           | CollectionListBlock
           | ContactBlock
           | EntryListBlock
+          | EqualizerBlock
           | HeroBlock
           | RichtextBlock
           | TerminalBlockBlock
