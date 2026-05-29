@@ -12,7 +12,7 @@ export function TerminalBlockComponent({
     <section className={cn(className)}>
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
         <div className="relative overflow-hidden bg-surface border border-border p-7 md:p-8 font-mono text-[0.825rem] leading-[1.8] text-muted">
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-accent" />
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-accent" />
 
           {lines?.map((line, i) =>
             line.type === 'command' ? (
@@ -45,7 +45,7 @@ export function TerminalBlockComponent({
                     </span>
                   )}
                   <div className="flex items-center gap-[0.4rem] text-[0.72rem] text-muted">
-                    <span className="w-[6px] h-[6px] bg-accent shrink-0" />
+                    <span className="w-1.5 h-1.5 bg-accent shrink-0" />
                     {node.label}
                   </div>
                 </React.Fragment>
