@@ -22,7 +22,7 @@
   --tw-prose-links: var(--color-accent);
   --tw-prose-bold: var(--color-fg);
   --tw-prose-counters: var(--color-muted);
-  --tw-prose-bullets: var(--color-muted);
+  --tw-prose-bullets: var(--color-accent);
   --tw-prose-hr: var(--color-border);
   --tw-prose-quotes: var(--color-muted);
   --tw-prose-quote-borders: var(--color-accent);
@@ -121,6 +121,18 @@
 }
 
 @layer base {
+  /* ── Prose overrides ── */
+  .prose :where(ul) {
+    list-style-type: none;
+    padding-left: 1.25rem;
+  }
+
+  .prose :where(ul > li)::marker {
+    content: '—  ';
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
   /* ── Equalizer animation ── */
   @keyframes eq-pulse-1 {
     0%,
