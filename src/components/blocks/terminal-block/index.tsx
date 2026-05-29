@@ -2,6 +2,7 @@ import React from 'react'
 import { cn } from '@/utilities/cn'
 import type { TerminalBlockBlock } from '@/payload-types'
 import type { BlockComponentProps } from '@/components/blocks/types'
+import styles from './terminal-block.module.css'
 
 export function TerminalBlockComponent({
   lines,
@@ -36,18 +37,15 @@ export function TerminalBlockComponent({
           )}
 
           {systemNodes && systemNodes.length > 0 && (
-            <div className="mt-6 pt-6 border-t border-dashed border-border flex gap-6 flex-wrap items-start">
+            <div className={styles['diagram']}>
               {systemNodes.map((node, i) => (
                 <React.Fragment key={i}>
                   {i > 0 && (
-                    <span className="font-mono text-border text-[0.65rem] select-none mx-[0.15rem]">
+                    <span className={styles['edge']} aria-hidden="true">
                       ⸻
                     </span>
                   )}
-                  <div className="flex items-center gap-[0.4rem] text-[0.72rem] text-muted">
-                    <span className="w-1.5 h-1.5 bg-accent shrink-0" />
-                    {node.label}
-                  </div>
+                  <div className={styles['node']}>{node.label}</div>
                 </React.Fragment>
               ))}
             </div>
