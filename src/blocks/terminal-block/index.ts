@@ -38,10 +38,5 @@ export const TerminalBlock: Block = {
       type: 'array',
       fields: [{ name: 'label', type: 'text', required: true }],
     },
-    {
-      name: 'nowPlaying',
-      type: 'group',
-      fields: [{ name: 'track', type: 'text', required: true }],
-    },
   ],
 }

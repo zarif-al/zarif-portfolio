@@ -6,6 +6,5 @@ export const Hero: Block = {
   fields: [
     { name: 'kicker', type: 'text' },
     { name: 'heading', type: 'richText', required: true },
-    { name: 'showEqualizer', type: 'checkbox', defaultValue: false },
   ],
 }

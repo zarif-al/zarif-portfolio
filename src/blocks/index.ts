@@ -6,6 +6,7 @@ import { CardGrid } from './card-grid'
 import { CollectionList } from './collection-list'
 import { Contact } from './contact'
 import { EntryList } from './entry-list'
+import { Equalizer } from './equalizer'
 
 export const ALL_PAGE_BLOCKS: Block[] = [
   Hero,
@@ -15,4 +16,5 @@ export const ALL_PAGE_BLOCKS: Block[] = [
   CollectionList,
   Contact,
   EntryList,
+  Equalizer,
 ]
