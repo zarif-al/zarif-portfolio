@@ -2,7 +2,6 @@ import React from 'react'
 import { Crimson_Pro, Inter, JetBrains_Mono } from 'next/font/google'
 import './styles.css'
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { RenderLayout } from '@/components/layout'
 
 const crimsonPro = Crimson_Pro({
@@ -27,13 +26,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
-  const cookieStore = await cookies()
-  const theme = cookieStore.get('theme')?.value ?? ''
 
   return (
     <html
       lang="en"
-      data-theme={theme}
       data-scroll-behavior="smooth"
       className={`${crimsonPro.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
