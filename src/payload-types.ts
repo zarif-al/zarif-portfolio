@@ -526,40 +526,47 @@ export interface FolderInterface {
 export interface Project {
   id: string;
   title: string;
+  /**
+   * The slug is used in the URL for this page. It's recommended to keep it short and descriptive.
+   */
   slug: string;
-  tags?: (string | Tag)[] | null;
-  description: string;
-  kicker?: string | null;
-  body: {
-    root: {
-      type: string;
-      children: {
-        type: any;
+  meta: {
+    tags?: (string | Tag)[] | null;
+    description: string;
+    kicker?: string | null;
+    body: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      [k: string]: unknown;
     };
-    [k: string]: unknown;
+    outcomeStats?:
+      | {
+          value: string;
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    techStack?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
   };
-  outcomeStats?:
-    | {
-        value: string;
-        label: string;
-        id?: string | null;
-      }[]
-    | null;
-  techStack?:
-    | {
-        label: string;
-        id?: string | null;
-      }[]
-    | null;
+  localSeoTab: LocalSeoTab;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -578,28 +585,35 @@ export interface Tag {
 export interface Blog {
   id: string;
   title: string;
+  /**
+   * The slug is used in the URL for this page. It's recommended to keep it short and descriptive.
+   */
   slug: string;
-  tags?: (string | Tag)[] | null;
-  trackNumber?: number | null;
-  publishedDate: string;
-  excerpt: string;
-  body: {
-    root: {
-      type: string;
-      children: {
-        type: any;
+  meta: {
+    tags?: (string | Tag)[] | null;
+    trackNumber?: number | null;
+    publishedDate: string;
+    excerpt: string;
+    body: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      [k: string]: unknown;
     };
-    [k: string]: unknown;
   };
+  localSeoTab: LocalSeoTab;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -791,25 +805,31 @@ export interface SchemaMarkupSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  tags?: T;
-  description?: T;
-  kicker?: T;
-  body?: T;
-  outcomeStats?:
+  meta?:
     | T
     | {
-        value?: T;
-        label?: T;
-        id?: T;
+        tags?: T;
+        description?: T;
+        kicker?: T;
+        body?: T;
+        outcomeStats?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+        techStack?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
       };
-  techStack?:
-    | T
-    | {
-        label?: T;
-        id?: T;
-      };
+  localSeoTab?: T | LocalSeoTabSelect<T>;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -818,13 +838,19 @@ export interface ProjectsSelect<T extends boolean = true> {
 export interface BlogsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
-  tags?: T;
-  trackNumber?: T;
-  publishedDate?: T;
-  excerpt?: T;
-  body?: T;
+  meta?:
+    | T
+    | {
+        tags?: T;
+        trackNumber?: T;
+        publishedDate?: T;
+        excerpt?: T;
+        body?: T;
+      };
+  localSeoTab?: T | LocalSeoTabSelect<T>;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
