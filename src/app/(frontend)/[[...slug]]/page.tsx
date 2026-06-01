@@ -1,7 +1,7 @@
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayloadInstance } from '@/lib/payload'
-import { RenderBlocks } from '@/components/blocks'
+import { RenderBuildableBlocks } from '@/components/blocks/buildable'
 import type { Metadata } from 'next'
 import { getMetadata } from '@/utilities/get-metadata'
 
@@ -26,7 +26,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     notFound()
   }
 
-  return <RenderBlocks blocks={page.blocksTab?.blocks} />
+  return <RenderBuildableBlocks blocks={page.blocksTab?.blocks} />
 }
 
 export async function generateMetadata({
