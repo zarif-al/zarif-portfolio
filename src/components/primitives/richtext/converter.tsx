@@ -1,6 +1,7 @@
 'use client'
 
 import type { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
+import type { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 import { textStateConfig } from '@/lib/lexical-editor/components/text-state-config'
 import type { TextStateConfig } from '@/lib/lexical-editor/components/text-state-config'
 import { CodeSnippet } from '@/components/primitives/code-snippet'
@@ -9,13 +10,13 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-interface BlockNode {
-  fields?: { code?: string; language?: string }
+interface CodeBlockFields {
+  blockType: 'Code'
+  code?: string
+  language?: string
 }
 
-function isBlockNode(node: unknown): node is BlockNode {
-  return isRecord(node) && 'fields' in node
-}
+type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CodeBlockFields>
 
 /** Returns the state group if `key` is a valid top-level key in the config. */
 function getStateGroup(key: string) {
@@ -42,17 +43,15 @@ const NODE_STATE_KEY = '$'
  * and {@link TextStateConfig} CSS styles.
  */
 
-export const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
+export const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   blocks: {
     ...defaultConverters.blocks,
     Code: ({ node }) => {
-      const fields = isBlockNode(node) ? node.fields : undefined
-      const code = fields?.code
-      if (!code) {
+      if (!node.fields.code) {
         return null
       }
-      return <CodeSnippet code={code} language={fields?.language} />
+      return <CodeSnippet code={node.fields.code} language={node.fields.language} />
     },
   },
   text: (args) => {
