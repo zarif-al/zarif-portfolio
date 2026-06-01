@@ -51,3 +51,4 @@ Vet dependencies before installing:
 - **Pre-process data above the return.** Resolve links, filter items, transform data into render-ready shapes in variables at the top of the component. Never embed data transformation logic inside JSX maps.
 - **Extract sub-components into `components/` subfolders.** For example, a `header/` component with internal pieces goes into `header/components/nav-link.tsx` and `header/components/theme-toggle.tsx`.
 - **Keep the return block lean.** It should read as a layout description — a map of components, not a tangle of ternaries and inline lambdas.
+- **Use `PrimitiveLink` as the sole link primitive.** Any component that renders a clickable navigation element must delegate to `@/components/primitives/link` — it handles internal vs external routing and `viewTransition`. Do not import `next/link` directly in new link-like components.
