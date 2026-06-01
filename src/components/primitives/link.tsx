@@ -23,12 +23,15 @@ export function PrimitiveLink({ href, label, children, className }: PrimitiveLin
   const isWebUrl = href.startsWith('http')
   const Element = isInternal ? Link : 'a'
   const content = children ?? label
+  const externalProps = isWebUrl
+    ? { target: '_blank' as const, rel: 'noopener noreferrer' as const }
+    : {}
 
   return (
     <Element
       href={href}
       className={cn('no-underline transition-colors', className)}
-      {...(isWebUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      {...externalProps}
     >
       {content}
     </Element>
