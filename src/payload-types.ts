@@ -356,7 +356,13 @@ export interface EntryListBlock {
  * via the `definition` "EqualizerBlock".
  */
 export interface EqualizerBlock {
-  track?: string | null;
+  tracks?:
+    | {
+        title?: string | null;
+        author?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'equalizer';
