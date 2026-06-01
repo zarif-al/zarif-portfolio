@@ -14,8 +14,9 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
   const pages = await payload.find({
     collection: 'pages',
-    overrideAccess: false,
-    where: { slug: { equals: pageSlug } },
+    where: isDraftMode
+      ? { slug: { equals: pageSlug } }
+      : { and: [{ slug: { equals: pageSlug } }, { _status: { not_equals: 'draft' } }] },
     limit: 1,
     draft: isDraftMode,
     select: { blocksTab: true },
@@ -53,8 +54,8 @@ export async function generateStaticParams() {
 
   const { docs } = await payload.find({
     collection: 'pages',
-    overrideAccess: false,
     pagination: false,
+    where: { _status: { not_equals: 'draft' } },
     select: { slug: true },
   })
 

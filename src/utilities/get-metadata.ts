@@ -28,8 +28,9 @@ export async function getMetadata({
 
   const pageResults = await payload.find({
     collection: collectionSlug,
-    overrideAccess: false,
-    where: { slug: { equals: pageSlug } },
+    where: draft
+      ? { slug: { equals: pageSlug } }
+      : { and: [{ slug: { equals: pageSlug } }, { _status: { not_equals: 'draft' } }] },
     select: {
       localSeoTab: true,
     },

@@ -17,10 +17,10 @@ export async function CollectionListBlockComponent({
     case 'projects': {
       const { docs: projects } = await payload.find({
         collection: 'projects',
-        overrideAccess: false,
         pagination: false,
         sort: '-createdAt',
         draft: isDraftMode,
+        where: { _status: { not_equals: 'draft' } },
         select: { id: true, slug: true, title: true, meta: true },
       })
 
@@ -43,10 +43,10 @@ export async function CollectionListBlockComponent({
     case 'blogs': {
       const { docs: posts } = await payload.find({
         collection: 'blogs',
-        overrideAccess: false,
         pagination: false,
         sort: '-publishedDate',
         draft: isDraftMode,
+        where: { _status: { not_equals: 'draft' } },
         select: { id: true, slug: true, title: true, meta: true },
       })
 
