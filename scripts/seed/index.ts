@@ -82,7 +82,7 @@ async function seed() {
   // ── Pass 0: seed tags, projects, and blog posts ──
 
   console.log('Seeding Tags…')
-  const tagLabels = ['CMS', 'Architecture', 'Integration', 'Full-stack']
+  const tagLabels = ['Sanity', 'NextJS', 'Architecture', 'Integration', 'Payload', 'Concept']
   const tagMap: Record<string, string> = {}
   for (const label of tagLabels) {
     const existing = await payload.find({
@@ -110,7 +110,7 @@ async function seed() {
     if (doc) {
       await payload.update({ collection: 'projects', id: doc.id, data })
     } else {
-      await payload.create({ collection: 'projects', data, draft: false })
+      await payload.create({ collection: 'projects', data, draft: p.draft ?? false })
     }
   }
 
@@ -153,7 +153,7 @@ async function seed() {
   console.log('Seeding Projects page…')
   const projectsPage = await upsertPage(payload, '/projects', 'Projects', [
     buildHeroBlock({
-      kicker: 'Quests completed: 05',
+      kicker: 'Quests completed: 02',
       size: 'default',
       heading: mdToLexical(editorConfig, readMd('headings/projects.md')),
     }),
@@ -183,7 +183,7 @@ async function seed() {
   console.log('Seeding Now page…')
   const nowPage = await upsertPage(payload, '/now', 'Now', [
     buildHeroBlock({
-      kicker: 'Updated May 2026',
+      kicker: 'Updated June 2025',
       size: 'default',
       heading: mdToLexical(editorConfig, readMd('headings/now.md')),
     }),
@@ -230,136 +230,73 @@ seed()
 
 const PROJECTS = [
   {
-    slug: 'multi-tenant-cms-platform',
-    title: 'Multi-tenant CMS Platform',
+    slug: 'brightonseo',
+    title: 'brightonSEO',
     kicker: 'Project',
     description:
-      'Designed and built a Payload CMS deployment serving 40+ tenants from a single codebase. Custom access control layer, per-tenant schema extensions, and a shared media pipeline with tenant-scoped storage. Reduced infrastructure costs by 60% vs. per-tenant instances.',
-    bodyFile: 'multi-tenant-cms-platform.md',
-    tags: ['CMS', 'Architecture'],
-    techStack: ['Payload CMS', 'Next.js', 'PostgreSQL', 'S3', 'Docker', 'Redis'],
-    outcomeStats: [
-      { value: '40+', label: 'Tenants' },
-      { value: '60%', label: 'Cost Reduction' },
-      { value: '1', label: 'Codebase' },
-      { value: '0', label: 'Data Leaks' },
-    ],
-  },
-  {
-    slug: 'real-time-data-pipeline',
-    title: 'Real-time Data Pipeline for e-Commerce',
-    kicker: 'Project',
-    description:
-      'Built a NestJS event-driven pipeline syncing product catalog, inventory, and order data between a legacy ERP and a modern Sanity + Next.js storefront. Handles 50k+ events/day with idempotent processing and a dead-letter queue for failed syncs.',
-    bodyFile: 'real-time-data-pipeline.md',
-    tags: ['Integration', 'Architecture'],
-    techStack: ['NestJS', 'Sanity', 'PostgreSQL', 'Redis Streams', 'BullMQ'],
-    outcomeStats: [
-      { value: '50k+', label: 'Events / Day' },
-      { value: '99.9%', label: 'Delivery Rate' },
-      { value: '<5s', label: 'Sync Latency' },
-      { value: '0', label: 'Silent Drops' },
-    ],
-  },
-  {
-    slug: 'editorial-platform-migration',
-    title: 'Editorial Platform Migration',
-    kicker: 'Project',
-    description:
-      'Migrated a 10k+ document editorial backend from WordPress to Sanity with custom content modeling, automated redirect mapping, and zero-downtime cutover. Built a Next.js frontend with ISR that cut page load times by 70%.',
-    bodyFile: 'editorial-platform-migration.md',
-    tags: ['Full-stack', 'CMS'],
+      'Led the rebuild of the world\'s largest search marketing conference website. Migrated from a rigid legacy system to a flexible Sanity + Next.js stack with a custom page builder, schedule table, and event management workflows.',
+    bodyFile: 'brightonseo.md',
+    tags: ['Sanity', 'NextJS', 'Architecture'],
     techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ'],
     outcomeStats: [
-      { value: '10k+', label: 'Documents Migrated' },
-      { value: '70%', label: 'Faster Page Loads' },
-      { value: '0', label: 'Downtime' },
-      { value: '100%', label: 'SEO Retention' },
+      { value: '10-11→2-3', label: 'Site Maintainers' },
+      { value: '1 wk', label: 'Event Setup' },
     ],
   },
   {
-    slug: 'payment-system-consolidation',
-    title: 'Payment System Consolidation',
+    slug: 'boutique-gym-site',
+    title: 'Boutique Gym Site',
     kicker: 'Project',
     description:
-      'Consolidated three payment providers (Stripe, local gateway, manual invoicing) behind a unified NestJS API layer. Built reconciliation tooling, webhook normalization, and an admin dashboard for finance operations. Processed $2M+ in the first quarter post-launch.',
-    bodyFile: 'payment-system-consolidation.md',
-    tags: ['Integration', 'Full-stack'],
-    techStack: ['NestJS', 'Stripe', 'Next.js', 'PostgreSQL', 'Temporal'],
-    outcomeStats: [
-      { value: '$2M+', label: 'Q1 Volume' },
-      { value: '3→1', label: 'Provider Surface' },
-      { value: '0', label: 'Double Charges' },
-      { value: '100%', label: 'Reconciliation' },
-    ],
+      'Led the migration of a premium gym from a restrictive legacy GMS to Sanity + Next.js + Flutter. Built a NestJS sync service, custom spot booking with visual layout positioning, and a reusable class list component with React Suspense.',
+    bodyFile: 'boutique-gym-site.md',
+    tags: ['Sanity', 'NextJS', 'Architecture', 'Integration'],
+    techStack: ['Sanity', 'Next.js', 'NestJS', 'Flutter', 'PostgreSQL'],
+    outcomeStats: [],
   },
   {
-    slug: 'internal-api-gateway',
-    title: 'Internal API Gateway',
+    slug: 'sauna-gms-integration',
+    title: 'Sauna GMS Integration',
     kicker: 'Project',
     description:
-      "Designed a centralized API gateway for a microservices ecosystem — rate limiting, auth, request tracing, and schema validation at the edge. Reduced inter-service coupling and gave the platform team observability they didn't have before.",
-    bodyFile: 'internal-api-gateway.md',
-    tags: ['Architecture'],
-    techStack: ['NestJS', 'Redis', 'OpenTelemetry', 'Docker', 'Kong'],
-    outcomeStats: [
-      { value: '1', label: 'Entry Point' },
-      { value: '100%', label: 'Trace Coverage' },
-      { value: '<10ms', label: 'Gateway Overhead' },
-      { value: '0', label: 'Auth Bypasses' },
-    ],
+      'Building a custom integration layer on top of Mariana Tek GMS for a sauna business. The GMS only supports single-spot authenticated booking — we are building anonymous group booking where customers can reserve multiple spots without logging in.',
+    bodyFile: 'sauna-gms-integration.md',
+    tags: ['Integration'],
+    techStack: ['NestJS', 'Mariana Tek', 'Next.js', 'Sanity'],
+    outcomeStats: [],
+    draft: true,
   },
 ]
 
 const BLOGS = [
   {
-    slug: 'multi-tenant-cms-architectures',
-    title: 'Designing Multi-Tenant CMS Architectures with Payload',
+    slug: 'payload-cms-2fa-implementation',
+    title: 'Payload CMS: 2FA Implementation',
     trackNumber: 1,
-    publishedDate: '2026-04-12',
+    publishedDate: '2025-02-23',
     excerpt:
-      'Patterns for database isolation, tenant-aware media storage, and keeping the developer experience sane when one codebase serves forty clients.',
-    bodyFile: 'multi-tenant-cms-architectures.md',
-    tags: ['CMS', 'Architecture'],
+      'An approach to implementing two-factor authentication in Payload CMS without replacing the default auth system — layering OTP verification on top of Payload\'s existing login flow.',
+    bodyFile: 'payload-cms-2fa.md',
+    tags: ['Payload', 'Architecture'],
   },
   {
-    slug: 'event-driven-sync',
-    title: 'Event-Driven Sync: When CRUD Is not Enough',
+    slug: 'conceptual-truncation',
+    title: 'Conceptual Truncation',
     trackNumber: 2,
-    publishedDate: '2026-03-03',
+    publishedDate: '2025-02-23',
     excerpt:
-      'Lessons from building an idempotent event pipeline between a legacy ERP and a modern headless storefront. Idempotency keys, dead-letter queues, and why you need both.',
-    bodyFile: 'event-driven-sync.md',
-    tags: ['Integration'],
+      'Much like "the customer is always right" was never about tolerating bad behavior, the DRY principle was never about eliminating code duplication — it\'s about eliminating duplication of knowledge. How conceptual truncation distorts software principles.',
+    bodyFile: 'conceptual-truncation.md',
+    tags: ['Concept'],
   },
   {
-    slug: 'typescript-patterns',
-    title: 'TypeScript Patterns for Resilient API Layers',
+    slug: 'client-vs-server-fetching',
+    title: 'Client Side vs Server Side Fetching',
     trackNumber: 3,
-    publishedDate: '2026-01-18',
+    publishedDate: '2025-02-23',
     excerpt:
-      'Branded types, Zod at the boundary, and why your DTO layer is the most important code in a NestJS service.',
-    bodyFile: 'typescript-patterns.md',
-    tags: ['Architecture'],
-  },
-  {
-    slug: 'cms-migration-without-downtime',
-    title: 'CMS Migration Without Downtime',
-    trackNumber: 4,
-    publishedDate: '2025-11-07',
-    excerpt:
-      'The playbook I used to move 10,000+ documents from WordPress to Sanity — content modeling, redirect mapping, and a zero-cutover strategy.',
-    bodyFile: 'cms-migration-without-downtime.md',
-    tags: ['CMS', 'Full-stack'],
-  },
-  {
-    slug: 'why-nestjs',
-    title: 'Why I Reach for NestJS',
-    trackNumber: 5,
-    publishedDate: '2025-09-22',
-    excerpt:
-      'Modules, decorators, and dependency injection — but the real reason is that NestJS forces a structure that survives team turnover.',
-    bodyFile: 'why-nestjs.md',
-    tags: ['Architecture'],
+      'Where should data queries be processed? The trade-off between cost, performance, and security when deciding between server-side and client-side data fetching.',
+    bodyFile: 'client-vs-server-fetching.md',
+    tags: ['Concept'],
   },
 ]
