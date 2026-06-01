@@ -81,7 +81,7 @@ export function CodeSnippet({ code, language }: CodeSnippetProps) {
                   <span className="table-cell text-right pr-4 select-none text-muted/40 w-8">
                     {i + 1}
                   </span>
-                  <span className="table-cell">
+                  <span className="table-cell pl-2">
                     {line.map((token, key) => (
                       <span key={key} {...getTokenProps({ token })} />
                     ))}
