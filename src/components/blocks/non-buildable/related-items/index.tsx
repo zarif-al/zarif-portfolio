@@ -27,6 +27,7 @@ export async function RelatedItems({
 
   const { docs } = await payload.find({
     collection,
+    overrideAccess: false,
     where: {
       and: [{ id: { not_equals: currentId } }, { 'meta.tags': { in: tagIds } }],
     },

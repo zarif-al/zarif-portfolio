@@ -17,6 +17,7 @@ export async function CollectionListBlockComponent({
     case 'projects': {
       const { docs: projects } = await payload.find({
         collection: 'projects',
+        overrideAccess: false,
         pagination: false,
         sort: '-createdAt',
         draft: isDraftMode,
@@ -42,6 +43,7 @@ export async function CollectionListBlockComponent({
     case 'blogs': {
       const { docs: posts } = await payload.find({
         collection: 'blogs',
+        overrideAccess: false,
         pagination: false,
         sort: '-publishedDate',
         draft: isDraftMode,

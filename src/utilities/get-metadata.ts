@@ -28,6 +28,7 @@ export async function getMetadata({
 
   const pageResults = await payload.find({
     collection: collectionSlug,
+    overrideAccess: false,
     where: { slug: { equals: pageSlug } },
     select: {
       localSeoTab: true,

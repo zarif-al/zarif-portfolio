@@ -17,6 +17,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   const { docs } = await payload.find({
     collection: 'blogs',
+    overrideAccess: false,
     where: { slug: { equals: '/' + slug } },
     limit: 1,
     draft: isDraftMode,
@@ -95,6 +96,7 @@ export async function generateStaticParams() {
 
   const { docs } = await payload.find({
     collection: 'blogs',
+    overrideAccess: false,
     pagination: false,
     select: { slug: true },
   })
