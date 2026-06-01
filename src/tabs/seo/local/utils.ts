@@ -10,6 +10,7 @@ import type { CollectionSlug, DataFromCollectionSlug, FieldHook } from 'payload'
 const seoFallbackHandlers: {
   [S in Exclude<
     CollectionSlug,
+    | 'form-submissions'
     | 'media'
     | 'users'
     | 'payload-kv'
