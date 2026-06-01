@@ -8,6 +8,7 @@ import { Pages } from './collections/Pages'
 import { Projects } from './collections/Projects'
 import { Blogs } from './collections/Blogs'
 import { Tags } from './collections/Tags'
+import { FormSubmissions } from './collections/FormSubmissions'
 import { SiteConfig } from './globals/site-config'
 import { Layout } from './globals/layout'
 import { ALL_PAGE_BLOCKS } from './blocks'
@@ -45,7 +46,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Pages, Projects, Blogs, Tags],
+  collections: [Users, Media, Pages, Projects, Blogs, Tags, FormSubmissions],
   globals: [SiteConfig, Layout],
   blocks: ALL_PAGE_BLOCKS,
   typescript: {
