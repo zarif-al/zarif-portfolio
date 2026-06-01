@@ -1,9 +1,13 @@
 import { getPayload } from 'payload'
-import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
+import {
+  convertMarkdownToLexical,
+  editorConfigFactory,
+  type SanitizedServerEditorConfig,
+} from '@payloadcms/richtext-lexical'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
-import type { SanitizedServerEditorConfig } from '@payloadcms/richtext-lexical'
 import type { SanitizedConfig } from 'payload'
+import { customLexicalEditor } from '../../src/lib/lexical-editor'
 import type {
   HeroBlock,
   RichtextBlock,
@@ -89,4 +93,15 @@ export function mdToLexical(editorConfig: SanitizedServerEditorConfig, md: strin
 /** Resolves the sanitized server editor config from the default lexical editor. */
 export async function getEditorConfig(config: SanitizedConfig) {
   return editorConfigFactory.default({ config })
+}
+
+/**
+ * Resolves a sanitized editor config with the Code block feature enabled.
+ * Used for converting blog/project markdown that contains fenced code blocks.
+ */
+export async function getEditorConfigWithCodeBlock(config: SanitizedConfig) {
+  return editorConfigFactory.fromEditor({
+    config,
+    editor: customLexicalEditor({ codeBlock: true }),
+  })
 }

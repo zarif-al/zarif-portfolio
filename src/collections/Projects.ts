@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { createSlugField } from '../fields/slug'
 import { createLocalSeoTab } from '../tabs/seo/local'
 import { draftModeAccess } from '../access/draft-mode-access'
+import { customLexicalEditor } from '../lib/lexical-editor'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -66,6 +67,7 @@ export const Projects: CollectionConfig = {
               name: 'body',
               type: 'richText',
               required: true,
+              editor: customLexicalEditor({ codeBlock: true }),
             },
             {
               name: 'outcomeStats',

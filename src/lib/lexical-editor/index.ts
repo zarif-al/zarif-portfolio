@@ -1,7 +1,13 @@
-import { lexicalEditor, TextStateFeature, HeadingFeature } from '@payloadcms/richtext-lexical'
+import {
+  lexicalEditor,
+  TextStateFeature,
+  HeadingFeature,
+  BlocksFeature,
+} from '@payloadcms/richtext-lexical'
 import { textStateConfig } from './components/text-state-config'
 import type { CustomLexicalOptions } from './types'
 import { hasKey } from './utils'
+import { createCodeBlock } from './features/code-block'
 
 export function customLexicalEditor(options: CustomLexicalOptions = {}) {
   return lexicalEditor({
@@ -30,6 +36,11 @@ export function customLexicalEditor(options: CustomLexicalOptions = {}) {
             enabledHeadingSizes: options.headingsConfig.allowedSizes,
           }),
         )
+      }
+
+      // Append the code block feature when enabled.
+      if (options.codeBlock) {
+        features.push(BlocksFeature({ blocks: [createCodeBlock()] }))
       }
 
       // Always append the custom text-state feature (accent colors, etc.).

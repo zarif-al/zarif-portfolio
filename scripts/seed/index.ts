@@ -14,20 +14,26 @@ import {
   buildContactBlock,
   buildEntryListBlock,
 } from './data'
-import { upsertPage, readMd, mdToLexical, getEditorConfig } from './helpers'
+import {
+  upsertPage,
+  readMd,
+  mdToLexical,
+  getEditorConfig,
+  getEditorConfigWithCodeBlock,
+} from './helpers'
 
 /** Builds a full Payload-shaped project data object from flat source data. */
 function buildProjectData(
   p: (typeof PROJECTS)[number],
   tagMap: Record<string, string>,
-  editorConfig: SanitizedServerEditorConfig,
+  bodyEditorConfig: SanitizedServerEditorConfig,
 ) {
   return {
     title: p.title,
     slug: p.slug,
     meta: {
       description: p.description,
-      body: mdToLexical(editorConfig, readMd(`projects/${p.bodyFile}`)),
+      body: mdToLexical(bodyEditorConfig, readMd(`projects/${p.bodyFile}`)),
       tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
       techStack: p.techStack,
       outcomeStats: p.outcomeStats,
@@ -50,7 +56,7 @@ function buildProjectData(
 function buildBlogData(
   b: (typeof BLOGS)[number],
   tagMap: Record<string, string>,
-  editorConfig: SanitizedServerEditorConfig,
+  bodyEditorConfig: SanitizedServerEditorConfig,
 ) {
   return {
     title: b.title,
@@ -59,7 +65,7 @@ function buildBlogData(
       trackNumber: b.trackNumber,
       publishedDate: b.publishedDate,
       excerpt: b.excerpt,
-      body: mdToLexical(editorConfig, readMd(`blogs/${b.bodyFile}`)),
+      body: mdToLexical(bodyEditorConfig, readMd(`blogs/${b.bodyFile}`)),
       tags: b.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
     },
     localSeoTab: {
@@ -77,7 +83,9 @@ function buildBlogData(
 
 async function seed() {
   const payload = await getPayload({ config: configPromise })
-  const editorConfig = await getEditorConfig(await configPromise)
+  const sanitizedConfig = await configPromise
+  const editorConfig = await getEditorConfig(sanitizedConfig)
+  const editorConfigWithCodeBlock = await getEditorConfigWithCodeBlock(sanitizedConfig)
 
   // ── Pass 0: seed tags, projects, and blog posts ──
 
@@ -105,7 +113,7 @@ async function seed() {
       limit: 1,
     })
     const doc = existing.docs[0]
-    const data = buildProjectData(p, tagMap, editorConfig)
+    const data = buildProjectData(p, tagMap, editorConfigWithCodeBlock)
 
     if (doc) {
       await payload.update({ collection: 'projects', id: doc.id, data })
@@ -122,7 +130,7 @@ async function seed() {
       limit: 1,
     })
     const doc = existing.docs[0]
-    const data = buildBlogData(b, tagMap, editorConfig)
+    const data = buildBlogData(b, tagMap, editorConfigWithCodeBlock)
 
     if (doc) {
       await payload.update({ collection: 'blogs', id: doc.id, data })

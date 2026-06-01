@@ -14,4 +14,11 @@ export interface CustomLexicalOptions {
    * When `false`, the paragraph feature is removed from the toolbar.
    */
   allowParagraph?: boolean
+  /**
+   * When `true`, enables the Code block feature via {@link BlocksFeature}.
+   * Only enabled for meta-tab richtext (blog/project body).
+   *
+   * @default false
+   */
+  codeBlock?: boolean
 }

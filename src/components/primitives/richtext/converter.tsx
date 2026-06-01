@@ -3,9 +3,18 @@
 import type { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
 import { textStateConfig } from '@/lib/lexical-editor/components/text-state-config'
 import type { TextStateConfig } from '@/lib/lexical-editor/components/text-state-config'
+import { CodeSnippet } from '@/components/primitives/code-snippet'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+interface BlockNode {
+  fields?: { code?: string; language?: string }
+}
+
+function isBlockNode(node: unknown): node is BlockNode {
+  return isRecord(node) && 'fields' in node
 }
 
 /** Returns the state group if `key` is a valid top-level key in the config. */
@@ -35,6 +44,17 @@ const NODE_STATE_KEY = '$'
 
 export const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
+  blocks: {
+    ...defaultConverters.blocks,
+    Code: ({ node }) => {
+      const fields = isBlockNode(node) ? node.fields : undefined
+      const code = fields?.code
+      if (!code) {
+        return null
+      }
+      return <CodeSnippet code={code} language={fields?.language} />
+    },
+  },
   text: (args) => {
     const { node } = args
 
