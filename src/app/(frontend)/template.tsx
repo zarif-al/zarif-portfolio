@@ -8,13 +8,7 @@ import { ViewTransition } from 'react'
  */
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
-    <ViewTransition
-      name="page"
-      enter="page-enter"
-      exit="page-exit"
-      default="none"
-      share="none"
-    >
+    <ViewTransition name="page" enter="page-enter" exit="page-exit" default="none" share="none">
       {children}
     </ViewTransition>
   )

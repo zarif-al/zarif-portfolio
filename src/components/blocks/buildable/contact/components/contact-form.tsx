@@ -1,7 +1,13 @@
 'use client'
 
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { cn } from '@/utilities/cn'
+import { submitContact } from './contact-form-action'
+
+const RESET_DELAY_MS = 5_000
+
+type SubmissionStatus = 'idle' | 'sending' | 'success' | 'error'
 
 interface ContactFormData {
   name: string
@@ -13,29 +19,36 @@ export function ContactForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    reset,
+    formState: { errors },
   } = useForm<ContactFormData>()
 
-  if (isSubmitSuccessful) {
-    return (
-      <div className="font-display text-[1.1rem] italic text-accent py-6">
-        Thanks — message sent. I&apos;ll get back to you.
-      </div>
-    )
-  }
+  const [status, setStatus] = useState<SubmissionStatus>('idle')
+
+  const onSubmit = useCallback(
+    async (data: ContactFormData) => {
+      setStatus('sending')
+      try {
+        await submitContact(data)
+        setStatus('success')
+        setTimeout(() => {
+          reset()
+          setStatus('idle')
+        }, RESET_DELAY_MS)
+      } catch {
+        setStatus('error')
+      }
+    },
+    [reset],
+  )
 
   return (
-    <form
-      noValidate
-      className="bg-surface p-7"
-      onSubmit={handleSubmit((_data) => {
-        // Swallow submission — real backend integration TBD.
-      })}
-    >
+    <form noValidate className="bg-surface p-7" onSubmit={handleSubmit(onSubmit)}>
       <Field label="Name" error={errors.name?.message}>
         <input
           type="text"
           placeholder="Your name"
+          disabled={status === 'sending' || status === 'success'}
           className={inputClass(errors.name)}
           {...register('name', { required: 'Please enter your name.' })}
         />
@@ -45,6 +58,7 @@ export function ContactForm() {
         <input
           type="email"
           placeholder="you@example.com"
+          disabled={status === 'sending' || status === 'success'}
           className={inputClass(errors.email)}
           {...register('email', {
             required: 'Please enter a valid email.',
@@ -57,6 +71,7 @@ export function ContactForm() {
         <textarea
           placeholder="What are you working on?"
           rows={5}
+          disabled={status === 'sending' || status === 'success'}
           className={cn(inputClass(errors.message), 'resize-y min-h-[7rem]')}
           {...register('message', { required: 'Please include a message.' })}
         />
@@ -64,10 +79,23 @@ export function ContactForm() {
 
       <button
         type="submit"
-        className="bg-fg text-bg border-0 px-6 py-2.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] cursor-pointer transition-opacity duration-200 hover:opacity-85"
+        disabled={status === 'sending' || status === 'success'}
+        className="bg-fg text-bg border-0 px-6 py-2.5 font-mono text-[0.72rem] uppercase tracking-[0.08em] cursor-pointer transition-opacity duration-200 hover:opacity-85 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Send Message
+        {status === 'sending' ? 'Sending...' : 'Send Message'}
       </button>
+
+      {status === 'success' && (
+        <p className="font-display text-[1.1rem] italic text-accent mt-4">
+          Thanks — message sent. I&apos;ll get back to you.
+        </p>
+      )}
+
+      {status === 'error' && (
+        <p className="font-mono text-[0.72rem] text-error mt-4">
+          Something went wrong. Please try again.
+        </p>
+      )}
     </form>
   )
 }
@@ -98,6 +126,7 @@ function inputClass(error?: { message?: string }) {
   return cn(
     'w-full border border-border bg-bg text-fg px-3 py-[0.6rem] font-body text-[0.9rem] leading-[1.5] transition-[border-color] duration-200',
     'focus:outline-hidden focus:border-accent',
+    'disabled:opacity-60 disabled:cursor-not-allowed',
     error && 'border-error',
   )
 }
