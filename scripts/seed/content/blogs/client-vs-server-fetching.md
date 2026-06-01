@@ -7,12 +7,12 @@ When evaluating where to handle queries, two critical factors come into play:
 
 ## When Speed Is Critical
 
-In scenarios where user retention depends on fast responses, prioritizing time to display content is crucial. Users are notoriously impatient — even a few seconds of delay leads to frustration and abandonment.
+In scenarios where user retention depends on fast responses, prioritizing time to display content is crucial. Users are notoriously impatient; even a few seconds of delay leads to frustration and abandonment.
 
 - **E-commerce sites:** Delays in loading product pages or completing transactions directly cost sales and trust.
 - **Real-time apps:** Stock trading platforms or live sports trackers require near-instant updates to stay relevant.
 
-For these, server-side processing — building and delivering fully-rendered pages or pre-fetched data — is usually the right call.
+For these, server-side processing, building and delivering fully-rendered pages or pre-fetched data, is usually the right call.
 
 ## When Speed Is Less Critical
 
@@ -35,8 +35,8 @@ Another critical factor is security. Servers provide controlled environments to 
 
 - **Measure impact:** Use real metrics to understand how time-to-display affects user behavior before deciding.
 - **Adopt a hybrid model:** Many modern applications use a mix of server and client querying to balance performance, cost, and security.
-- **Plan for scale:** As your application grows, regularly reassess your strategy — what works at 1,000 users may not work at 100,000.
+- **Plan for scale:** As your application grows, regularly reassess your strategy; what works at 1,000 users may not work at 100,000.
 
 ## Conclusion
 
-Balancing server and client data querying is a nuanced decision that hinges on performance, cost, and security. By understanding your users' expectations and the implications of each approach, you can design systems that deliver value without breaking the bank. There's no one-size-fits-all solution — the right choice is the one that supports both your users and your bottom line.
+Balancing server and client data querying is a nuanced decision that hinges on performance, cost, and security. By understanding your users' expectations and the implications of each approach, you can design systems that deliver value without breaking the bank. There's no one-size-fits-all solution; the right choice is the one that supports both your users and your bottom line.

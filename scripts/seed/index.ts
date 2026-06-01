@@ -163,7 +163,7 @@ async function seed() {
   console.log('Seeding Blog page…')
   const blogPage = await upsertPage(payload, '/blog', 'Blog', [
     buildHeroBlock({
-      kicker: 'Side A — Mixtape',
+      kicker: 'Side A: Mixtape',
       size: 'default',
       heading: mdToLexical(editorConfig, readMd('headings/blog.md')),
     }),
@@ -259,7 +259,7 @@ const PROJECTS = [
     title: 'Sauna GMS Integration',
     kicker: 'Project',
     description:
-      'Building a custom integration layer on top of Mariana Tek GMS for a sauna business. The GMS only supports single-spot authenticated booking — we are building anonymous group booking where customers can reserve multiple spots without logging in.',
+      'Building a custom integration layer on top of Mariana Tek GMS for a sauna business. The GMS only supports single-spot authenticated booking; we are building anonymous group booking where customers can reserve multiple spots without logging in.',
     bodyFile: 'sauna-gms-integration.md',
     tags: ['Integration'],
     techStack: ['NestJS', 'Mariana Tek', 'Next.js', 'Sanity'],
@@ -275,7 +275,7 @@ const BLOGS = [
     trackNumber: 1,
     publishedDate: '2025-02-23',
     excerpt:
-      'An approach to implementing two-factor authentication in Payload CMS without replacing the default auth system — layering OTP verification on top of Payload\'s existing login flow.',
+      'An approach to implementing two-factor authentication in Payload CMS without replacing the default auth system: layering OTP verification on top of Payload\'s existing login flow.',
     bodyFile: 'payload-cms-2fa.md',
     tags: ['Payload', 'Architecture'],
   },
@@ -285,7 +285,7 @@ const BLOGS = [
     trackNumber: 2,
     publishedDate: '2025-02-23',
     excerpt:
-      'Much like "the customer is always right" was never about tolerating bad behavior, the DRY principle was never about eliminating code duplication — it\'s about eliminating duplication of knowledge. How conceptual truncation distorts software principles.',
+      'Much like "the customer is always right" was never about tolerating bad behavior, the DRY principle was never about eliminating code duplication; it\'s about eliminating duplication of knowledge. How conceptual truncation distorts software principles.',
     bodyFile: 'conceptual-truncation.md',
     tags: ['Concept'],
   },

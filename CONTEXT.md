@@ -11,23 +11,23 @@ A publicly routable, generic web page built with blocks. Managed in the `pages` 
 _Avoid_: Route, CMS page, content page
 
 **Block**:
-A composable content building block used on Pages and in the Layout. Each **Buildable Block** has both a **Block Config** (the Payload schema definition in `src/blocks/buildable/`) and a **Block Component** (the React renderer in `src/components/blocks/`). The config defines what data the block stores; the component defines how it renders. **Non-Buildable Blocks** (in `src/blocks/non-buildable/`) are frontend-only — they render block-like UI but are not CMS-managed and have no Payload schema.
+A composable content building block used on Pages and in the Layout. Each **Buildable Block** has both a **Block Schema** (the Payload schema definition in `src/blocks/`) and a **Block Component** (the React renderer in `src/components/blocks/buildable/`). The schema defines what data the block stores; the component defines how it renders. **Non-Buildable Blocks** (in `src/components/blocks/non-buildable/`) are frontend-only — they render block-like UI but are not CMS-managed and have no Payload schema.
 _Avoid_: Component, section, module
 
 **Buildable Block**:
-A CMS-composable **Block** registered in `ALL_PAGE_BLOCKS`. Has a **Block Config** in `src/blocks/buildable/` and a **Block Component** in `src/components/blocks/`. Editable via the Payload admin.
+A CMS-composable **Block** registered in `ALL_PAGE_BLOCKS`. Has a **Block Schema** in `src/blocks/` and a **Block Component** in `src/components/blocks/buildable/`. Editable via the Payload admin.
 _Avoid_: CMS block, page block, admin block
 
 **Non-Buildable Block**:
-A frontend-only **Block** that shares the visual language of blocks but has no Payload schema — not CMS-managed, not in `ALL_PAGE_BLOCKS`. Lives in `src/blocks/non-buildable/` and is rendered by pages that need it (e.g., the **RelatedItems** block on detail pages). Self-fetching or accepts pre-fetched data.
+A frontend-only **Block** that shares the visual language of blocks but has no Payload schema — not CMS-managed, not in `ALL_PAGE_BLOCKS`. Lives in `src/components/blocks/non-buildable/` and is rendered by pages that need it (e.g., the **RelatedItems** block on detail pages). Self-fetching or accepts pre-fetched data.
 _Avoid_: Static block, hardcoded block, inline block
 
-**Block Config**:
-A Payload block schema — defines the fields, validation, and admin UI for a single **Buildable Block** type. Lives in `src/blocks/buildable/`.
-_Avoid_: Block definition, block schema
+**Block Schema**:
+A Payload block schema — defines the fields, validation, and admin UI for a single **Buildable Block** type. Lives in `src/blocks/`.
+_Avoid_: Block definition, block config
 
 **Block Component**:
-A React component that renders a single block type on the frontend. Receives the block's data as props. Lives in `src/components/blocks/`.
+A React component that renders a single block type on the frontend. Receives the block's data as props. Lives in `src/components/blocks/buildable/`.
 
 **Layout**:
 The site-wide chrome — Header and Footer. The **Global** (`src/globals/layout/`) configures them; the **React components** (`src/components/layout/`) render them. Same split as blocks.
@@ -52,7 +52,7 @@ A universal page header block — a kicker and a heading. Used at the top of eve
 _Avoid_: Home hero, page header, banner
 
 **Equalizer**:
-A decorative block with pulsing bar animation and a "Now Playing" widget showing a track name. Sits between the hero and the terminal block on the home page. Has tighter vertical spacing than other blocks.
+A decorative **Buildable Block** with pulsing bar animation and a "Now Playing" widget that cycles through a **Track** array. Each **Track** has a `title` and `author`. The displayed track changes every 3 minutes based on wall-clock time — all visitors see the same track at the same time. Sits between the hero and the terminal block on the home page. Has tighter vertical spacing than other blocks.
 _Avoid_: EQ, audio bars, visualizer, now-playing
 
 **TerminalBlock**:
@@ -103,10 +103,6 @@ _Avoid_: Category, label, topic
 A small mono-styled label above a heading — used in the **Hero** block, Project detail headers, and Blog Post detail headers.
 _Avoid_: Eyebrow, label, subtitle, overline
 
-**Equalizer**:
-A decorative CSS animation of pulsing bars rendered below a **Hero** heading when `showEqualizer` is enabled. Pure decoration — no CMS fields.
-_Avoid_: EQ, audio bars, visualizer
-
 **FilterBar**:
 A frontend component inside **CollectionList** (Projects variant) that renders filter buttons auto-derived from the unique set of **Tags** across all Projects. Not a CMS block — generated at render time.
 _Avoid_: Filter, category bar, tag filter
@@ -127,7 +123,7 @@ _Avoid_: Related posts, related projects, cross-links
 
 **Dev**: "I need to add a testimonials section to every page."
 
-**Lead**: "So you're adding a new **Buildable Block**. You'll need a **Block Config** in `src/blocks/buildable/` for the data — author name, quote, avatar — and a **Block Component** in `src/components/blocks/` to render it. Then register both in the blocks index and the renderer."
+**Lead**: "So you're adding a new **Buildable Block**. You'll need a **Block Schema** in `src/blocks/` for the data — author name, quote, avatar — and a **Block Component** in `src/components/blocks/buildable/` to render it. Then register both in the blocks index and the renderer."
 
 **Dev**: "Got it. And the block shows up automatically in the Pages editor?"
 
@@ -135,7 +131,7 @@ _Avoid_: Related posts, related projects, cross-links
 
 **Dev**: "What about the footer — I need social links in it."
 
-**Lead**: "Footer is part of the **Layout**. Add the field to the Footer **Block Config** in `src/globals/layout/footer/`, then update the **Block Component** in `src/components/layout/` to render them."
+**Lead**: "Footer is part of the **Layout**. Add the field to the Footer **Block Schema** in `src/globals/layout/footer/`, then update the **Block Component** in `src/components/layout/` to render them."
 
 **Dev**: "And the Google Analytics ID?"
 

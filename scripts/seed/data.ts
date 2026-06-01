@@ -115,7 +115,7 @@ export function buildTerminalBlock(override: Partial<TerminalBlockBlock> = {}): 
       { type: 'command', command: 'whoami', indent: false },
       {
         type: 'output',
-        output: 'zarif — systems engineer. code, games, music. in that order, or all at once.',
+        output: 'zarif: systems engineer. code, games, music. in that order, or all at once.',
         indent: true,
       },
       { type: 'command', command: 'cat ~/stack.txt', indent: false },
@@ -147,7 +147,7 @@ export function buildTerminalBlock(override: Partial<TerminalBlockBlock> = {}): 
 export function buildEqualizerBlock(override: Partial<EqualizerBlock> = {}): EqualizerBlock {
   return {
     blockType: 'equalizer',
-    track: 'Bonobo — Black Sands',
+    tracks: [{ title: 'Black Sands', author: 'Bonobo' }],
     ...override,
   }
 }
@@ -156,7 +156,7 @@ export function buildRichtextBlock(override: Partial<RichtextBlock> = {}): Richt
   return {
     blockType: 'richtext',
     content: createRichText(
-      "I build the connective tissue between platforms — APIs that talk to each other, CMS backends that editors actually enjoy using, and TypeScript architectures that stay maintainable as they grow. When I'm not in an editor, I'm probably deep in a game world or tinkering with AI agents. My work lives where a clear data model meets a real business need — and I bring the same obsessive attention to both.",
+      "I build the connective tissue between platforms: APIs that talk to each other, CMS backends that editors actually enjoy using, and TypeScript architectures that stay maintainable as they grow. When I'm not in an editor, I'm probably deep in a game world or tinkering with AI agents. My work lives where a clear data model meets a real business need, and I bring the same obsessive attention to both.",
     ),
     ...override,
   }
@@ -173,22 +173,22 @@ export function buildCardGridBlock(override: Partial<CardGridBlock> = {}): CardG
           {
             title: 'API Design & Architecture',
             description:
-              'REST, GraphQL, event-driven systems — contracts that survive the first production deploy.',
+              'REST, GraphQL, event-driven systems: contracts that survive the first production deploy.',
           },
           {
             title: 'CMS Architecture',
             description:
-              'Payload, Sanity, structured content pipelines — turning editorial workflows into type-safe APIs.',
+              'Payload, Sanity, structured content pipelines: turning editorial workflows into type-safe APIs.',
           },
           {
             title: 'System Integration',
             description:
-              'Syncing Gym Management Systems with modern CMS platforms — bridging systems that were never meant to talk.',
+              'Syncing Gym Management Systems with modern CMS platforms: bridging systems that were never meant to talk.',
           },
           {
             title: 'Data Modeling',
             description:
-              'PostgreSQL, MySQL, Prisma, migration strategy — schemas that reflect the domain, not the ORM.',
+              'PostgreSQL, MySQL, Prisma, migration strategy: schemas that reflect the domain, not the ORM.',
           },
         ],
       },
@@ -200,7 +200,7 @@ export function buildCardGridBlock(override: Partial<CardGridBlock> = {}): CardG
             type: 'text',
             heading: 'Background',
             content: createRichText(
-              "I'm Zarif — a software engineer focused on high-level systems design and integrations. I work across the full stack but my gravity is on the backend: API design, data modeling, CMS architecture, and making disparate systems interoperate. Outside of code, I'm deep into video games (strategy, RPGs, anything with good systems) and music (Bonobo, Four Tet, Floating Points — the kind of stuff you can code to for hours).",
+              "I'm Zarif, a software engineer focused on high-level systems design and integrations. I work across the full stack but my gravity is on the backend: API design, data modeling, CMS architecture, and making disparate systems interoperate. Outside of code, I'm deep into video games (strategy, RPGs, anything with good systems) and music (Bonobo, Four Tet, Floating Points: the kind of stuff you can code to for hours).",
             ),
             footnote: '',
           },
@@ -208,7 +208,7 @@ export function buildCardGridBlock(override: Partial<CardGridBlock> = {}): CardG
             type: 'text',
             heading: 'Approach',
             content: createRichText(
-              'I start with the business problem, not the technology. What data needs to move? Who needs to edit it? What breaks if this goes down? From there I work backward to architecture — choosing the right abstractions, keeping the surface area small, and writing code that the next engineer can understand in ten minutes. Same philosophy I bring to games: understand the system, then optimize.',
+              'I start with the business problem, not the technology. What data needs to move? Who needs to edit it? What breaks if this goes down? From there I work backward to architecture: choosing the right abstractions, keeping the surface area small, and writing code that the next engineer can understand in ten minutes. Same philosophy I bring to games: understand the system, then optimize.',
             ),
             footnote: '',
           },
@@ -263,7 +263,7 @@ export function buildContactBlock(override: Partial<ContactBlock> = {}): Contact
     blockType: 'contact',
     infoHeading: 'Contact',
     infoDescription: createRichText(
-      "I'm available for consulting, systems architecture engagements, and integration work. If you have a business problem that needs a technical system designed around it — or if you just want to talk about TypeScript architecture — reach out.",
+      "I'm available for consulting, systems architecture engagements, and integration work. If you have a business problem that needs a technical system designed around it, or if you just want to talk about TypeScript architecture, reach out.",
     ),
     email: 'zarif_al96@outlook.com',
     ...override,
@@ -276,9 +276,9 @@ export function buildEntryListBlock(override: Partial<EntryListBlock> = {}): Ent
     entries: [
       {
         label: 'Work',
-        title: 'Sauna GMS integration — anonymous group booking',
+        title: 'Sauna GMS integration: anonymous group booking',
         description:
-          'Building a custom integration layer on top of Mariana Tek GMS so that sauna customers can book multiple spots in one session without creating an account — something the GMS does not support natively.',
+          'Building a custom integration layer on top of Mariana Tek GMS so that sauna customers can book multiple spots in one session without creating an account; something the GMS does not support natively.',
       },
       {
         label: 'Learning',
@@ -290,13 +290,13 @@ export function buildEntryListBlock(override: Partial<EntryListBlock> = {}): Ent
         label: 'Side Project',
         title: 'AI-powered code review GitHub Action',
         description:
-          'Building a GitHub Action that uses AI to review pull requests — catching bugs, suggesting improvements, and enforcing code style before a human even looks at the code.',
+          'Building a GitHub Action that uses AI to review pull requests: catching bugs, suggesting improvements, and enforcing code style before a human even looks at the code.',
       },
       {
         label: 'Playing',
-        title: 'Path of Exile 2 — Monk Martial Artist ascendancy',
+        title: 'Path of Exile 2: Monk Martial Artist ascendancy',
         description:
-          'Deep into PoE 2 with a Monk build. The Martial Artist ascendancy adds a layer of combo-based combat that rewards system knowledge — my kind of game.',
+          'Deep into PoE 2 with a Monk build. The Martial Artist ascendancy adds a layer of combo-based combat that rewards system knowledge; my kind of game.',
       },
     ],
     ...override,

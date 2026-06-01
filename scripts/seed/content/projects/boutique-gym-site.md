@@ -12,12 +12,12 @@ Led the migration of a premium gym from a restrictive legacy Gym Management Syst
 
 ## Challenges
 
-**Spot booking system:** The GMS provided a basic booking view but it was visually generic, not mobile-friendly, and redirected users to a separate page. We built a custom booking experience from scratch — an airplane-style seat picker where users could see their spot positioned relative to key points in the classroom (trainers, equipment, exits). Custom layout images were uploaded in Sanity with a drag-and-drop spot placement interface.
+**Spot booking system:** The GMS provided a basic booking view but it was visually generic, not mobile-friendly, and redirected users to a separate page. We built a custom booking experience from scratch: an airplane-style seat picker where users could see their spot positioned relative to key points in the classroom (trainers, equipment, exits). Custom layout images were uploaded in Sanity with a drag-and-drop spot placement interface.
 
 **Class list viewer:** The GMS required users to manually select country and gym location before browsing classes. We built a unified class list component that could be embedded across multiple pages (gym detail, trainer detail, class type pages) with React Suspense for parallel data fetching and skeleton loading states.
 
 ## Outcome
 
-- **Dramatically improved booking UX** — users could visually select spots based on room layout
-- **Content updates no longer required multiple people** — editors managed everything in Sanity
+- **Dramatically improved booking UX:** users could visually select spots based on room layout
+- **Content updates no longer required multiple people:** editors managed everything in Sanity
 - **Consistent brand experience** across web and mobile platforms

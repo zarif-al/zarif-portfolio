@@ -1,6 +1,6 @@
 ## Overall Plan
 
-Payload has a robust JWT authentication implementation. I didn't have time to replace it with a custom auth layer that would match the same security guarantees, so instead I wanted to layer an OTP input on top of the existing login screen — keeping Payload's default login logic intact.
+Payload has a robust JWT authentication implementation. I didn't have time to replace it with a custom auth layer that would match the same security guarantees, so instead I wanted to layer an OTP input on top of the existing login screen, keeping Payload's default login logic intact.
 
 The approach: add an OTP step to the login flow, validate the code before forwarding credentials to Payload's own authentication endpoint.
 
@@ -43,9 +43,9 @@ export function hashWithHmac(value: string): string {
 }
 ```
 
-Then a server action to generate and send the OTP via email — it checks if the user exists, whether they're locked out, and if a valid OTP was already sent within the last minute. The code generates a random 6-digit OTP, hashes it, stores it in the OTP collection, and sends it to the user.
+Then a server action to generate and send the OTP via email; it checks if the user exists, whether they're locked out, and if a valid OTP was already sent within the last minute. The code generates a random 6-digit OTP, hashes it, stores it in the OTP collection, and sends it to the user.
 
-Next, a client-side OTP input component using Payload's `NumberField` with a "Send OTP" button. And a login form component that includes the email field, password field, and the OTP component — all wired to submit to a custom route handler.
+Next, a client-side OTP input component using Payload's `NumberField` with a "Send OTP" button. And a login form component that includes the email field, password field, and the OTP component, all wired to submit to a custom route handler.
 
 ### 3. Create the login route handler
 
@@ -55,7 +55,7 @@ A custom `/api/login` route that intercepts the login request:
 - On failure: returns Payload's translation-based error messages (consistent UX)
 - On success: forwards the request to Payload's default `/api/users/login` endpoint and marks the OTP as used
 
-If the OTP is invalid, login attempts are tracked and the account locks after the configured max attempts — matching Payload's built-in brute-force protection.
+If the OTP is invalid, login attempts are tracked and the account locks after the configured max attempts, matching Payload's built-in brute-force protection.
 
 ### 4. Overwrite English translations
 

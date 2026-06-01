@@ -1,6 +1,6 @@
 ## Overview
 
-Building a custom integration layer on top of Mariana Tek Gym Management System for a sauna business. The core challenge: the GMS only supports single-spot booking with mandatory user login — the client needs anonymous group booking where customers can reserve multiple spots in one session without creating an account.
+Building a custom integration layer on top of Mariana Tek Gym Management System for a sauna business. The core challenge: the GMS only supports single-spot booking with mandatory user login; the client needs anonymous group booking where customers can reserve multiple spots in one session without creating an account.
 
 ## Architecture Decisions
 
