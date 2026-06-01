@@ -1,4 +1,3 @@
-import { ViewTransition } from 'react'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayloadInstance } from '@/lib/payload'
@@ -27,11 +26,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     notFound()
   }
 
-  return (
-    <ViewTransition name="page" enter="page-enter" exit="page-exit" default="none" share="none">
-      <RenderBlocks blocks={page.blocksTab?.blocks} />
-    </ViewTransition>
-  )
+  return <RenderBlocks blocks={page.blocksTab?.blocks} />
 }
 
 export async function generateMetadata({
