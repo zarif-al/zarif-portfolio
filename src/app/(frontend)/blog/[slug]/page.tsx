@@ -1,3 +1,4 @@
+import { ViewTransition } from 'react'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { BackLink } from '@/components/primitives/back-link'
@@ -35,42 +36,44 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   const tagIds = (post.meta?.tags ?? []).map((t) => extractCollectionId(t))
 
   return (
-    <section className="py-[clamp(2rem,6vh,4rem)]">
-      <div className="mx-auto max-w-(--max-width) px-(--gutter)">
-        <BackLink href="/blog" label="Back to Blog" />
+    <ViewTransition name="page" enter="page-enter" exit="page-exit" default="none" share="none">
+      <section className="py-[clamp(2rem,6vh,4rem)]">
+        <div className="mx-auto max-w-(--max-width) px-(--gutter)">
+          <BackLink href="/blog" label="Back to Blog" />
 
-        <div className="mb-10">
-          <BlogKicker
-            trackNumber={post.meta?.trackNumber}
-            publishedDate={post.meta?.publishedDate}
-          />
+          <div className="mb-10">
+            <BlogKicker
+              trackNumber={post.meta?.trackNumber}
+              publishedDate={post.meta?.publishedDate}
+            />
 
-          <h1 className="font-display text-[clamp(1.75rem,4vw,2.75rem)] font-normal leading-[1.18] tracking-[-0.015em] text-fg">
-            {post.title}
-          </h1>
+            <h1 className="font-display text-[clamp(1.75rem,4vw,2.75rem)] font-normal leading-[1.18] tracking-[-0.015em] text-fg">
+              {post.title}
+            </h1>
 
-          {post.meta?.tags && post.meta.tags.length > 0 && (
-            <div className="mt-4">
-              <Tags tags={post.meta.tags} />
+            {post.meta?.tags && post.meta.tags.length > 0 && (
+              <div className="mt-4">
+                <Tags tags={post.meta.tags} />
+              </div>
+            )}
+          </div>
+
+          {post.meta?.body && (
+            <div>
+              <Richtext data={post.meta.body} />
             </div>
           )}
+
+          <RelatedItems
+            collection="blogs"
+            currentId={post.id}
+            tagIds={tagIds}
+            sort="-meta.publishedDate"
+            draft={isDraftMode}
+          />
         </div>
-
-        {post.meta?.body && (
-          <div>
-            <Richtext data={post.meta.body} />
-          </div>
-        )}
-
-        <RelatedItems
-          collection="blogs"
-          currentId={post.id}
-          tagIds={tagIds}
-          sort="-meta.publishedDate"
-          draft={isDraftMode}
-        />
-      </div>
-    </section>
+      </section>
+    </ViewTransition>
   )
 }
 
