@@ -1,12 +1,12 @@
 import type { Block } from 'payload'
-import { Hero } from './buildable/hero'
-import { Richtext } from './buildable/richtext'
-import { TerminalBlock } from './buildable/terminal-block'
-import { CardGrid } from './buildable/card-grid'
-import { CollectionList } from './buildable/collection-list'
-import { Contact } from './buildable/contact'
-import { EntryList } from './buildable/entry-list'
-import { Equalizer } from './buildable/equalizer'
+import { Hero } from './hero'
+import { Richtext } from './richtext'
+import { TerminalBlock } from './terminal-block'
+import { CardGrid } from './card-grid'
+import { CollectionList } from './collection-list'
+import { Contact } from './contact'
+import { EntryList } from './entry-list'
+import { Equalizer } from './equalizer'
 
 export const ALL_PAGE_BLOCKS: Block[] = [
   Hero,

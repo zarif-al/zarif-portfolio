@@ -6,8 +6,8 @@ import { CollectionListBlockComponent } from './collection-list'
 import { ContactBlockComponent } from './contact'
 import { EntryListBlockComponent } from './entry-list'
 import { EqualizerBlockComponent } from './equalizer'
-import { BLOCK_SPACING, BLOCK_SPACING_TOP, EQUALIZER_SPACING } from './constants'
-import type { RenderBlocksProps } from './types'
+import { BLOCK_SPACING, BLOCK_SPACING_TOP, EQUALIZER_SPACING } from '../constants'
+import type { RenderBlocksProps } from '../types'
 
 /**
  * Renders an ordered list of page blocks.
@@ -18,7 +18,7 @@ import type { RenderBlocksProps } from './types'
  * The first block additionally receives top padding (`BLOCK_SPACING_TOP`)
  * so the page opens with breathing room.
  */
-export function RenderBlocks({ blocks }: RenderBlocksProps) {
+export function RenderBuildableBlocks({ blocks }: RenderBlocksProps) {
   if (!blocks || blocks.length === 0) {
     return null
   }
