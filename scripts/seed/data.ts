@@ -90,7 +90,11 @@ export function buildFooter(_pages: {
         },
       },
       {
-        link: { type: 'external', label: 'zarif_al96@outlook.com', url: 'mailto:zarif_al96@outlook.com' },
+        link: {
+          type: 'external',
+          label: 'zarif_al96@outlook.com',
+          url: 'mailto:zarif_al96@outlook.com',
+        },
       },
     ],
   }

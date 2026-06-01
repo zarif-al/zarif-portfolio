@@ -234,7 +234,7 @@ const PROJECTS = [
     title: 'brightonSEO',
     kicker: 'Project',
     description:
-      'Led the rebuild of the world\'s largest search marketing conference website. Migrated from a rigid legacy system to a flexible Sanity + Next.js stack with a custom page builder, schedule table, and event management workflows.',
+      "Led the rebuild of the world's largest search marketing conference website. Migrated from a rigid legacy system to a flexible Sanity + Next.js stack with a custom page builder, schedule table, and event management workflows.",
     bodyFile: 'brightonseo.md',
     tags: ['Sanity', 'NextJS', 'Architecture'],
     techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ'],
@@ -275,7 +275,7 @@ const BLOGS = [
     trackNumber: 1,
     publishedDate: '2025-02-23',
     excerpt:
-      'An approach to implementing two-factor authentication in Payload CMS without replacing the default auth system: layering OTP verification on top of Payload\'s existing login flow.',
+      "An approach to implementing two-factor authentication in Payload CMS without replacing the default auth system: layering OTP verification on top of Payload's existing login flow.",
     bodyFile: 'payload-cms-2fa.md',
     tags: ['Payload', 'Architecture'],
   },

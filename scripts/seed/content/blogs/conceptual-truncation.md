@@ -1,10 +1,10 @@
-*"The customer is always right, in matters of taste."*
+_"The customer is always right, in matters of taste."_
 
 When principles and quotes are distilled into shorthand, they often lose their original nuance. In software development, one such concept is Don't Repeat Yourself. DRY encourages developers to reduce duplication, leading to more maintainable systems.
 
-But DRY was never intended to apply solely to code. The original quote from *The Pragmatic Programmer* states:
+But DRY was never intended to apply solely to code. The original quote from _The Pragmatic Programmer_ states:
 
-*"Every piece of knowledge must have a single, unambiguous, authoritative representation within a system."*
+_"Every piece of knowledge must have a single, unambiguous, authoritative representation within a system."_
 
 This extends far beyond code; it applies to business rules, project configurations, database schemas, documentation, and yes, code itself. Despite its merits, DRY is often applied too rigidly, creating more problems than it solves.
 
@@ -41,6 +41,7 @@ Not all repetition is bad. Sometimes duplicating code, what some call "WET" (Wri
 **Modularize, don't over-abstract.** Favor small, cohesive components with well-defined boundaries over monolithic abstractions. Modular systems achieve reuse without sacrificing flexibility.
 
 **Practice pragmatic DRY.** Ask yourself:
+
 - Does this abstraction simplify or complicate the code?
 - Will the shared logic evolve uniformly across all use cases?
 - Are the benefits of consolidation worth the trade-offs?

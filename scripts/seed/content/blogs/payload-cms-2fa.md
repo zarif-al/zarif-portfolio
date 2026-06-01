@@ -64,6 +64,7 @@ Since we forward to Payload's default endpoint, error messages come from Payload
 ### 5. Update Payload config
 
 Three changes to `payload.config.ts`:
+
 - **Translations:** Point `i18n.translations.en` to the custom translation file
 - **Route:** Move the default login route to `/deprecated-login` so Payload doesn't serve its own login page
 - **Custom view:** Register the custom `LoginView` component at the `/login` path
