@@ -30,6 +30,13 @@ type AnyBlock =
   | EntryListBlock
   | EqualizerBlock
 
+interface PageSeo {
+  /** SEO title. Falls back to the document `title` if omitted. */
+  title?: string
+  /** SEO description for search result snippets and Open Graph. */
+  description?: string
+}
+
 /**
  * Creates or updates a Page document in the CMS.
  * If a page with the given slug already exists it is updated in place;
@@ -40,6 +47,7 @@ export async function upsertPage(
   slug: string,
   title: string,
   blocks: AnyBlock[],
+  seo?: PageSeo,
 ): Promise<Page> {
   const existing = await payload.find({
     collection: 'pages',
@@ -62,6 +70,8 @@ export async function upsertPage(
       slug,
       blocksTab: { blocks },
       localSeoTab: {
+        title: seo?.title ?? title,
+        description: seo?.description ?? null,
         robotsConfig: {
           disableIndex: false,
           disableFollow: false,
