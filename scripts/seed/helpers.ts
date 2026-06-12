@@ -59,7 +59,21 @@ export async function upsertPage(
     return payload.update({
       collection: 'pages',
       id: existing.docs[0].id,
-      data: { title, slug, blocksTab: { blocks } },
+      data: {
+        title,
+        slug,
+        blocksTab: { blocks },
+        localSeoTab: {
+          title: seo?.title ?? title,
+          description: seo?.description ?? null,
+          robotsConfig: {
+            disableIndex: false,
+            disableFollow: false,
+            disableImageIndex: false,
+            disableSnippet: false,
+          },
+        },
+      },
     })
   }
 
