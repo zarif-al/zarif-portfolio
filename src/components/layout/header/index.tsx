@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { IPayloadHeader } from '@/payload-types'
 import { resolveLinks } from '@/utilities/resolve-link'
 import { NavLink } from './components/nav-link'
-import { MobileNav } from './components/mobile-nav'
+import { MobileNavWrapper } from './components/mobile-nav-wrapper'
 import { ThemeToggle } from './components/theme-toggle'
 
 export function HeaderComponent({ title, links }: IPayloadHeader) {
@@ -33,7 +33,7 @@ export function HeaderComponent({ title, links }: IPayloadHeader) {
         )}
 
         <div className="flex items-center gap-2">
-          {navLinkChildren && <MobileNav>{navLinkChildren}</MobileNav>}
+          {navLinkChildren && <MobileNavWrapper>{navLinkChildren}</MobileNavWrapper>}
           <ThemeToggle />
         </div>
       </div>
