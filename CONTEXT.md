@@ -119,6 +119,14 @@ _Avoid_: Tools, technologies, stack tags
 A **Non-Buildable Block** rendered on **Blog Post** and **Project** detail pages. Auto-generates up to 3 related items from the same collection that share at least one **Tag** with the current item. Self-fetching — pages just configure collection, sort, and tag IDs.
 _Avoid_: Related posts, related projects, cross-links
 
+**Diagram**:
+A visual explanation of a technical concept, process, workflow, or relationship — authored as text inside a Lexical code block and rendered as SVG on the frontend. Preferred over large blocks of prose for project descriptions and blog posts. Currently authored in Mermaid syntax.
+_Avoid_: Mermaid diagram, chart, graph, visualization
+
+**Code Snippet**:
+A syntax-highlighted code block with line numbers and a language label — rendered from a Lexical code block when the language is set to anything other than `diagram`. Used for sharing TypeScript, JavaScript, CSS, Bash, and other code examples in blog posts and project pages.
+_Avoid_: Code block, code listing, pre block
+
 ## Example dialogue
 
 **Dev**: "I need to add a testimonials section to every page."
