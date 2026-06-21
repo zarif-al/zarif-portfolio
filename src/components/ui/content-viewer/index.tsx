@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { MinusIcon, PlusIcon, RotateCcwIcon, XIcon } from 'lucide-react'
 import { useZoomPan } from './use-zoom-pan'
@@ -29,6 +29,14 @@ export function ContentViewer({ open, onOpenChange, children }: ContentViewerPro
     containerRef,
     wrapperRef,
   })
+
+  // Auto-fit content when the dialog opens.
+  useEffect(() => {
+    if (open) {
+      const raf = requestAnimationFrame(() => fitToViewport())
+      return () => cancelAnimationFrame(raf)
+    }
+  }, [open, fitToViewport])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
