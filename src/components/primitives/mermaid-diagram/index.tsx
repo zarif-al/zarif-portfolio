@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Maximize2Icon } from 'lucide-react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { useStore } from '@/store/global-store'
 import { useMermaidRender } from './use-mermaid-render'
@@ -60,9 +61,9 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
           <button
             onClick={() => setIsFullscreen(true)}
             className="font-mono text-[0.65rem] text-muted hover:text-fg transition-colors"
-            aria-label="View diagram fullscreen"
           >
-            Fullscreen
+            <Maximize2Icon className="size-4" />
+            <span className="sr-only">View diagram fullscreen</span>
           </button>
         </div>
         {/* Click target for fullscreen */}
