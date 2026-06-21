@@ -29,6 +29,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname, '..'),
     },
+    components: {
+      providers: [
+        {
+          path: '@/components/admin/monaco-mermaid-provider',
+          exportName: 'MonacoMermaidProvider',
+        },
+      ],
+    },
     livePreview: {
       collections: ['pages'],
       globals: ['layout'],

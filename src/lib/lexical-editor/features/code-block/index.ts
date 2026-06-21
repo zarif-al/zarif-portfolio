@@ -17,6 +17,7 @@ const LANGUAGES: Record<string, string> = {
   graphql: 'GraphQL',
   yaml: 'YAML',
   markdown: 'Markdown',
+  mermaid: 'Mermaid',
   text: 'Plain Text',
 }
 
