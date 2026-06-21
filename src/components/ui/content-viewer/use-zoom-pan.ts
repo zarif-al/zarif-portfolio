@@ -122,36 +122,34 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
 
   // ── fit to container ─────────────────────────────────────────────────
 
+  /**
+   * Measures the wrapper's first child via `scrollWidth` / `scrollHeight`
+   * and calculates a zoom level that fits the content inside the container
+   * (padding-aware).  Works for SVG, `<img>`, and any HTML element.
+   */
   const fitToViewport = useCallback(() => {
     const container = containerRef.current
     const wrapper = wrapperRef.current
     if (!container || !wrapper) {
       return
     }
-    const svgEl = wrapper.querySelector('svg')
 
-    let fitZoom = 1
-    if (svgEl) {
-      svgEl.style.maxWidth = 'none'
-      svgEl.style.maxHeight = 'none'
-
-      let w: number
-      let h: number
-      const viewBox = svgEl.viewBox?.baseVal
-      if (viewBox && viewBox.width > 0 && viewBox.height > 0) {
-        w = viewBox.width
-        h = viewBox.height
-      } else {
-        w = svgEl.clientWidth || svgEl.getBoundingClientRect().width || 800
-        h = svgEl.clientHeight || svgEl.getBoundingClientRect().height || 600
-      }
-
-      const rect = container.getBoundingClientRect()
-      const FIT_PADDING = 40
-      const vw = rect.width - FIT_PADDING * 2
-      const vh = rect.height - FIT_PADDING * 2
-      fitZoom = Math.min(vw / w, vh / h, ZOOM_MAX)
+    const content = wrapper.firstElementChild
+    if (!(content instanceof HTMLElement)) {
+      return
     }
+
+    const naturalW = content.scrollWidth
+    const naturalH = content.scrollHeight
+    if (naturalW === 0 || naturalH === 0) {
+      return
+    }
+
+    const rect = container.getBoundingClientRect()
+    const FIT_PADDING = 40
+    const vw = rect.width - FIT_PADDING * 2
+    const vh = rect.height - FIT_PADDING * 2
+    const fitZoom = Math.min(vw / naturalW, vh / naturalH, ZOOM_MAX)
 
     setBaseZoom(fitZoom)
     setZoom(fitZoom)
