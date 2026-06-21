@@ -28,6 +28,8 @@ export function ContentViewer({ open, onOpenChange, children }: ContentViewerPro
   const { zoom, displayZoom, pan, zoomIn, zoomOut, fitToViewport, panAreaProps } = useZoomPan({
     containerRef,
     wrapperRef,
+    zoomable: open,
+    pannable: open,
   })
 
   // Auto-fit content when the dialog opens.

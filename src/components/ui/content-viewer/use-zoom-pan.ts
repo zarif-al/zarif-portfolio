@@ -11,6 +11,10 @@ interface UseZoomPanOptions {
   containerRef: React.RefObject<HTMLElement | null>
   /** Element that receives the CSS transform. */
   wrapperRef: React.RefObject<HTMLElement | null>
+  /** When `false`, zoom input is ignored (wheel, pinch, buttons). */
+  zoomable: boolean
+  /** When `false`, pan input is ignored (mouse drag, touch drag). */
+  pannable: boolean
 }
 
 export interface UseZoomPanResult {
@@ -38,7 +42,12 @@ export interface UseZoomPanResult {
  * with `transform-origin: center center`.  All coordinates measure from
  * the container center.
  */
-export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): UseZoomPanResult {
+export function useZoomPan({
+  containerRef,
+  wrapperRef,
+  zoomable,
+  pannable,
+}: UseZoomPanOptions): UseZoomPanResult {
   const [zoom, setZoom] = useState(1)
   const [baseZoom, setBaseZoom] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
@@ -70,14 +79,17 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
   }
 
   /** Returns (x, y) measured from the center of the container. */
-  function toContainerCenter(clientX: number, clientY: number): { x: number; y: number } | null {
-    const c = containerRef.current
-    if (!c) {
-      return null
-    }
-    const r = c.getBoundingClientRect()
-    return { x: clientX - (r.left + r.width / 2), y: clientY - (r.top + r.height / 2) }
-  }
+  const toContainerCenter = useCallback(
+    (clientX: number, clientY: number): { x: number; y: number } | null => {
+      const c = containerRef.current
+      if (!c) {
+        return null
+      }
+      const r = c.getBoundingClientRect()
+      return { x: clientX - (r.left + r.width / 2), y: clientY - (r.top + r.height / 2) }
+    },
+    [containerRef],
+  )
 
   // ── zoom toward a point ──────────────────────────────────────────────
 
@@ -95,9 +107,7 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
       })
       setZoom(newZoom)
     },
-    // containerRef is a ref — stable.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [toContainerCenter],
   )
 
   // ── button zoom (toward container center) ────────────────────────────
@@ -154,14 +164,16 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
     setBaseZoom(fitZoom)
     setZoom(fitZoom)
     setPan({ x: 0, y: 0 })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [containerRef, wrapperRef])
 
   // ── Ctrl / Cmd + wheel zoom ──────────────────────────────────────────
+  //
+  // Listener is attached to `window` (not the container ref) because the
+  // container lives inside a portal and its ref may not be populated when
+  // the effect runs.  The `zoomable` flag gates behaviour.
 
   useEffect(() => {
-    const container = containerRef.current
-    if (!container) {
+    if (!zoomable) {
       return
     }
 
@@ -174,14 +186,14 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
       zoomToward(e.clientX, e.clientY, factor)
     }
 
-    container.addEventListener('wheel', handler, { passive: false })
-    return () => container.removeEventListener('wheel', handler)
-  }, [containerRef, zoomToward])
+    window.addEventListener('wheel', handler, { passive: false })
+    return () => window.removeEventListener('wheel', handler)
+  }, [zoomable, zoomToward])
 
   // ── mouse drag pan ───────────────────────────────────────────────────
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (e.button !== 0) {
+    if (e.button !== 0 || !pannable) {
       return
     }
     e.preventDefault()
@@ -192,7 +204,7 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
       panX: panRef.current.x,
       panY: panRef.current.y,
     }
-  }, [])
+  }, [pannable])
 
   useEffect(() => {
     if (!isDragging) {
@@ -218,15 +230,21 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
   }, [isDragging])
 
   // ── touch drag + pinch ───────────────────────────────────────────────
+  //
+  // Attached to `window` for the same portal timing reason as the wheel
+  // listener.  Coordinates are measured from the container ref at event
+  // time (guaranteed populated by then).
 
   useEffect(() => {
-    const container = containerRef.current
-    if (!container) {
+    if (!zoomable && !pannable) {
       return
     }
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 1) {
+        if (!pannable) {
+          return
+        }
         const t = e.touches.item(0)
         if (!t) {
           return
@@ -238,6 +256,9 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
           panY: panRef.current.y,
         }
       } else if (e.touches.length === 2) {
+        if (!zoomable) {
+          return
+        }
         const t0 = e.touches.item(0)
         const t1 = e.touches.item(1)
         if (!t0 || !t1) {
@@ -253,6 +274,9 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault()
       if (e.touches.length === 1) {
+        if (!pannable) {
+          return
+        }
         const t = e.touches.item(0)
         if (!t) {
           return
@@ -263,6 +287,9 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
           y: d.panY + (t.clientY - d.y),
         })
       } else if (e.touches.length === 2) {
+        if (!zoomable) {
+          return
+        }
         const t0 = e.touches.item(0)
         const t1 = e.touches.item(1)
         if (!t0 || !t1) {
@@ -273,7 +300,10 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
         const p = pinchRef.current
         const newZoom = clampZoom(p.zoomStart * (newDistance / p.distance))
 
-        const rect = container.getBoundingClientRect()
+        const rect = containerRef.current?.getBoundingClientRect()
+        if (!rect) {
+          return
+        }
         const cx = rect.left + rect.width / 2
         const cy = rect.top + rect.height / 2
         const mx = (t0.clientX + t1.clientX) / 2 - cx
@@ -286,13 +316,13 @@ export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): Use
       }
     }
 
-    container.addEventListener('touchstart', handleTouchStart, { passive: false })
-    container.addEventListener('touchmove', handleTouchMove, { passive: false })
+    window.addEventListener('touchstart', handleTouchStart, { passive: false })
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
     return () => {
-      container.removeEventListener('touchstart', handleTouchStart)
-      container.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
     }
-  }, [containerRef])
+  }, [zoomable, pannable, containerRef])
 
   // ── cursor ───────────────────────────────────────────────────────────
 
