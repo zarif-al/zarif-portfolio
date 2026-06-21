@@ -306,7 +306,8 @@ const PROJECTS = [
       { value: '10-11→2-3', label: 'Site Maintainers' },
       { value: '1 wk', label: 'Event Setup' },
     ],
-    keywords: 'brightonSEO, conference website, Sanity CMS, Next.js, search marketing, page builder, event management',
+    keywords:
+      'brightonSEO, conference website, Sanity CMS, Next.js, search marketing, page builder, event management',
   },
   {
     slug: 'boutique-gym-site',
@@ -318,7 +319,8 @@ const PROJECTS = [
     tags: ['Sanity', 'NextJS', 'Architecture', 'Integration'],
     techStack: ['Sanity', 'Next.js', 'NestJS', 'Flutter', 'PostgreSQL'],
     outcomeStats: [],
-    keywords: 'gym management system, GMS migration, Sanity CMS, Next.js, Flutter, NestJS, spot booking, class scheduling',
+    keywords:
+      'gym management system, GMS migration, Sanity CMS, Next.js, Flutter, NestJS, spot booking, class scheduling',
   },
   {
     slug: 'sauna-gms-integration',
@@ -356,7 +358,8 @@ const BLOGS = [
       'Much like "the customer is always right" was never about tolerating bad behavior, the DRY principle was never about eliminating code duplication; it\'s about eliminating duplication of knowledge. How conceptual truncation distorts software principles.',
     bodyFile: 'conceptual-truncation.md',
     tags: ['Concept'],
-    keywords: 'conceptual truncation, DRY principle, software principles, code duplication, software engineering philosophy',
+    keywords:
+      'conceptual truncation, DRY principle, software principles, code duplication, software engineering philosophy',
   },
   {
     slug: 'client-vs-server-fetching',
@@ -367,6 +370,7 @@ const BLOGS = [
       'Where should data queries be processed? The trade-off between cost, performance, and security when deciding between server-side and client-side data fetching.',
     bodyFile: 'client-vs-server-fetching.md',
     tags: ['Concept'],
-    keywords: 'client-side fetching, server-side fetching, SSR, Next.js, data fetching, performance, security',
+    keywords:
+      'client-side fetching, server-side fetching, SSR, Next.js, data fetching, performance, security',
   },
 ]
