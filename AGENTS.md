@@ -114,6 +114,30 @@ A file that contains a 49-line token array, a 40-line registration function, a t
 
 - **Do not re-export.** Import directly from the file where the symbol is defined. Never use barrel re-exports like `export { X } from './other-file'`.
 
+### Check centralized resources first
+
+Before writing any custom logic, check whether the project already has a canonical source for that concern:
+
+- **State** — Is this value already tracked in the project's state management layer?  Never write a listener, observer, or polling loop to replicate state that already exists.
+- **Utilities & constants** — Search the shared utility and constants directories.  Do not hard-code values or re-derive logic the project already exports.
+- **Primitives & components** — Search the shared component layer.  Do not rebuild low-level UI patterns that already exist.
+
+If you are unsure whether something already exists, research before writing.
+
+### Use the design system — don't bypass it
+
+The project has a designated component library / design system.  Never build a bespoke modal, dialog, drawer, tooltip, popover, dropdown, or toast.  Compose the design-system primitive instead.
+
+When a feature needs a UI pattern that the design system already covers, use the primitive — do not hand-roll a one-off version for one feature.  Patterns like modals and overlays are never single-use; they will be needed again.
+
+### Generalize for reuse
+
+When building a feature, identify sub-components and sub-logic that are not coupled to the specific feature:
+
+- If a piece of logic or UI is **general-purpose**, extract it to the nearest shared layer.
+- If a hook, component, or utility is useful beyond the feature that birthed it, move it out of the feature directory.
+- If you catch yourself writing a modal, an overlay, a gesture handler, or a state observer for a single feature — stop.  Extract it.  The next feature will need it too.
+
 ### Component architecture
 
 - **Pre-process data above the return.** Resolve links, filter items, transform data into render-ready shapes in variables at the top of the component. Never embed data transformation logic inside JSX maps.
