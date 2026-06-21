@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Maximize2Icon } from 'lucide-react'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { ContentViewer } from '@/components/ui/content-viewer'
 import { useStore } from '@/store/global-store'
 import { useMermaidRender } from './use-mermaid-render'
 
@@ -86,14 +86,9 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
         </div>
       </div>
 
-      <Dialog open={isFullscreen} onOpenChange={setIsFullscreen}>
-        <DialogContent className="max-w-[90vw] max-h-[85vh] p-0">
-          <div
-            className="flex items-center justify-center w-full h-full min-h-0 p-6 overflow-auto"
-            dangerouslySetInnerHTML={{ __html: svg }}
-          />
-        </DialogContent>
-      </Dialog>
+      <ContentViewer open={isFullscreen} onOpenChange={setIsFullscreen}>
+        <div dangerouslySetInnerHTML={{ __html: svg }} />
+      </ContentViewer>
     </>
   )
 }

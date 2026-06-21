@@ -1,0 +1,321 @@
+'use client'
+
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+
+const ZOOM_MAX = 10
+const SCROLL_ZOOM_FACTOR = 1.08
+const BUTTON_ZOOM_FACTOR = 1.25
+
+interface UseZoomPanOptions {
+  /** Element whose bounding rect is used as the coordinate origin. */
+  containerRef: React.RefObject<HTMLElement | null>
+  /** Element that receives the CSS transform. */
+  wrapperRef: React.RefObject<HTMLElement | null>
+}
+
+export interface UseZoomPanResult {
+  /** Absolute zoom level (1 = natural size). */
+  zoom: number
+  /** Zoom relative to the fit level (1 = fits container). */
+  displayZoom: number
+  /** Pan offset in pixels. */
+  pan: { x: number; y: number }
+  zoomIn: () => void
+  zoomOut: () => void
+  /** Reset zoom and pan so content fits the container. */
+  fitToViewport: () => void
+  /** Props to spread on the pan / zoom interaction area. */
+  panAreaProps: {
+    onMouseDown: (e: React.MouseEvent) => void
+    style: { cursor: 'grab' | 'grabbing' | 'default' }
+  }
+}
+
+/**
+ * Manages zoom, pan, and cross-platform gestures for a content viewer.
+ *
+ * Transforms are applied via `translate` + `scale` on the wrapper element
+ * with `transform-origin: center center`.  All coordinates measure from
+ * the container center.
+ */
+export function useZoomPan({ containerRef, wrapperRef }: UseZoomPanOptions): UseZoomPanResult {
+  const [zoom, setZoom] = useState(1)
+  const [baseZoom, setBaseZoom] = useState(1)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState(false)
+
+  // Mirrors so native handlers see current state without re-attaching.
+  const zoomRef = useRef(zoom)
+  const panRef = useRef(pan)
+  const baseZoomRef = useRef(baseZoom)
+
+  useLayoutEffect(() => {
+    zoomRef.current = zoom
+  })
+  useLayoutEffect(() => {
+    panRef.current = pan
+  })
+  useLayoutEffect(() => {
+    baseZoomRef.current = baseZoom
+  })
+
+  const dragStartRef = useRef({ x: 0, y: 0, panX: 0, panY: 0 })
+  const pinchRef = useRef({ distance: 0, zoomStart: 1 })
+
+  // ── helpers ──────────────────────────────────────────────────────────
+
+  /** Clamp absolute zoom so it never drops below the fit level. */
+  function clampZoom(z: number): number {
+    return Math.max(baseZoomRef.current, Math.min(ZOOM_MAX, z))
+  }
+
+  /** Returns (x, y) measured from the center of the container. */
+  function toContainerCenter(clientX: number, clientY: number): { x: number; y: number } | null {
+    const c = containerRef.current
+    if (!c) {
+      return null
+    }
+    const r = c.getBoundingClientRect()
+    return { x: clientX - (r.left + r.width / 2), y: clientY - (r.top + r.height / 2) }
+  }
+
+  // ── zoom toward a point ──────────────────────────────────────────────
+
+  const zoomToward = useCallback(
+    (clientX: number, clientY: number, factor: number) => {
+      const p = toContainerCenter(clientX, clientY)
+      if (!p) {
+        return
+      }
+      const z = zoomRef.current
+      const newZoom = clampZoom(z * factor)
+      setPan({
+        x: p.x - (p.x - panRef.current.x) * (newZoom / z),
+        y: p.y - (p.y - panRef.current.y) * (newZoom / z),
+      })
+      setZoom(newZoom)
+    },
+    // containerRef is a ref — stable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  )
+
+  // ── button zoom (toward container center) ────────────────────────────
+
+  const zoomIn = useCallback(() => {
+    const c = containerRef.current
+    if (!c) {
+      return
+    }
+    const r = c.getBoundingClientRect()
+    zoomToward(r.left + r.width / 2, r.top + r.height / 2, BUTTON_ZOOM_FACTOR)
+  }, [containerRef, zoomToward])
+
+  const zoomOut = useCallback(() => {
+    const c = containerRef.current
+    if (!c) {
+      return
+    }
+    const r = c.getBoundingClientRect()
+    zoomToward(r.left + r.width / 2, r.top + r.height / 2, 1 / BUTTON_ZOOM_FACTOR)
+  }, [containerRef, zoomToward])
+
+  // ── fit to container ─────────────────────────────────────────────────
+
+  const fitToViewport = useCallback(() => {
+    const container = containerRef.current
+    const wrapper = wrapperRef.current
+    if (!container || !wrapper) {
+      return
+    }
+    const svgEl = wrapper.querySelector('svg')
+
+    let fitZoom = 1
+    if (svgEl) {
+      svgEl.style.maxWidth = 'none'
+      svgEl.style.maxHeight = 'none'
+
+      let w: number
+      let h: number
+      const viewBox = svgEl.viewBox?.baseVal
+      if (viewBox && viewBox.width > 0 && viewBox.height > 0) {
+        w = viewBox.width
+        h = viewBox.height
+      } else {
+        w = svgEl.clientWidth || svgEl.getBoundingClientRect().width || 800
+        h = svgEl.clientHeight || svgEl.getBoundingClientRect().height || 600
+      }
+
+      const rect = container.getBoundingClientRect()
+      const FIT_PADDING = 40
+      const vw = rect.width - FIT_PADDING * 2
+      const vh = rect.height - FIT_PADDING * 2
+      fitZoom = Math.min(vw / w, vh / h, ZOOM_MAX)
+    }
+
+    setBaseZoom(fitZoom)
+    setZoom(fitZoom)
+    setPan({ x: 0, y: 0 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // ── Ctrl / Cmd + wheel zoom ──────────────────────────────────────────
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) {
+      return
+    }
+
+    const handler = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) {
+        return
+      }
+      e.preventDefault()
+      const factor = e.deltaY < 0 ? SCROLL_ZOOM_FACTOR : 1 / SCROLL_ZOOM_FACTOR
+      zoomToward(e.clientX, e.clientY, factor)
+    }
+
+    container.addEventListener('wheel', handler, { passive: false })
+    return () => container.removeEventListener('wheel', handler)
+  }, [containerRef, zoomToward])
+
+  // ── mouse drag pan ───────────────────────────────────────────────────
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (e.button !== 0) {
+      return
+    }
+    e.preventDefault()
+    setIsDragging(true)
+    dragStartRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      panX: panRef.current.x,
+      panY: panRef.current.y,
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isDragging) {
+      return
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const d = dragStartRef.current
+      setPan({
+        x: d.panX + (e.clientX - d.x),
+        y: d.panY + (e.clientY - d.y),
+      })
+    }
+
+    const handleMouseUp = () => setIsDragging(false)
+
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isDragging])
+
+  // ── touch drag + pinch ───────────────────────────────────────────────
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) {
+      return
+    }
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        const t = e.touches.item(0)
+        if (!t) {
+          return
+        }
+        dragStartRef.current = {
+          x: t.clientX,
+          y: t.clientY,
+          panX: panRef.current.x,
+          panY: panRef.current.y,
+        }
+      } else if (e.touches.length === 2) {
+        const t0 = e.touches.item(0)
+        const t1 = e.touches.item(1)
+        if (!t0 || !t1) {
+          return
+        }
+        pinchRef.current = {
+          distance: Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY),
+          zoomStart: zoomRef.current,
+        }
+      }
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault()
+      if (e.touches.length === 1) {
+        const t = e.touches.item(0)
+        if (!t) {
+          return
+        }
+        const d = dragStartRef.current
+        setPan({
+          x: d.panX + (t.clientX - d.x),
+          y: d.panY + (t.clientY - d.y),
+        })
+      } else if (e.touches.length === 2) {
+        const t0 = e.touches.item(0)
+        const t1 = e.touches.item(1)
+        if (!t0 || !t1) {
+          return
+        }
+
+        const newDistance = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY)
+        const p = pinchRef.current
+        const newZoom = clampZoom(p.zoomStart * (newDistance / p.distance))
+
+        const rect = container.getBoundingClientRect()
+        const cx = rect.left + rect.width / 2
+        const cy = rect.top + rect.height / 2
+        const mx = (t0.clientX + t1.clientX) / 2 - cx
+        const my = (t0.clientY + t1.clientY) / 2 - cy
+        setPan({
+          x: mx - (mx - panRef.current.x) * (newZoom / zoomRef.current),
+          y: my - (my - panRef.current.y) * (newZoom / zoomRef.current),
+        })
+        setZoom(newZoom)
+      }
+    }
+
+    container.addEventListener('touchstart', handleTouchStart, { passive: false })
+    container.addEventListener('touchmove', handleTouchMove, { passive: false })
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart)
+      container.removeEventListener('touchmove', handleTouchMove)
+    }
+  }, [containerRef])
+
+  // ── cursor ───────────────────────────────────────────────────────────
+
+  const cursor = isDragging
+    ? ('grabbing' as const)
+    : zoom > 1
+      ? ('grab' as const)
+      : ('default' as const)
+
+  const displayZoom = baseZoom > 0 ? (zoom - baseZoom) / baseZoom : 0
+
+  return {
+    zoom,
+    displayZoom,
+    pan,
+    zoomIn,
+    zoomOut,
+    fitToViewport,
+    panAreaProps: {
+      onMouseDown: handleMouseDown,
+      style: { cursor },
+    },
+  }
+}
