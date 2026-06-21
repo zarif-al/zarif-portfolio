@@ -42,10 +42,7 @@ export function ContentViewer({ open, onOpenChange, children }: ContentViewerPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="max-w-[90vw] sm:max-w-[90vw] p-0 gap-0"
-        showCloseButton={false}
-      >
+      <DialogContent className="max-w-[90vw] sm:max-w-[90vw] p-0 gap-0" showCloseButton={false}>
         <div className="h-[85vh] relative overflow-hidden bg-bg rounded-xl">
           {/* Toolbar */}
           <div

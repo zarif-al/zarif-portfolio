@@ -53,7 +53,7 @@ Every file must follow this top-to-bottom order. Separate each section with exac
 6. **Helper functions** — unexported functions that the main export delegates to
 7. **Module-level side effects** — `loader.init()`, subscription setups, etc. (see rules below)
 
-The main export always sits above its helpers.  A reader opening the file should see *what* it does before *how*.
+The main export always sits above its helpers. A reader opening the file should see _what_ it does before _how_.
 
 ### One concern per file
 
@@ -61,14 +61,14 @@ The main export always sits above its helpers.  A reader opening the file should
 - **Logic** (language registration, init routines) belongs in its own file — not stuffed into a component.
 - **UI** (React providers, components) imports and uses the data and logic modules.
 
-A file that contains a 49-line token array, a 40-line registration function, a type, *and* a React component is doing too much. Split it into `constants.ts`, `register-mermaid-language.ts`, and `monaco-mermaid-provider.tsx`.
+A file that contains a 49-line token array, a 40-line registration function, a type, _and_ a React component is doing too much. Split it into `constants.ts`, `register-mermaid-language.ts`, and `monaco-mermaid-provider.tsx`.
 
 ### Type discipline
 
-- **Never use `any`.**  The eslint config enforces `@typescript-eslint/no-explicit-any: error` — do not disable it.
+- **Never use `any`.** The eslint config enforces `@typescript-eslint/no-explicit-any: error` — do not disable it.
 - For external modules whose types are unavailable at build time (e.g. Monaco loaded from CDN), create a minimal `.d.ts` declaration file with only the members you use.
 - If a value genuinely can be anything, use `unknown` and narrow it with type guards before use.
-- **Never use blanket `eslint-disable` comments.**  Each disable must be a single-line `// eslint-disable-next-line` with a trailing comment that justifies *why* it is unavoidable.  Example:
+- **Never use blanket `eslint-disable` comments.** Each disable must be a single-line `// eslint-disable-next-line` with a trailing comment that justifies _why_ it is unavoidable. Example:
   ```ts
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- monaco.languages is only available at runtime; types are loaded from CDN
   ```
@@ -76,8 +76,9 @@ A file that contains a 49-line token array, a 40-line registration function, a t
 
 ### Error handling
 
-- **Every promise must handle rejection.**  A bare `.then(...)` without `.catch(...)` is a bug.  Use `.catch()` or a `try/catch` around `await`.
-- **Module-level side effects must be wrapped** with error handling and a JSDOC block that explains *why* the code runs at module scope (not inside a component or hook).  Example:
+- **Every promise must handle rejection.** A bare `.then(...)` without `.catch(...)` is a bug. Use `.catch()` or a `try/catch` around `await`.
+- **Module-level side effects must be wrapped** with error handling and a JSDOC block that explains _why_ the code runs at module scope (not inside a component or hook). Example:
+
   ```ts
   /**
    * Register the Mermaid Monarch tokenizer before any CodeField mounts.
@@ -90,7 +91,9 @@ A file that contains a 49-line token array, a 40-line registration function, a t
   function registerMermaidLanguage(): void {
     loader
       .init()
-      .then((monaco) => { /* ... */ })
+      .then((monaco) => {
+        /* ... */
+      })
       .catch((err) => {
         if (err?.type !== 'cancelation') {
           console.error('Failed to register Mermaid language for Monaco:', err)
@@ -103,8 +106,8 @@ A file that contains a 49-line token array, a 40-line registration function, a t
 
 ### JSDOC
 
-- **Every exported symbol must have a JSDOC comment.**  Functions, components, types, and exported constants.
-- **Helper functions must have JSDOC** that describes *what* the function does and *why* it exists (not just how).
+- **Every exported symbol must have a JSDOC comment.** Functions, components, types, and exported constants.
+- **Helper functions must have JSDOC** that describes _what_ the function does and _why_ it exists (not just how).
 - Use `@param`, `@returns`, and `@throws` tags consistently.
 - JSDOC sits immediately above the symbol it describes — no blank line between the comment and the declaration.
 
@@ -118,17 +121,17 @@ A file that contains a 49-line token array, a 40-line registration function, a t
 
 Before writing any custom logic, check whether the project already has a canonical source for that concern:
 
-- **State** — Is this value already tracked in the project's state management layer?  Never write a listener, observer, or polling loop to replicate state that already exists.
-- **Utilities & constants** — Search the shared utility and constants directories.  Do not hard-code values or re-derive logic the project already exports.
-- **Primitives & components** — Search the shared component layer.  Do not rebuild low-level UI patterns that already exist.
+- **State** — Is this value already tracked in the project's state management layer? Never write a listener, observer, or polling loop to replicate state that already exists.
+- **Utilities & constants** — Search the shared utility and constants directories. Do not hard-code values or re-derive logic the project already exports.
+- **Primitives & components** — Search the shared component layer. Do not rebuild low-level UI patterns that already exist.
 
 If you are unsure whether something already exists, research before writing.
 
 ### Use the design system — don't bypass it
 
-The project has a designated component library / design system.  Never build a bespoke modal, dialog, drawer, tooltip, popover, dropdown, or toast.  Compose the design-system primitive instead.
+The project has a designated component library / design system. Never build a bespoke modal, dialog, drawer, tooltip, popover, dropdown, or toast. Compose the design-system primitive instead.
 
-When a feature needs a UI pattern that the design system already covers, use the primitive — do not hand-roll a one-off version for one feature.  Patterns like modals and overlays are never single-use; they will be needed again.
+When a feature needs a UI pattern that the design system already covers, use the primitive — do not hand-roll a one-off version for one feature. Patterns like modals and overlays are never single-use; they will be needed again.
 
 ### Generalize for reuse
 
@@ -136,7 +139,7 @@ When building a feature, identify sub-components and sub-logic that are not coup
 
 - If a piece of logic or UI is **general-purpose**, extract it to the nearest shared layer.
 - If a hook, component, or utility is useful beyond the feature that birthed it, move it out of the feature directory.
-- If you catch yourself writing a modal, an overlay, a gesture handler, or a state observer for a single feature — stop.  Extract it.  The next feature will need it too.
+- If you catch yourself writing a modal, an overlay, a gesture handler, or a state observer for a single feature — stop. Extract it. The next feature will need it too.
 
 ### Component architecture
 

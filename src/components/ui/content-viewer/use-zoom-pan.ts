@@ -192,19 +192,22 @@ export function useZoomPan({
 
   // ── mouse drag pan ───────────────────────────────────────────────────
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (e.button !== 0 || !pannable) {
-      return
-    }
-    e.preventDefault()
-    setIsDragging(true)
-    dragStartRef.current = {
-      x: e.clientX,
-      y: e.clientY,
-      panX: panRef.current.x,
-      panY: panRef.current.y,
-    }
-  }, [pannable])
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      if (e.button !== 0 || !pannable) {
+        return
+      }
+      e.preventDefault()
+      setIsDragging(true)
+      dragStartRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+        panX: panRef.current.x,
+        panY: panRef.current.y,
+      }
+    },
+    [pannable],
+  )
 
   useEffect(() => {
     if (!isDragging) {
