@@ -1,39 +1,8 @@
 'use client'
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-
-const ZOOM_MAX = 10
-const SCROLL_ZOOM_FACTOR = 1.08
-const BUTTON_ZOOM_FACTOR = 1.25
-
-interface UseZoomPanOptions {
-  /** Element whose bounding rect is used as the coordinate origin. */
-  containerRef: React.RefObject<HTMLElement | null>
-  /** Element that receives the CSS transform. */
-  wrapperRef: React.RefObject<HTMLElement | null>
-  /** When `false`, zoom input is ignored (wheel, pinch, buttons). */
-  zoomable: boolean
-  /** When `false`, pan input is ignored (mouse drag, touch drag). */
-  pannable: boolean
-}
-
-export interface UseZoomPanResult {
-  /** Absolute zoom level (1 = natural size). */
-  zoom: number
-  /** Zoom relative to the fit level (1 = fits container). */
-  displayZoom: number
-  /** Pan offset in pixels. */
-  pan: { x: number; y: number }
-  zoomIn: () => void
-  zoomOut: () => void
-  /** Reset zoom and pan so content fits the container. */
-  fitToViewport: () => void
-  /** Props to spread on the pan / zoom interaction area. */
-  panAreaProps: {
-    onMouseDown: (e: React.MouseEvent) => void
-    style: { cursor: 'grab' | 'grabbing' | 'default' }
-  }
-}
+import { ZOOM_MAX, FIT_MAX_UPSCALE, SCROLL_ZOOM_FACTOR, BUTTON_ZOOM_FACTOR } from './constants'
+import type { UseZoomPanOptions, UseZoomPanResult } from './interface'
 
 /**
  * Manages zoom, pan, and cross-platform gestures for a content viewer.
@@ -159,7 +128,7 @@ export function useZoomPan({
     const FIT_PADDING = 40
     const vw = rect.width - FIT_PADDING * 2
     const vh = rect.height - FIT_PADDING * 2
-    const fitZoom = Math.min(vw / naturalW, vh / naturalH, ZOOM_MAX)
+    const fitZoom = Math.min(vw / naturalW, vh / naturalH, FIT_MAX_UPSCALE)
 
     setBaseZoom(fitZoom)
     setZoom(fitZoom)
