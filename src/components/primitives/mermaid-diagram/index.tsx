@@ -68,7 +68,7 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
         </div>
         {/* Click target for fullscreen */}
         <div
-          className="flex justify-center p-4 cursor-pointer"
+          className="flex justify-center items-center p-4 cursor-pointer min-h-[160px]"
           onClick={() => setIsFullscreen(true)}
           role="button"
           tabIndex={0}
@@ -79,8 +79,11 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
             }
           }}
         >
+          {/* Mermaid sets style="max-width: Npx" inline on the <svg>.  max-w-none!
+              uses !important to tear down that cap.  w-full on the wrapper gives
+              the SVG's width="100%" a definite value to resolve against. */}
           <div
-            className="[&>svg]:max-w-full [&>svg]:h-auto"
+            className="w-full [&>svg]:h-auto [&>svg]:max-w-none!"
             dangerouslySetInnerHTML={{ __html: svg }}
           />
         </div>
