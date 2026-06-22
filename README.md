@@ -31,5 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) for the frontend and [http:/
 
 The following features are remaining:
 
+- [ ] Add Husky
+- [ ] Add image support
 - [ ] Enable preview for pages: Currently the pages, header and footer have no preview.
 - [ ] On demand revalidation: Implement the plugin version of Kohere's on demand revalidation. Make sure the logic runs in jobs rather than in after save hooks
