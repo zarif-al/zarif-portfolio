@@ -5,6 +5,7 @@ import { Maximize2Icon } from 'lucide-react'
 import { ContentViewer } from '@/components/ui/content-viewer'
 import { useStore } from '@/store/global-store'
 import { useMermaidRender } from './use-mermaid-render'
+import { MAX_MERMAID_UPSCALE } from './use-mermaid-render/constants'
 
 /** Props for {@link MermaidDiagram}. */
 interface MermaidDiagramProps {
@@ -22,7 +23,7 @@ interface MermaidDiagramProps {
 export function MermaidDiagram({ code }: MermaidDiagramProps) {
   const theme = useStore((s) => s.theme)
   const isDark = theme === 'dark'
-  const { svg, error } = useMermaidRender(code, isDark)
+  const { svg, error, naturalWidth } = useMermaidRender(code, isDark)
   const [isFullscreen, setIsFullscreen] = useState(false)
 
   // ── error state ──
@@ -79,11 +80,15 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
             }
           }}
         >
-          {/* Mermaid sets style="max-width: Npx" inline on the <svg>.  max-w-none!
-              uses !important to tear down that cap.  w-full on the wrapper gives
-              the SVG's width="100%" a definite value to resolve against. */}
+          {/* max-w-none! tears down Mermaid's inline cap so the SVG can grow.
+              width is set via min(100%, viewBox × MAX_UPSCALE) so small diagrams
+              are capped without using max-width which can conflict in flex layouts. */}
           <div
-            className="w-full [&>svg]:h-auto [&>svg]:max-w-none!"
+            className="[&>svg]:h-auto [&>svg]:max-w-none!"
+            style={{
+              width:
+                naturalWidth > 0 ? `min(100%, ${naturalWidth * MAX_MERMAID_UPSCALE}px)` : '100%',
+            }}
             dangerouslySetInnerHTML={{ __html: svg }}
           />
         </div>
