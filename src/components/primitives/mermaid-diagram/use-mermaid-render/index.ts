@@ -1,14 +1,7 @@
 'use client'
 
 import { useEffect, useId, useState } from 'react'
-
-/** Return value of {@link useMermaidRender}. */
-interface UseMermaidRenderResult {
-  /** Rendered SVG markup, or `null` while loading / on error. */
-  svg: string | null
-  /** Parse or render error message, or `null` on success. */
-  error: string | null
-}
+import type { UseMermaidRenderResult } from './interface'
 
 /**
  * Renders a Mermaid diagram string to SVG with security defaults and
@@ -22,6 +15,7 @@ interface UseMermaidRenderResult {
 export function useMermaidRender(code: string, isDark: boolean): UseMermaidRenderResult {
   const [svg, setSvg] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [naturalWidth, setNaturalWidth] = useState(0)
 
   const id = `mermaid-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`
 
@@ -35,6 +29,7 @@ export function useMermaidRender(code: string, isDark: boolean): UseMermaidRende
     async function render(): Promise<void> {
       setError(null)
       setSvg(null)
+      setNaturalWidth(0)
 
       try {
         const mermaid = await import('mermaid')
@@ -59,6 +54,11 @@ export function useMermaidRender(code: string, isDark: boolean): UseMermaidRende
           return
         }
 
+        const vb = result.svg.match(/viewBox="(-?[\d.]+)\s+(-?[\d.]+)\s+([\d.]+)\s+([\d.]+)"/)
+        if (vb) {
+          setNaturalWidth(parseFloat(vb[3]))
+        }
+
         setSvg(result.svg)
       } catch (err) {
         if (!controller.signal.aborted) {
@@ -72,5 +72,5 @@ export function useMermaidRender(code: string, isDark: boolean): UseMermaidRende
     return () => controller.abort()
   }, [code, isDark, id])
 
-  return { svg, error }
+  return { svg, error, naturalWidth }
 }
