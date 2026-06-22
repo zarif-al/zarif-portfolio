@@ -298,16 +298,16 @@ const PROJECTS = [
     title: 'brightonSEO',
     kicker: 'Project',
     description:
-      "Led the rebuild of the world's largest search marketing conference website. Migrated from a rigid legacy system to a flexible Sanity + Next.js stack with a custom page builder, schedule table, and event management workflows.",
+      'Rebuilt the world\'s largest search marketing conference website. Replaced a loose WordPress setup with a Sanity + Next.js stack featuring a flexible page builder, a complex schedule table assembled from six levels of related data, and a personalized attendee agenda.',
     bodyFile: 'brightonseo.md',
     tags: ['Sanity', 'NextJS', 'Architecture'],
-    techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ'],
+    techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ', 'Supabase'],
     outcomeStats: [
-      { value: '10-11→2-3', label: 'Site Maintainers' },
+      { value: '15-20→2-3', label: 'Site Maintainers' },
       { value: '1 wk', label: 'Event Setup' },
     ],
     keywords:
-      'brightonSEO, conference website, Sanity CMS, Next.js, search marketing, page builder, event management',
+      'brightonSEO, conference website, Sanity CMS, Next.js, page builder, schedule table, GROQ, Supabase, event management',
   },
   {
     slug: 'boutique-gym-site',
