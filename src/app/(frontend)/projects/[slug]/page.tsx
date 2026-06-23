@@ -63,19 +63,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </div>
         )}
 
-        {project.meta?.outcomeStats && project.meta.outcomeStats.length > 0 && (
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-px bg-border border border-border my-8">
-            {project.meta.outcomeStats.map((stat, i) => (
-              <div key={i} className="bg-surface px-4 py-5 text-center">
-                <div className="font-display text-2xl text-fg">{stat.value}</div>
-                <div className="font-mono text-[0.65rem] uppercase tracking-[0.08em] text-muted mt-[0.3rem]">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
         {project.meta?.techStack && project.meta.techStack.length > 0 && (
           <div className="flex flex-wrap gap-[0.4rem] mt-8 pt-6 border-t border-border">
             {project.meta.techStack.map((s) => (
