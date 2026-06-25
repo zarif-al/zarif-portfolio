@@ -298,7 +298,7 @@ const PROJECTS = [
     title: 'brightonSEO',
     kicker: 'Project',
     description:
-      'Rebuilt the world\'s largest search marketing conference website. Replaced a loose WordPress setup with a Sanity + Next.js stack featuring a flexible page builder, a complex schedule table assembled from six levels of related data, and a personalized attendee agenda.',
+      "Rebuilt the world's largest search marketing conference website. Replaced a loose WordPress setup with a Sanity + Next.js stack featuring a flexible page builder, a complex schedule table assembled from six levels of related data, and a personalized attendee agenda.",
     bodyFile: 'brightonseo.md',
     tags: ['Sanity', 'NextJS', 'Architecture'],
     techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ', 'Supabase'],
@@ -318,7 +318,11 @@ const PROJECTS = [
     bodyFile: 'boutique-gym-site.md',
     tags: ['Sanity', 'NextJS', 'Architecture', 'Integration'],
     techStack: ['Sanity', 'Next.js', 'NestJS', 'Flutter', 'PostgreSQL'],
-    outcomeStats: [],
+    outcomeStats: [
+      { value: 'Custom seat-picker', label: 'Booking UX' },
+      { value: 'Self-serve', label: 'Content Updates' },
+      { value: 'Cross-platform', label: 'Delivery' },
+    ],
     keywords:
       'gym management system, GMS migration, Sanity CMS, Next.js, Flutter, NestJS, spot booking, class scheduling',
   },
