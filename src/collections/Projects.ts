@@ -67,7 +67,15 @@ export const Projects: CollectionConfig = {
               name: 'body',
               type: 'richText',
               required: true,
-              editor: customLexicalEditor({ codeBlock: true, outcomeStats: true }),
+              editor: customLexicalEditor({ codeBlock: true }),
+            },
+            {
+              name: 'outcomeStats',
+              type: 'array',
+              fields: [
+                { name: 'label', type: 'text', required: true },
+                { name: 'value', type: 'text', required: true },
+              ],
             },
           ],
         },

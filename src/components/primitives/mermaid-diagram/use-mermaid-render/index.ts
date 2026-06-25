@@ -33,6 +33,7 @@ export function useMermaidRender(code: string, isDark: boolean): UseMermaidRende
 
       try {
         const mermaid = await import('mermaid')
+
         if (controller.signal.aborted) {
           return
         }
@@ -55,7 +56,8 @@ export function useMermaidRender(code: string, isDark: boolean): UseMermaidRende
         }
 
         const vb = result.svg.match(/viewBox="(-?[\d.]+)\s+(-?[\d.]+)\s+([\d.]+)\s+([\d.]+)"/)
-        if (vb) {
+
+        if (vb && vb[3]) {
           setNaturalWidth(parseFloat(vb[3]))
         }
 
