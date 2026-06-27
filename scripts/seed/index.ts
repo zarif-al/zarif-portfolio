@@ -37,6 +37,7 @@ function buildProjectData(
       tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
       techStack: p.techStack,
       outcomeStats: p.outcomeStats,
+      involvement: p.involvement,
       kicker: p.kicker,
     },
     localSeoTab: {
@@ -306,6 +307,11 @@ const PROJECTS = [
       { value: '15-20→2-3', label: 'Site Maintainers' },
       { value: '1 wk', label: 'Event Setup' },
     ],
+    involvement: {
+      role: 'Lead Developer & Architect',
+      duration: '6 months',
+      team: '5-person team',
+    },
     keywords:
       'brightonSEO, conference website, Sanity CMS, Next.js, page builder, schedule table, GROQ, Supabase, event management',
   },
@@ -323,6 +329,7 @@ const PROJECTS = [
       { value: 'Self-serve', label: 'Content Updates' },
       { value: 'Cross-platform', label: 'Delivery' },
     ],
+    involvement: {},
     keywords:
       'gym management system, GMS migration, Sanity CMS, Next.js, Flutter, NestJS, spot booking, class scheduling',
   },
@@ -336,6 +343,7 @@ const PROJECTS = [
     tags: ['Integration'],
     techStack: ['NestJS', 'Mariana Tek', 'Next.js', 'Sanity'],
     outcomeStats: [],
+    involvement: {},
     draft: true,
     keywords: 'Mariana Tek, GMS integration, anonymous group booking, sauna, NestJS, Sanity CMS',
   },

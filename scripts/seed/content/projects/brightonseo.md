@@ -1,14 +1,10 @@
-- **Role:** Lead Developer &amp; Architect
-- **Stack:** Sanity CMS, Next.js, GROQ, Supabase, TypeScript
-- **Outcome:** Maintainers reduced from 15–20 to 2–3. New events launched in one week instead of two to three.
+## The Problem: Outgrowing a Page-Based Architecture
 
-## The Problem: A CMS That Created More Friction Than Freedom
+brightonSEO is the world's largest search marketing conference. Behind the scenes, their event management had grown organically alongside the conference itself: a WordPress setup that had served them well through years of expansion. But the content model had kept pace with the conference by adding pages, not by adding structure. Every entity — schedule, speakers, sponsors, courses — was a hand-authored page. There was no notion of an "event" as data, just pages that described one.
 
-brightonSEO is the world's largest search marketing conference. Behind the scenes, their event management ran on a loose WordPress setup that had grown organically over years with no consistent structure. Content was scattered across pages, posts, and plugins with no unified model tying it together. There was no concept of an "event" as a data entity; just pages that happened to describe one.
+As the conference scaled, this page-based workflow became the bottleneck. Each edition required a large team to rebuild the site by hand, with no structured way to carry prior work forward. Content that should have been reusable — speaker bios, talk descriptions, sponsor profiles — had to be recreated every time. Past events faded into disconnected archives, if they were preserved at all.
 
-Every new conference meant hiring 15–20 freelancers to manually wipe site content and re-enter everything from scratch. Old events simply disappeared. There was no archive. The schedule, speaker bios, sponsor lists, and course descriptions all lived as free-form HTML, making them unsearchable, unlinked, and impossible to reuse across event editions.
-
-The team needed to go from "a collection of pages about events" to "a platform that understands events as structured data."
+The editorial vision was there. What was missing was a system that could express it in structured, reusable terms. The team needed to go from "a collection of pages about events" to "a platform that understands events as data."
 
 ## The Architecture
 
