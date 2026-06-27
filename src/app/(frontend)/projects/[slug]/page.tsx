@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import { BackLink } from '@/components/primitives/back-link'
 import { Tags } from '@/components/primitives/tags'
 import { Richtext } from '@/components/primitives/richtext'
-import { OutcomeStats } from '@/components/blocks/non-buildable/outcome-stats'
+import { OutcomeStats } from './components/outcome-stats'
+import { DetailRibbon } from './components/detail-ribbon'
 import { RelatedItems } from '@/components/blocks/non-buildable/related-items'
 import { getPayloadInstance } from '@/lib/payload'
 import type { Metadata } from 'next'
@@ -60,14 +61,17 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           )}
         </div>
 
+        {/* ── Detail ribbon ── */}
+        <DetailRibbon involvement={project.meta?.involvement} />
+
         {/* ── Outcomes ── */}
-        <div className="mb-10">
+        <div className="mb-10 mt-10">
           <OutcomeStats stats={project.meta?.outcomeStats} />
         </div>
 
         {/* ── Content body ── */}
         {project.meta?.body && (
-          <div className="max-w-2xl">
+          <div className="max-w-2xl mx-auto">
             <Richtext data={project.meta.body} />
           </div>
         )}
