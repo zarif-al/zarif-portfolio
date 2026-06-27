@@ -566,6 +566,11 @@ export interface Project {
           id?: string | null;
         }[]
       | null;
+    involvement?: {
+      role?: string | null;
+      duration?: string | null;
+      team?: string | null;
+    };
   };
   updatedAt: string;
   createdAt: string;
@@ -841,6 +846,13 @@ export interface ProjectsSelect<T extends boolean = true> {
               label?: T;
               value?: T;
               id?: T;
+            };
+        involvement?:
+          | T
+          | {
+              role?: T;
+              duration?: T;
+              team?: T;
             };
       };
   updatedAt?: T;
