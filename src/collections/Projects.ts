@@ -60,6 +60,23 @@ export const Projects: CollectionConfig = {
               required: true,
             },
             {
+              name: 'outcomeStats',
+              type: 'array',
+              fields: [
+                { name: 'label', type: 'text', required: true },
+                { name: 'value', type: 'text', required: true },
+              ],
+            },
+            {
+              name: 'involvement',
+              type: 'group',
+              fields: [
+                { name: 'role', type: 'text' },
+                { name: 'duration', type: 'text' },
+                { name: 'team', type: 'text' },
+              ],
+            },
+            {
               name: 'kicker',
               type: 'text',
             },
@@ -68,14 +85,6 @@ export const Projects: CollectionConfig = {
               type: 'richText',
               required: true,
               editor: customLexicalEditor({ codeBlock: true }),
-            },
-            {
-              name: 'outcomeStats',
-              type: 'array',
-              fields: [
-                { name: 'label', type: 'text', required: true },
-                { name: 'value', type: 'text', required: true },
-              ],
             },
           ],
         },
