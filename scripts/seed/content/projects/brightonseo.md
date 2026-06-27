@@ -1,4 +1,4 @@
-## The Problem: Outgrowing a Page-Based Architecture
+## The Problem: Outgrowing a Page-Based Content Structure
 
 brightonSEO is the world's largest search marketing conference. Behind the scenes, their event management had grown organically alongside the conference itself: a WordPress setup that had served them well through years of expansion. But the content model had kept pace with the conference by adding pages, not by adding structure. Every entity — schedule, speakers, sponsors, courses — was a hand-authored page. There was no notion of an "event" as data, just pages that described one.
 
