@@ -543,6 +543,18 @@ export interface Project {
     tags?: (string | Tag)[] | null;
     techStack?: string[] | null;
     description: string;
+    outcomeStats?:
+      | {
+          label: string;
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+    involvement?: {
+      role?: string | null;
+      duration?: string | null;
+      team?: string | null;
+    };
     kicker?: string | null;
     body: {
       root: {
@@ -558,18 +570,6 @@ export interface Project {
         version: number;
       };
       [k: string]: unknown;
-    };
-    outcomeStats?:
-      | {
-          label: string;
-          value: string;
-          id?: string | null;
-        }[]
-      | null;
-    involvement?: {
-      role?: string | null;
-      duration?: string | null;
-      team?: string | null;
     };
   };
   updatedAt: string;
@@ -838,8 +838,6 @@ export interface ProjectsSelect<T extends boolean = true> {
         tags?: T;
         techStack?: T;
         description?: T;
-        kicker?: T;
-        body?: T;
         outcomeStats?:
           | T
           | {
@@ -854,6 +852,8 @@ export interface ProjectsSelect<T extends boolean = true> {
               duration?: T;
               team?: T;
             };
+        kicker?: T;
+        body?: T;
       };
   updatedAt?: T;
   createdAt?: T;
