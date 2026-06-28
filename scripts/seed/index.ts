@@ -385,4 +385,16 @@ const BLOGS = [
     keywords:
       'client-side fetching, server-side fetching, SSR, Next.js, data fetching, performance, security',
   },
+  {
+    slug: 'building-schedule-table-groq-query',
+    title: 'Building a Conference Schedule Table with One GROQ Query',
+    trackNumber: 4,
+    publishedDate: '2025-06-28',
+    excerpt:
+      'How a single GROQ query resolves six entity levels — Event, Day Schedule, Time Slot, Session, Talk, and Person — to build a conference schedule table, using conditional projection, dereferencing, and scope traversal.',
+    bodyFile: 'building-schedule-table-groq-query.md',
+    tags: ['Sanity', 'Architecture'],
+    keywords:
+      'GROQ, Sanity, schedule table, nested query, conditional projection, scope traversal, conference CMS',
+  },
 ]
