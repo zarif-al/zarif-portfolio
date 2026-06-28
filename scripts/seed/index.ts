@@ -37,6 +37,7 @@ function buildProjectData(
       tags: p.tags.map((t) => tagMap[t]).filter((id): id is string => id !== undefined),
       techStack: p.techStack,
       outcomeStats: p.outcomeStats,
+      involvement: p.involvement,
       kicker: p.kicker,
     },
     localSeoTab: {
@@ -298,15 +299,23 @@ const PROJECTS = [
     title: 'brightonSEO',
     kicker: 'Project',
     description:
-      "Led the rebuild of the world's largest search marketing conference website. Migrated from a rigid legacy system to a flexible Sanity + Next.js stack with a custom page builder, schedule table, and event management workflows.",
+      "Rebuilt the world's largest search marketing conference website. Replaced a loose WordPress setup with a Sanity + Next.js stack featuring a flexible page builder, a complex schedule table assembled from six levels of related data, and a personalized attendee agenda.",
     bodyFile: 'brightonseo.md',
     tags: ['Sanity', 'NextJS', 'Architecture'],
-    techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ'],
+    techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ', 'Supabase'],
     outcomeStats: [
-      { value: '10-11→2-3', label: 'Site Maintainers' },
+      { value: '15-20→2-3', label: 'Site Maintainers' },
       { value: '1 wk', label: 'Event Setup' },
+      { value: '2 regions', label: 'Managed from One Studio' },
+      { value: 'My-Schedule', label: 'Personalized Agendas' },
     ],
-    keywords: 'brightonSEO, conference website, Sanity CMS, Next.js, search marketing, page builder, event management',
+    involvement: {
+      role: 'Lead Developer & Architect',
+      duration: '6 months',
+      team: '5-person team',
+    },
+    keywords:
+      'brightonSEO, conference website, Sanity CMS, Next.js, page builder, schedule table, GROQ, Supabase, event management',
   },
   {
     slug: 'boutique-gym-site',
@@ -317,8 +326,14 @@ const PROJECTS = [
     bodyFile: 'boutique-gym-site.md',
     tags: ['Sanity', 'NextJS', 'Architecture', 'Integration'],
     techStack: ['Sanity', 'Next.js', 'NestJS', 'Flutter', 'PostgreSQL'],
-    outcomeStats: [],
-    keywords: 'gym management system, GMS migration, Sanity CMS, Next.js, Flutter, NestJS, spot booking, class scheduling',
+    outcomeStats: [
+      { value: 'Custom seat-picker', label: 'Booking UX' },
+      { value: 'Self-serve', label: 'Content Updates' },
+      { value: 'Cross-platform', label: 'Delivery' },
+    ],
+    involvement: {},
+    keywords:
+      'gym management system, GMS migration, Sanity CMS, Next.js, Flutter, NestJS, spot booking, class scheduling',
   },
   {
     slug: 'sauna-gms-integration',
@@ -330,6 +345,7 @@ const PROJECTS = [
     tags: ['Integration'],
     techStack: ['NestJS', 'Mariana Tek', 'Next.js', 'Sanity'],
     outcomeStats: [],
+    involvement: {},
     draft: true,
     keywords: 'Mariana Tek, GMS integration, anonymous group booking, sauna, NestJS, Sanity CMS',
   },
@@ -356,7 +372,8 @@ const BLOGS = [
       'Much like "the customer is always right" was never about tolerating bad behavior, the DRY principle was never about eliminating code duplication; it\'s about eliminating duplication of knowledge. How conceptual truncation distorts software principles.',
     bodyFile: 'conceptual-truncation.md',
     tags: ['Concept'],
-    keywords: 'conceptual truncation, DRY principle, software principles, code duplication, software engineering philosophy',
+    keywords:
+      'conceptual truncation, DRY principle, software principles, code duplication, software engineering philosophy',
   },
   {
     slug: 'client-vs-server-fetching',
@@ -367,6 +384,19 @@ const BLOGS = [
       'Where should data queries be processed? The trade-off between cost, performance, and security when deciding between server-side and client-side data fetching.',
     bodyFile: 'client-vs-server-fetching.md',
     tags: ['Concept'],
-    keywords: 'client-side fetching, server-side fetching, SSR, Next.js, data fetching, performance, security',
+    keywords:
+      'client-side fetching, server-side fetching, SSR, Next.js, data fetching, performance, security',
+  },
+  {
+    slug: 'building-schedule-table-groq-query',
+    title: 'Building a Conference Schedule Table with One GROQ Query',
+    trackNumber: 4,
+    publishedDate: '2025-06-28',
+    excerpt:
+      'How a single GROQ query resolves six entity levels — Event, Day Schedule, Time Slot, Session, Talk, and Person — to build a conference schedule table, using conditional projection, dereferencing, and scope traversal.',
+    bodyFile: 'building-schedule-table-groq-query.md',
+    tags: ['Sanity', 'Architecture'],
+    keywords:
+      'GROQ, Sanity, schedule table, nested query, conditional projection, scope traversal, conference CMS',
   },
 ]

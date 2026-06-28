@@ -5,6 +5,7 @@ import type { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext
 import { textStateConfig } from '@/lib/lexical-editor/components/text-state-config'
 import type { TextStateConfig } from '@/lib/lexical-editor/components/text-state-config'
 import { CodeSnippet } from '@/components/primitives/code-snippet'
+import { MermaidDiagram } from '@/components/primitives/mermaid-diagram'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -51,6 +52,11 @@ export const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConvert
       if (!node.fields.code) {
         return null
       }
+
+      if (node.fields.language === 'mermaid') {
+        return <MermaidDiagram code={node.fields.code} />
+      }
+
       return <CodeSnippet code={node.fields.code} language={node.fields.language} />
     },
   },

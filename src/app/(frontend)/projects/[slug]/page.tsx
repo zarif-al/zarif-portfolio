@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import { BackLink } from '@/components/primitives/back-link'
 import { Tags } from '@/components/primitives/tags'
 import { Richtext } from '@/components/primitives/richtext'
+import { OutcomeStats } from './components/outcome-stats'
+import { DetailRibbon } from './components/detail-ribbon'
 import { RelatedItems } from '@/components/blocks/non-buildable/related-items'
 import { getPayloadInstance } from '@/lib/payload'
 import type { Metadata } from 'next'
@@ -38,8 +40,10 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   return (
     <section className="py-[clamp(2rem,6vh,4rem)]">
       <div className="mx-auto max-w-(--max-width) px-(--gutter)">
+        {/* ── Page chrome ── */}
         <BackLink href="/projects" label="Back to Projects" />
 
+        {/* ── Intro ── */}
         <div className="mb-10">
           {project.meta?.kicker && (
             <p className="font-mono text-[0.72rem] uppercase tracking-widest text-accent mb-3">
@@ -57,25 +61,18 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           )}
         </div>
 
-        {project.meta?.body && (
-          <div className="max-w-2xl">
-            <Richtext data={project.meta.body} />
-          </div>
-        )}
+        {/* ── Detail ribbon ── */}
+        <DetailRibbon involvement={project.meta?.involvement} />
 
-        {project.meta?.outcomeStats && project.meta.outcomeStats.length > 0 && (
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-px bg-border border border-border my-8">
-            {project.meta.outcomeStats.map((stat, i) => (
-              <div key={i} className="bg-surface px-4 py-5 text-center">
-                <div className="font-display text-2xl text-fg">{stat.value}</div>
-                <div className="font-mono text-[0.65rem] uppercase tracking-[0.08em] text-muted mt-[0.3rem]">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* ── Outcomes ── */}
+        <div className="mb-10 mt-10">
+          <OutcomeStats stats={project.meta?.outcomeStats} />
+        </div>
 
+        {/* ── Content body ── */}
+        {project.meta?.body && <Richtext data={project.meta.body} />}
+
+        {/* ── Tech stack ── */}
         {project.meta?.techStack && project.meta.techStack.length > 0 && (
           <div className="flex flex-wrap gap-[0.4rem] mt-8 pt-6 border-t border-border">
             {project.meta.techStack.map((s) => (
@@ -89,6 +86,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </div>
         )}
 
+        {/* ── Related items ── */}
         <RelatedItems
           collection="projects"
           currentId={project.id}
