@@ -51,9 +51,9 @@ export async function RelatedItems({
 
   return (
     <div className="mt-12 p-6 bg-surface border border-border">
-      <h4 className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-accent mb-[0.85rem]">
+      <h5 className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-accent mb-[0.85rem]">
         Related
-      </h4>
+      </h5>
       <div className="flex flex-wrap gap-2">
         {docs.map((doc) => (
           <Link
