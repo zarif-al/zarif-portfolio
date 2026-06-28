@@ -306,6 +306,8 @@ const PROJECTS = [
     outcomeStats: [
       { value: '15-20→2-3', label: 'Site Maintainers' },
       { value: '1 wk', label: 'Event Setup' },
+      { value: '2 regions', label: 'Managed from One Studio' },
+      { value: 'My-Schedule', label: 'Personalized Agendas' },
     ],
     involvement: {
       role: 'Lead Developer & Architect',
