@@ -175,6 +175,11 @@
     font-weight: 600;
   }
 
+  .prose li:has(ul)::marker,
+  .prose li:has(ol)::marker {
+    content: none;
+  }
+
   /* ── Equalizer animation ── */
   @keyframes eq-pulse-1 {
     0%,
