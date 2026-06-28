@@ -8,3 +8,4 @@ test.env
 .env
 .env.*
 .agents
+scripts/seed/content/
