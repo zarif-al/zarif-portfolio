@@ -19,6 +19,7 @@
 }
 
 @utility prose {
+  max-width: 100%; /* Override Tailwind Typography default of 65ch */
   --tw-prose-body: var(--color-muted);
   --tw-prose-headings: var(--color-fg);
   --tw-prose-links: var(--color-accent);

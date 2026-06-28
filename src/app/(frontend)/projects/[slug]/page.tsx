@@ -70,11 +70,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* ── Content body ── */}
-        {project.meta?.body && (
-          <div className="max-w-2xl mx-auto">
-            <Richtext data={project.meta.body} />
-          </div>
-        )}
+        {project.meta?.body && <Richtext data={project.meta.body} />}
 
         {/* ── Tech stack ── */}
         {project.meta?.techStack && project.meta.techStack.length > 0 && (
