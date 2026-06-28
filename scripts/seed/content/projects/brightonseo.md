@@ -119,9 +119,9 @@ erDiagram
 - **Event:** a single conference edition. Contains a title, start and end dates, a venue (which carries the country), a schedule made of day schedules, and content to build the event's home page - hero, page sections, sponsor categories, header, and footer.
 - **Day Schedule:** one day of the multi-day schedule. Holds a date and an ordered list of time slots.
 - **Time Slot:** a block of time with a start time. Can hold multiple concurrent items. The item types are:
-  - **Session**: a scheduled talk or panel. Contains a title, an ordered list of talk objects, a venue, and optional page sections.
-  - **Minor Activity**: a break, networking session, or sponsored event. Has a title, an optional rich text description, and an optional list of sponsors. When placed in a time slot, it carries a free-text duration the editor can customize.
-  - **Major Activity**: a standalone event-within-an-event, added during this build. Carries its own title, a required hero image, and a list of content blocks - each with a location, time range, and page sections.
+    - **Session**: a scheduled talk or panel. Contains a title, an ordered list of talk objects, a venue, and optional page sections.
+    - **Minor Activity**: a break, networking session, or sponsored event. Has a title, an optional rich text description, and an optional list of sponsors. When placed in a time slot, it carries a free-text duration the editor can customize.
+    - **Major Activity**: a standalone event-within-an-event, added during this build. Carries its own title, a required hero image, and a list of content blocks - each with a location, time range, and page sections.
 
 By nesting the schedule as a tree rather than a flat list, editors could add or remove days and time slots without restructuring anything. Days, time slots, and activities are just nodes in the tree - add one, remove one, reorder them, and the rest stays intact.
 
