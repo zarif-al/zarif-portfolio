@@ -10,13 +10,14 @@ The editorial vision was there. What was missing was a system that could express
 
 ```mermaid
 flowchart LR
-  Studio["Sanity Studio"] --> Content["Structured Content"]
-  Content --> Queries["GROQ Query Layer"]
-  Queries --> Pages["Next.js Frontend"]
-  Pages --> Supabase["Supabase Auth + DB"]
+    Editors["Editors"] --> Studio["Sanity Studio<br/>(Admin Portal)"]
+    Studio --> Lake["Sanity Content Lake<br/>(Database)"]
+    Lake --> Frontend["Next.js / Vercel"]
+    Frontend --> Attendees["Attendees"]
+    Frontend --> Supabase["Supabase<br/>(auth + user DB)"]
 ```
 
-We migrated the entire content stack to Sanity CMS with a Next.js frontend. Content editors work in Sanity Studio, where every entity—event, talk, speaker, sponsor—is modeled as structured content. GROQ queries assemble the relational data server-side; one query can traverse six levels of nesting. The Next.js frontend renders the results, while Supabase provides authentication and a user database for the personalized features.
+We migrated the entire content stack to Sanity CMS with a Next.js frontend. Content editors work in Sanity Studio (the admin portal), where every entity—event, talk, speaker, sponsor—is modeled as structured content. GROQ queries assemble the relational data server-side; one query can traverse six levels of nesting. The Next.js frontend renders the results, while Supabase provides authentication and a user database for the personalized features.
 
 ## Feature Breakdown
 
