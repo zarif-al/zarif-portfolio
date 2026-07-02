@@ -34,6 +34,22 @@
   margin: 0 0.15rem;
 }
 
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  background: var(--color-accent);
+  vertical-align: text-bottom;
+  margin-left: 0.15em;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 @media (max-width: 600px) {
   .diagram {
     gap: 0.75rem;

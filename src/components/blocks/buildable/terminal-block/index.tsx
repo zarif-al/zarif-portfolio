@@ -29,7 +29,7 @@ export function TerminalBlockComponent({
                 <span className="text-muted">
                   {line.output}
                   {i === (lines?.length ?? 0) - 1 && lines?.[i]?.type === 'output' && (
-                    <span className="inline-block w-[0.55em] h-[1em] bg-accent animate-blink align-text-bottom ml-[0.15em]" />
+                    <span className={styles['cursor']} />
                   )}
                 </span>
               </div>

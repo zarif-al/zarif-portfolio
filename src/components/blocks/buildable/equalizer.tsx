@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { cn } from '@/utilities/cn'
 import type { EqualizerBlock } from '@/payload-types'
 import type { BlockComponentProps } from '@/components/blocks/types'
+import styles from './equalizer.module.css'
 
 const SLOT_MS = 3 * 60 * 1000
 const FADE_MS = 500
@@ -22,11 +23,11 @@ function getSlotIndex(tracksLength: number): number {
 function EqualizerBars() {
   return (
     <div className="flex items-end gap-[3px] h-6 shrink-0" aria-hidden="true">
-      <span className="w-0.5 bg-accent opacity-50 animate-eq1" />
-      <span className="w-0.5 bg-accent opacity-50 animate-eq2" />
-      <span className="w-0.5 bg-accent opacity-50 animate-eq3" />
-      <span className="w-0.5 bg-accent opacity-50 animate-eq4" />
-      <span className="w-0.5 bg-accent opacity-50 animate-eq5" />
+      <span className={`w-0.5 bg-accent opacity-50 ${styles['bar-1']}`} />
+      <span className={`w-0.5 bg-accent opacity-50 ${styles['bar-2']}`} />
+      <span className={`w-0.5 bg-accent opacity-50 ${styles['bar-3']}`} />
+      <span className={`w-0.5 bg-accent opacity-50 ${styles['bar-4']}`} />
+      <span className={`w-0.5 bg-accent opacity-50 ${styles['bar-5']}`} />
     </div>
   )
 }
@@ -46,7 +47,7 @@ function NowPlaying({
   return (
     <div className="inline-flex items-center gap-2.5 font-mono text-[0.66rem] text-muted tracking-[0.03em] shrink-0 max-sm:text-[0.62rem]">
       <span className="relative w-2 h-2 border-[1.5px] border-accent shrink-0">
-        <span className="absolute inset-[2px] bg-accent animate-spin-slow" />
+        <span className={styles['dot']} />
       </span>
       <span className="text-accent uppercase tracking-widest text-[0.6rem]">Now Playing</span>
       <span
