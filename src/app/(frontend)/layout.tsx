@@ -13,11 +13,13 @@ const crimsonPro = Crimson_Pro({
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-body-next',
+  preload: false,
 })
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono-next',
+  preload: false,
 })
 
 export const metadata: Metadata = {
