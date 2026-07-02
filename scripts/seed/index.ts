@@ -299,7 +299,7 @@ const PROJECTS = [
     title: 'brightonSEO',
     kicker: 'Project',
     description:
-      "Rebuilt the world's largest search marketing conference website. Replaced a loose WordPress setup with a Sanity + Next.js stack featuring a flexible page builder, a complex schedule table assembled from six levels of related data, and a personalized attendee agenda.",
+      "Rebuilt the world's largest search marketing conference website. Replaced a WordPress setup with a Sanity + Next.js stack featuring a flexible event data model, a page builder for editorial teams, a schedule table assembled from six levels of related data, a personalized attendee agenda, and multi-region management from a single Sanity Studio.",
     bodyFile: 'brightonseo.md',
     tags: ['Sanity', 'NextJS', 'Architecture'],
     techStack: ['Sanity', 'Next.js', 'TypeScript', 'Vercel', 'GROQ', 'Supabase'],
@@ -315,25 +315,25 @@ const PROJECTS = [
       team: '5-person team',
     },
     keywords:
-      'brightonSEO, conference website, Sanity CMS, Next.js, page builder, schedule table, GROQ, Supabase, event management',
+      'brightonSEO, conference website, Sanity CMS, Next.js, page builder, schedule table, event data model, multi-region, GROQ, Supabase, event management, personalized agenda',
   },
   {
     slug: 'boutique-gym-site',
-    title: 'Boutique Gym Site',
+    title: 'Boutique Gym System Migration',
     kicker: 'Project',
     description:
-      'Led the migration of a premium gym from a restrictive legacy GMS to Sanity + Next.js + Flutter. Built a NestJS sync service, custom spot booking with visual layout positioning, and a reusable class list component with React Suspense.',
+      'Built a custom headless web and mobile experience on top of Mariana Tek for a premium boutique gym: a Sanity CMS page builder for brand-aligned content, a NestJS sync pipeline to bridge GMS data into editorial workflows, a visual floor-plan seat picker with drag-and-drop layout editing, and a contextual class list component. Delivered across Next.js and Flutter for two regions from a single codebase.',
     bodyFile: 'boutique-gym-site.md',
     tags: ['Sanity', 'NextJS', 'Architecture', 'Integration'],
-    techStack: ['Sanity', 'Next.js', 'NestJS', 'Flutter', 'PostgreSQL'],
-    outcomeStats: [
-      { value: 'Custom seat-picker', label: 'Booking UX' },
-      { value: 'Self-serve', label: 'Content Updates' },
-      { value: 'Cross-platform', label: 'Delivery' },
-    ],
-    involvement: {},
+    techStack: ['Sanity', 'Next.js', 'NestJS', 'Flutter', 'Mariana Tek', 'TypeScript'],
+    outcomeStats: [],
+    involvement: {
+      role: 'Lead Developer',
+      duration: '8 months',
+      team: '8-person team',
+    },
     keywords:
-      'gym management system, GMS migration, Sanity CMS, Next.js, Flutter, NestJS, spot booking, class scheduling',
+      'Mariana Tek, GMS integration, Sanity CMS, headless gym website, Next.js, Flutter, NestJS, seat picker, class scheduling, sync pipeline, multi-region, page builder',
   },
   {
     slug: 'sauna-gms-integration',
