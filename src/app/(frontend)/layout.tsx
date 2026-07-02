@@ -13,7 +13,7 @@ const crimsonPro = Crimson_Pro({
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-body-next',
-  preload: false,
+  display: 'fallback',
 })
 
 const jetbrainsMono = JetBrains_Mono({
