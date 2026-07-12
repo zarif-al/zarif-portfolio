@@ -21,7 +21,7 @@ export function Table({ columnHeaders, rows }: TableBlockType) {
             {columnHeaders.map((header, i) => (
               <th
                 key={i}
-                className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-fg font-medium px-4 py-[0.85rem] text-left border-b-2 border-fg align-bottom"
+                className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-muted font-semibold px-4 py-[0.85rem] text-left border-b border-muted align-bottom"
               >
                 {header.label}
               </th>
