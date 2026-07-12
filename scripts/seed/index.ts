@@ -121,7 +121,7 @@ async function seed() {
     if (doc) {
       await payload.update({ collection: 'projects', id: doc.id, data })
     } else {
-      await payload.create({ collection: 'projects', data, draft: p.draft ?? false })
+      await payload.create({ collection: 'projects', data, draft: false })
     }
   }
 
@@ -337,17 +337,26 @@ const PROJECTS = [
   },
   {
     slug: 'sauna-gms-integration',
-    title: 'Sauna GMS Integration',
+    title: 'Custom Booking on Top of a Gym Management System',
     kicker: 'Project',
     description:
-      'Building a custom integration layer on top of Mariana Tek GMS for a sauna business. The GMS only supports single-spot authenticated booking; we are building anonymous group booking where customers can reserve multiple spots without logging in.',
-    bodyFile: 'sauna-gms-integration.md',
-    tags: ['Integration'],
-    techStack: ['NestJS', 'Mariana Tek', 'Next.js', 'Sanity'],
-    outcomeStats: [],
-    involvement: {},
-    draft: true,
-    keywords: 'Mariana Tek, GMS integration, anonymous group booking, sauna, NestJS, Sanity CMS',
+      'Built a custom booking website on top of Mariana Tek for a sauna business: a NestJS gateway bridging the GMS with a Next.js frontend, anonymous checkout without mandatory login, group booking in a single flow, and an atomic queue for processing multi-spot reservations. Payload CMS for content management with a sync pipeline from Mariana Tek.',
+    bodyFile: 'sauna-gym/index.md',
+    tags: ['Integration', 'Payload', 'NextJS', 'Architecture'],
+    techStack: ['NestJS', 'Next.js', 'Payload CMS', 'Mariana Tek', 'TypeScript', 'Redis', 'MongoDB'],
+    outcomeStats: [
+      { value: 'Walk-in ready', label: 'Purchase without creating an account' },
+      { value: 'Group booking', label: 'Multiple spots in a single checkout' },
+      { value: 'Unified cart', label: 'Reservations and add-ons together' },
+      { value: 'Pay at checkout', label: 'No prepaid membership required' },
+    ],
+    involvement: {
+      role: 'Lead Developer',
+      duration: '6 months',
+      team: '8-person team',
+    },
+    keywords:
+      'Mariana Tek, GMS integration, anonymous checkout, group booking, NestJS, Next.js, Payload CMS, GraphQL, Redis, BullMQ, sauna booking, spot hold, queue-based reservation',
   },
 ]
 
