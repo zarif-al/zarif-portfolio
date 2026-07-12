@@ -1,3 +1,4 @@
+import type { Block } from 'payload'
 import { CodeBlock } from '@payloadcms/richtext-lexical'
 
 /**
@@ -22,17 +23,13 @@ const LANGUAGES: Record<string, string> = {
 }
 
 /**
- * Premade code block feature for the Lexical editor.
+ * Code block for the Lexical editor.
  *
- * Wraps {@link CodeBlock} from `@payloadcms/richtext-lexical` with a
- * focused language set and project defaults.
- *
- * @returns A Payload Block to be passed to {@link BlocksFeature}.
+ * Built on Payload's premade {@link CodeBlock} with a curated language set
+ * and project defaults. Passed directly to {@link BlocksFeature}.
  */
-export function createCodeBlock() {
-  return CodeBlock({
-    defaultLanguage: 'ts',
-    languages: LANGUAGES,
-    slug: 'Code',
-  })
-}
+export const CodeBlockBlock: Block = CodeBlock({
+  defaultLanguage: 'ts',
+  languages: LANGUAGES,
+  slug: 'Code',
+})

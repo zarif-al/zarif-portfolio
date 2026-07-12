@@ -7,7 +7,9 @@ import {
 import { textStateConfig } from './components/text-state-config'
 import type { CustomLexicalOptions } from './types'
 import { hasKey } from './utils'
-import { createCodeBlock } from './features/code-block'
+import { CodeBlockBlock } from './features/code-block'
+import { CalloutBlock } from './features/callout'
+import { TableBlock } from './features/table'
 
 export function customLexicalEditor(options: CustomLexicalOptions = {}) {
   return lexicalEditor({
@@ -38,10 +40,15 @@ export function customLexicalEditor(options: CustomLexicalOptions = {}) {
         )
       }
 
-      // Append the code block feature when enabled.
+      // Always include callout and table blocks.
+      const richTextBlocks = [CalloutBlock, TableBlock]
+
+      // Code block is optional — only for long-form content editors.
       if (options.codeBlock) {
-        features.push(BlocksFeature({ blocks: [createCodeBlock()] }))
+        richTextBlocks.push(CodeBlockBlock)
       }
+
+      features.push(BlocksFeature({ blocks: richTextBlocks }))
 
       // Always append the custom text-state feature (accent colors, etc.).
       features.push(TextStateFeature({ state: textStateConfig }))

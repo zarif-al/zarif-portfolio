@@ -4,12 +4,11 @@ import type { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
 import type { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 import { textStateConfig } from '@/lib/lexical-editor/components/text-state-config'
 import type { TextStateConfig } from '@/lib/lexical-editor/components/text-state-config'
+import type { CalloutBlock, TableBlock } from '@/payload-types'
 import { CodeSnippet } from '@/components/primitives/code-snippet'
 import { MermaidDiagram } from '@/components/primitives/mermaid-diagram'
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
-}
+import { Callout } from '@/components/primitives/callout'
+import { Table } from '@/components/primitives/table'
 
 interface CodeBlockFields {
   blockType: 'Code'
@@ -17,7 +16,15 @@ interface CodeBlockFields {
   language?: string
 }
 
-type NodeTypes = DefaultNodeTypes | SerializedBlockNode<CodeBlockFields>
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+type NodeTypes =
+  | DefaultNodeTypes
+  | SerializedBlockNode<CodeBlockFields>
+  | SerializedBlockNode<CalloutBlock>
+  | SerializedBlockNode<TableBlock>
 
 /** Returns the state group if `key` is a valid top-level key in the config. */
 function getStateGroup(key: string) {
@@ -59,6 +66,8 @@ export const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConvert
 
       return <CodeSnippet code={node.fields.code} language={node.fields.language} />
     },
+    callout: ({ node }) => <Callout {...node.fields} />,
+    table: ({ node }) => <Table {...node.fields} />,
   },
   text: (args) => {
     const { node } = args
